@@ -34,6 +34,7 @@ class _LanguageState extends State<LanguagePage> {
               title: Text('Languages',
                   style: TextStyle(color: Colors.white, fontSize: 60)),
               background: ColoredBox(color: Colors.transparent),
+              titlePadding: EdgeInsets.all(24),
             ),
             floating: true,
             pinned: true,
@@ -68,7 +69,7 @@ class _LanguageState extends State<LanguagePage> {
                             ),
                           ],
                         ),
-                         Row(
+                        Row(
                           children: [
                             SizedBox(width: 50),
                             Text("...Will be added soon(日本語, 繁體中文)",

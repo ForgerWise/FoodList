@@ -1,6 +1,6 @@
 {
-    "name": "refrigerator_manage",
-    "short_name": "refrigerator_manage",
+    "name": "foodlist",
+    "short_name": "foodlist",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

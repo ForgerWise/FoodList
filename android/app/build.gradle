@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 
 
 android {
-    namespace "com.example.refrigerator_manage"
+    namespace "com.example.foodlist"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 

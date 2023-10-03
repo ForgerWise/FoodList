@@ -1,4 +1,4 @@
-name: refrigerator_manage
+name: foodlist
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,12 +41,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_slidable: ^1.3.0
+  flutter_slidable: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.1.3
+  hive_generator: ^2.0.1
   build_runner: ^2.1.11
   flutter_launcher_icons: "^0.13.1"
 

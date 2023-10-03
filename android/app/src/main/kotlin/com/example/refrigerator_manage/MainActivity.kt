@@ -1,4 +1,4 @@
-package com.example.refrigerator_manage
+package com.example.foodlist
 
 import io.flutter.embedding.android.FlutterActivity
 

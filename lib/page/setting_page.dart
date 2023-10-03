@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:refrigerator_manage/setting/author.dart';
-import 'package:refrigerator_manage/setting/special_thanks.dart';
 
 import '../setting/language.dart';
 import '../setting/policy.dart';
@@ -33,6 +31,7 @@ class _SettingPageState extends State<SettingPage> {
               title: Text('Settings',
                   style: TextStyle(color: Colors.white, fontSize: 70)),
               background: ColoredBox(color: Colors.transparent),
+              titlePadding: EdgeInsets.all(24),
             ),
             floating: true,
             pinned: true,
@@ -114,50 +113,6 @@ class _SettingPageState extends State<SettingPage> {
                   )
                 },
               ),
-              const Divider(
-                color: Colors.black54,
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.person,
-                  color: Colors.black,
-                  size: 24,
-                ),
-                title: const Text(
-                  'Developer Info',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                  ),
-                ),
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AuthorPage(),
-                    ),
-                  )
-                color: Colors.black54,
-                },
-                ),
-              ListTile(
-                leading: const Icon(
-                  Icons.favorite,
-                  color: Colors.black,
-                  size: 24,
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SpecialThanksPage(),
-                    ),
-                  )
-                },
-              )
             ],
           ),
         ),

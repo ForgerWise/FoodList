@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:refrigerator_manage/page/add_page.dart';
+import 'package:foodlist/page/add_page.dart';
 
 class ListRifTile extends StatelessWidget {
   final String title;

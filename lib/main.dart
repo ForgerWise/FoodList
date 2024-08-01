@@ -5,8 +5,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:refrigerator_manage/l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:refrigerator_manage/setting/author.dart';
-import 'package:refrigerator_manage/setting/special_thanks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'page/add_page.dart';
@@ -49,8 +47,6 @@ class MyApp extends StatelessWidget {
         '/language': (context) => const LanguagePage(),
         '/policy': (context) => const PolicyPage(),
         '/about': (context) => const AboutPage(),
-        '/author': (context) => AuthorPage(),
-        '/special_thanks': (context) => SpecialThanksPage(),
       },
       locale: locale,
       supportedLocales: L10n.all,

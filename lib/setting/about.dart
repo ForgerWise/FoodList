@@ -32,13 +32,13 @@ class _AboutState extends State<AboutPage> {
         ],
         body: Container(
           padding: const EdgeInsets.all(16),
-          child:  SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 SizedBox(height: 12),
                 Text(
                   "This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste.",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                 ),
               ],
             ),

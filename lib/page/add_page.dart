@@ -10,7 +10,11 @@ class AddPage extends StatefulWidget {
   final DateTime? inputdate;
   final DateTime? expdate;
 
-  const AddPage(param0, param1, param2, param3, {
+  const AddPage(
+    param0,
+    param1,
+    param2,
+    param3, {
     Key? key,
     this.catagory,
     this.subcatagory,
@@ -103,7 +107,8 @@ class _AddPageState extends State<AddPage> {
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
-          title: const Text("Add Ingredients", style: TextStyle(color: Colors.white))),
+          title: const Text("Add Ingredients",
+              style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.blueGrey,
           elevation: 0,
           centerTitle: true,

@@ -25,6 +25,7 @@ class _AboutState extends State<AboutPage> {
               title: Text('About',
                   style: TextStyle(color: Colors.white, fontSize: 50)),
               background: ColoredBox(color: Colors.transparent),
+              titlePadding: EdgeInsets.all(24),
             ),
             floating: true,
             pinned: true,

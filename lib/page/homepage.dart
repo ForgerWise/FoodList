@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:refrigerator_manage/database/data.dart';
-import 'package:refrigerator_manage/page/add_page.dart';
-import 'package:refrigerator_manage/util/list_tile.dart';
+import 'package:foodlist/database/data.dart';
+import 'package:foodlist/page/add_page.dart';
+import 'package:foodlist/util/list_tile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class HomePage extends StatefulWidget {

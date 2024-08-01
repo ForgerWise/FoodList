@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:refrigerator_manage/database/ingredient.dart';
+import 'package:foodlist/database/ingredient.dart';
 import 'package:intl/intl.dart';
-import 'package:refrigerator_manage/database/data.dart';
+import 'package:foodlist/database/data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class AddPage extends StatefulWidget {
@@ -95,14 +95,15 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        setState(() {
-          _selectedCatagory = null;
-          _selectedSubcatagory = null;
-          _dateTime = null;
-        });
-        return true;
+    return PopScope(
+      onPopInvoked: (bool isPop) async {
+        if (isPop) {
+          setState(() {
+            _selectedCatagory = null;
+            _selectedSubcatagory = null;
+            _dateTime = null;
+          });
+        }
       },
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,

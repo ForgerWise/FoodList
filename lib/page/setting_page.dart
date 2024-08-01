@@ -31,6 +31,7 @@ class _SettingPageState extends State<SettingPage> {
               title: Text('Settings',
                   style: TextStyle(color: Colors.white, fontSize: 70)),
               background: ColoredBox(color: Colors.transparent),
+              titlePadding: EdgeInsets.all(24),
             ),
             floating: true,
             pinned: true,

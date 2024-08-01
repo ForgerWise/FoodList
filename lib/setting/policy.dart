@@ -25,6 +25,7 @@ class _PolicyState extends State<PolicyPage> {
               title: Text('Policy',
                   style: TextStyle(color: Colors.white, fontSize: 50)),
               background: ColoredBox(color: Colors.transparent),
+              titlePadding: EdgeInsets.all(24),
             ),
             floating: true,
             pinned: true,
@@ -32,7 +33,7 @@ class _PolicyState extends State<PolicyPage> {
         ],
         body: Container(
           padding: const EdgeInsets.all(16),
-          child:  SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 SizedBox(height: 24),

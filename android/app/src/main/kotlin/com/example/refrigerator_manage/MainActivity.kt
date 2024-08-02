@@ -1,4 +1,4 @@
-package com.example.foodlist
+package com.forgerwise.foodlist
 
 import io.flutter.embedding.android.FlutterActivity
 

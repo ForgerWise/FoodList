@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:foodlist/database/data.dart';
-import 'package:foodlist/page/add_page.dart';
-import 'package:foodlist/util/list_tile.dart';
+import '../database/data.dart';
+import 'add_page.dart';
+import '../util/list_tile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class HomePage extends StatefulWidget {
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.blueGrey,
                 onPressed: () async {
                   await Navigator.pushNamed(context, '/add',
-                      arguments: const AddPage(null, null, null, null));
+                      arguments: AddPage());
                   setState(() {
                     IDB.loadData();
                   });

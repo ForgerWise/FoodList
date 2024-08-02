@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lib/l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +12,7 @@ import 'page/setting_page.dart';
 import 'setting/language.dart';
 import 'setting/policy.dart';
 import 'setting/about.dart';
+import 'l10n/l10n.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MainPage(),
         '/home': (context) => const HomePage(),
-        '/add': (context) => const AddPage(null, null, null, null),
+        '/add': (context) => AddPage(),
         '/setting': (context) => const SettingPage(),
         '/language': (context) => const LanguagePage(),
         '/policy': (context) => const PolicyPage(),
@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: Colors.blueGrey,
-          labelTextStyle: MaterialStateProperty.all(
+          labelTextStyle: WidgetStateProperty.all(
             const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,

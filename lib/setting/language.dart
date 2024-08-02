@@ -69,16 +69,6 @@ class _LanguageState extends State<LanguagePage> {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            SizedBox(width: 50),
-                            Text("...Will be added soon(日本語, 繁體中文)",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey)),
-                          ],
-                        ),
                       ],
                     ),
                   ),

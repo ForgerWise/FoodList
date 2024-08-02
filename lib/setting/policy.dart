@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PolicyPage extends StatefulWidget {
   const PolicyPage({Key? key}) : super(key: key);
@@ -8,6 +9,24 @@ class PolicyPage extends StatefulWidget {
 }
 
 class _PolicyState extends State<PolicyPage> {
+  final String email = "forgerwise@gmail.com";
+
+  void _sendMail() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(emailUri);
+      } else {
+        throw 'Could not launch $emailUri';
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +80,16 @@ class _PolicyState extends State<PolicyPage> {
                   "● Contact Us"
                   "\n"
                   "If you have any questions regarding this Privacy Policy or the practices of this Site, please contact us by sending an email to forgerwise@gmail.com"
-                  "\n\n"
-                  "Last Updated: 2023/07/25",
-                  style: TextStyle(fontSize: 16),
+                  "\n\n",
+                  style: TextStyle(fontSize: 14),
+                ),
+                ElevatedButton(
+                  onPressed: _sendMail,
+                  child: Text("Contact Us"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                    foregroundColor: Colors.white,
+                  ),
                 ),
               ],
             ),

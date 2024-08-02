@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.example.refrigerator_manage"
+    namespace "com.forgerwise.foodlist"
     compileSdkVersion 34 // 更新為 API 級別 34
     ndkVersion flutter.ndkVersion
 
@@ -71,8 +71,4 @@ android {
 
 flutter {
     source '../..'
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

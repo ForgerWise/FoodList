@@ -25,6 +25,27 @@ class InputDataBase {
 
   void updateData() {
     ingredientsList.sort(compareIngredients);
+    print(ingredientsList);
     _myBox.put("INGREDIENTS_LIST", ingredientsList);
+  }
+
+  List editData(int index, String category, String subcategory, String expdate,
+      List ingredientsList) {
+    ingredientsList[index][0] = category;
+    ingredientsList[index][1] = subcategory;
+    ingredientsList[index][3] = expdate;
+    return ingredientsList;
+  }
+
+  int searchIndex(String category, String subcategory, String expdate,
+      List ingredientsList) {
+    for (int i = 0; i < ingredientsList.length; i++) {
+      if (ingredientsList[i][0] == category &&
+          ingredientsList[i][1] == subcategory &&
+          ingredientsList[i][3] == expdate) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

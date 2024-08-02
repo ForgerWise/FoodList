@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-class CatagoryDataBase {
-  List<String> catagoryList = [
+class CategoryDataBase {
+  List<String> categoryList = [
     "Meat",
     "Fish",
     "Vegetable",

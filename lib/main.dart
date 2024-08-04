@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'database/languageDB.dart';
 import 'page/add_page.dart';
 import 'page/homepage.dart';
 import 'page/setting_page.dart';
@@ -17,6 +18,7 @@ import 'l10n/l10n.dart';
 void main() async {
   await Hive.initFlutter();
   var box = await Hive.openBox("mybox");
+  await LanguageDB.init();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? languageCode = prefs.getString('languageCode');
@@ -98,12 +100,12 @@ class _MainPageState extends State<MainPage> {
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home),
+              selectedIcon: Icon(Icons.home, color: Colors.white),
               label: 'Home',
             ),
             NavigationDestination(
               icon: Icon(Icons.settings_outlined),
-              selectedIcon: Icon(Icons.settings),
+              selectedIcon: Icon(Icons.settings, color: Colors.white),
               label: 'Settings',
             ),
           ],

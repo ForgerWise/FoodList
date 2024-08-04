@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.forgerwise.foodlist"
-    compileSdkVersion 34 // 更新為 API 級別 34
+    compileSdkVersion 34 // ! Update to API level 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -49,7 +49,7 @@ android {
     defaultConfig {
         applicationId "com.forgerwise.foodlist"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 34 // 更新為 API 級別 34
+        targetSdkVersion 34 // ! Update to API level 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

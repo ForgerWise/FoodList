@@ -50,6 +50,19 @@ class MyApp extends StatelessWidget {
         '/policy': (context) => const PolicyPage(),
         '/about': (context) => const AboutPage(),
       },
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+        fontFamily: 'IBM Plex Sans',
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blueGrey,
+          iconTheme: const IconThemeData(color: Colors.white),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       locale: locale,
       supportedLocales: L10n.all,
       localizationsDelegates: [

@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- The permissions for notification channels and alarms are required for the app to work correctly. -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
     <application
         android:label="FoodList"
         android:name="${applicationName}"

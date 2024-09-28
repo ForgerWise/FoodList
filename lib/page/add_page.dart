@@ -144,6 +144,7 @@ class _AddPageState extends State<AddPage> {
       backgroundColor: Colors.blueGrey,
       elevation: 0,
       centerTitle: true,
+      iconTheme: const IconThemeData(color: Colors.white),
     );
   }
 
@@ -183,7 +184,10 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: const Text(
             "Category",
-            style: TextStyle(fontSize: 16, color: Colors.black54),
+            style: TextStyle(
+                fontSize: 16,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ],
@@ -192,46 +196,24 @@ class _AddPageState extends State<AddPage> {
 
   Widget buildCategoryDropdown() {
     return Container(
-      child: DropdownButtonFormField<String>(
-        items: CDB.categoryList.map((option) {
-          return DropdownMenuItem<String>(
+      child: DropdownMenu<String>(
+        initialSelection: _selectedCategory,
+        onSelected: (String? newValue) {
+          if (newValue != null) {
+            dropDownCallBack(newValue);
+          }
+        },
+        dropdownMenuEntries: CDB.categoryList.map((option) {
+          return DropdownMenuEntry<String>(
             value: option,
-            child: Text(
-              option,
-              textAlign: TextAlign.center,
-            ),
+            label: option,
           );
         }).toList(),
-        value: _selectedCategory,
-        onChanged: dropDownCallBack,
-        isExpanded: true,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
-        dropdownColor: Colors.grey.shade300,
-        decoration: const InputDecoration(
-          hintText: "Select Category",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            borderSide: BorderSide(
-              color: Colors.black,
-              width: 1,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            borderSide: BorderSide(
-              color: Colors.black,
-              width: 1,
-            ),
-          ),
-        ),
+        menuHeight: MediaQuery.of(context).size.height * 0.5,
+        width: MediaQuery.of(context).size.width * 0.9,
+        enableFilter: true,
+        hintText: 'Select Category',
+        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -243,7 +225,10 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: const Text(
             "Subcategory",
-            style: TextStyle(fontSize: 16, color: Colors.black54),
+            style: TextStyle(
+                fontSize: 16,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ],
@@ -252,47 +237,26 @@ class _AddPageState extends State<AddPage> {
 
   Widget buildSubcategoryDropdown() {
     return Container(
-      child: DropdownButtonFormField<String>(
-        items: CDB.subCategoryMap[_selectedCategory]?.map((option) {
-              return DropdownMenuItem<String>(
-                value: option,
-                child: Text(
-                  option,
-                  textAlign: TextAlign.center,
-                ),
-              );
-            }).toList() ??
-            [],
-        value: _selectedSubcategory,
-        onChanged: dropDownSubcategoryCallBack,
-        isExpanded: true,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
-        dropdownColor: Colors.grey.shade300,
-        decoration: const InputDecoration(
-          hintText: "Select Subcategory",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            borderSide: BorderSide(
-              color: Colors.black,
-              width: 1,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            borderSide: BorderSide(
-              color: Colors.black,
-              width: 1,
-            ),
-          ),
-        ),
+      child: DropdownMenu<String>(
+        initialSelection: _selectedSubcategory,
+        onSelected: (String? newValue) {
+          if (newValue != null) {
+            dropDownSubcategoryCallBack(newValue);
+          }
+        },
+        dropdownMenuEntries:
+            CDB.subCategoryMap[_selectedCategory]?.map((option) {
+                  return DropdownMenuEntry<String>(
+                    value: option,
+                    label: option,
+                  );
+                }).toList() ??
+                [],
+        menuHeight: MediaQuery.of(context).size.height * 0.5,
+        width: MediaQuery.of(context).size.width * 0.9,
+        enableFilter: true,
+        hintText: "Select Subcategory",
+        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -304,7 +268,10 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: const Text(
             "Name",
-            style: TextStyle(fontSize: 16, color: Colors.black54),
+            style: TextStyle(
+                fontSize: 16,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ],
@@ -367,7 +334,10 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: const Text(
             "Expire Date",
-            style: TextStyle(fontSize: 16, color: Colors.black54),
+            style: TextStyle(
+                fontSize: 16,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ],

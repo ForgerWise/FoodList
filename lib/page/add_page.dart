@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../database/ingredient.dart';
 import 'package:intl/intl.dart';
 import '../database/data.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
+import '../database/sub_category.dart';
+import '../generated/l10n.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -18,18 +20,12 @@ class _AddPageState extends State<AddPage> {
   int? editIndex;
   InputDataBase IDB = InputDataBase();
   CategoryDataBase CDB = CategoryDataBase();
-  final _myBox = Hive.box('myBox');
 
   @override
   void initState() {
-    if (_myBox.get("SUB_CATEGORY_MAP") == null) {
-      CDB.createInitialData();
-      CDB.updateData();
-    } else {
-      CDB.loadData();
-    }
-
     super.initState();
+
+    loadDataAsync();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final arguments = ModalRoute.of(context)?.settings.arguments;
@@ -40,19 +36,34 @@ class _AddPageState extends State<AddPage> {
           _selectedCategory = data.category;
           _selectedSubcategory = data.subcategory;
           _dateTime = DateFormat('yyyy/MM/dd').parse(data.expdate);
-          IDB.loadData();
-          editIndex = IDB.searchIndex(
-            data.category,
-            data.subcategory,
-            data.expdate,
-            IDB.ingredientsList,
-          );
-          print(editIndex);
+          loadEditData(data);
         });
       } else {
         print('Arguments are not of type AddPageArguments');
       }
     });
+  }
+
+  Future<void> loadDataAsync() async {
+    await CDB.loadData();
+    setState(() {});
+  }
+
+  Future<void> loadEditData(data) async {
+    await IDB.loadData();
+    editIndex = IDB.searchIndex(
+      data.category,
+      data.subcategory,
+      data.expdate,
+      IDB.ingredientsList,
+    );
+    _selectedCategory = CDB.categoryMap.keys.firstWhere(
+        (key) => CDB.categoryMap[key] == data.category,
+        orElse: () => '');
+    _selectedSubcategory = CDB.subCategoryMap[_selectedCategory!]
+        ?.firstWhere((subCategory) => subCategory.name == data.subcategory,
+            orElse: () => SubCategory(id: '', name: ''))
+        .id;
   }
 
   void dropDownCallBack(String? selectedCategory) {
@@ -113,7 +124,12 @@ class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: handlePopInvoked,
+      onPopInvokedWithResult: (bool didPop, Object? result) async {
+        if (didPop) {
+          handlePopInvoked();
+          return;
+        }
+      },
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
         appBar: buildAppBar(),
@@ -124,28 +140,45 @@ class _AddPageState extends State<AddPage> {
     );
   }
 
-  void handlePopInvoked(bool isPop) {
-    if (isPop) {
-      setState(() {
-        _selectedCategory = null;
-        _selectedSubcategory = null;
-        _dateTime = null;
-      });
-    }
+  void handlePopInvoked() {
+    setState(() {
+      _selectedCategory = null;
+      _selectedSubcategory = null;
+      _dateTime = null;
+    });
   }
 
   AppBar buildAppBar() {
     return AppBar(
       title: editIndex != null && editIndex != -1
-          ? const Text("Edit Ingredients",
+          ? Text(S.of(context).editIngredients,
               style: TextStyle(color: Colors.white))
-          : const Text("Add Ingredients",
+          : Text(S.of(context).addIngredients,
               style: TextStyle(color: Colors.white)),
       backgroundColor: Colors.blueGrey,
       elevation: 0,
       centerTitle: true,
       iconTheme: const IconThemeData(color: Colors.white),
     );
+  }
+
+  bool showNameInput() {
+    if (_selectedCategory != null &&
+        _selectedCategory != '' &&
+        _selectedSubcategory != null &&
+        _selectedSubcategory != SubCategory(id: '', name: '')) {
+      // * If the selected subcategory is the last one(which is Other), then show the name input field
+      List<SubCategory>? subCategories;
+      subCategories = CDB.subCategoryMap[_selectedCategory!];
+
+      if (subCategories != null && subCategories.isNotEmpty) {
+        print(subCategories.last.id);
+        print(_selectedSubcategory);
+        SubCategory lastSubCategory = subCategories.last;
+        return _selectedSubcategory == lastSubCategory.id;
+      }
+    }
+    return false;
   }
 
   Widget buildBody() {
@@ -159,16 +192,8 @@ class _AddPageState extends State<AddPage> {
             buildSubcategoryRow(),
             buildSubcategoryDropdown(),
             // * If the selected subcategory is the last one(which is Other), then show the name input field
-            _selectedCategory != null &&
-                    _selectedSubcategory ==
-                        CDB.subCategoryMap[_selectedCategory!]?.last
-                ? buildNameRow()
-                : const SizedBox(),
-            _selectedCategory != null &&
-                    _selectedSubcategory ==
-                        CDB.subCategoryMap[_selectedCategory!]?.last
-                ? buildNameInput()
-                : const SizedBox(),
+            showNameInput() ? buildNameRow() : const SizedBox(),
+            showNameInput() ? buildNameInput() : const SizedBox(),
             buildExpireDateRow(),
             buildExpireDateButton(),
           ],
@@ -182,8 +207,8 @@ class _AddPageState extends State<AddPage> {
       children: [
         Container(
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
-          child: const Text(
-            "Category",
+          child: Text(
+            S.of(context).category,
             style: TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
@@ -203,16 +228,18 @@ class _AddPageState extends State<AddPage> {
             dropDownCallBack(newValue);
           }
         },
-        dropdownMenuEntries: CDB.categoryList.map((option) {
-          return DropdownMenuEntry<String>(
-            value: option,
-            label: option,
-          );
-        }).toList(),
+        dropdownMenuEntries: CDB.categoryMap.entries
+            .map(
+              (category) => DropdownMenuEntry<String>(
+                value: category.key,
+                label: category.value,
+              ),
+            )
+            .toList(),
         menuHeight: MediaQuery.of(context).size.height * 0.5,
         width: MediaQuery.of(context).size.width * 0.9,
         enableFilter: true,
-        hintText: 'Select Category',
+        hintText: S.of(context).selectCategoryHint,
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
@@ -223,8 +250,8 @@ class _AddPageState extends State<AddPage> {
       children: [
         Container(
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
-          child: const Text(
-            "Subcategory",
+          child: Text(
+            S.of(context).subcategory,
             style: TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
@@ -247,15 +274,15 @@ class _AddPageState extends State<AddPage> {
         dropdownMenuEntries:
             CDB.subCategoryMap[_selectedCategory]?.map((option) {
                   return DropdownMenuEntry<String>(
-                    value: option,
-                    label: option,
+                    value: option.id,
+                    label: option.name,
                   );
                 }).toList() ??
                 [],
         menuHeight: MediaQuery.of(context).size.height * 0.5,
         width: MediaQuery.of(context).size.width * 0.9,
         enableFilter: true,
-        hintText: "Select Subcategory",
+        hintText: S.of(context).selectSubcategoryHint,
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
@@ -266,8 +293,8 @@ class _AddPageState extends State<AddPage> {
       children: [
         Container(
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
-          child: const Text(
-            "Name",
+          child: Text(
+            S.of(context).subcategoryName,
             style: TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
@@ -288,8 +315,8 @@ class _AddPageState extends State<AddPage> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Please input the name of the ingredient',
+            decoration: InputDecoration(
+              hintText: S.of(context).subcategoryNameInputHint,
               border: InputBorder.none,
             ),
             onChanged: (value) {
@@ -320,7 +347,7 @@ class _AddPageState extends State<AddPage> {
                   : null,
               activeColor: Colors.blueGrey,
             ),
-            const Text("Add to Subcategory"),
+            Text(S.of(context).addToSubcategory),
           ],
         )
       ],
@@ -332,8 +359,8 @@ class _AddPageState extends State<AddPage> {
       children: [
         Container(
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
-          child: const Text(
-            "Expire Date",
+          child: Text(
+            S.of(context).expireDate,
             style: TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
@@ -357,8 +384,8 @@ class _AddPageState extends State<AddPage> {
             onPressed: _showDatePicker,
             child: Text(
               _dateTime != null
-                  ? "Expire Date: ${DateFormat('yyyy/MM/dd').format(_dateTime!)}"
-                  : "Select Date",
+                  ? S.of(context).expireDateConfirmMessage(_dateTime!)
+                  : S.of(context).selectDate,
               style: const TextStyle(fontSize: 20),
             ),
           ),
@@ -371,13 +398,13 @@ class _AddPageState extends State<AddPage> {
     return Padding(
       padding: const EdgeInsets.all(50.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(width: 30.0),
           Align(
             alignment: Alignment.bottomLeft,
             child: FloatingActionButton.extended(
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: Colors.red[400],
               onPressed: () {
                 setState(() {
                   _selectedCategory = null;
@@ -387,8 +414,8 @@ class _AddPageState extends State<AddPage> {
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.cancel, color: Colors.white),
-              label:
-                  const Text('Cancel', style: TextStyle(color: Colors.white)),
+              label: Text(S.of(context).cancel,
+                  style: TextStyle(color: Colors.white)),
               elevation: 0,
             ),
           ),
@@ -401,7 +428,7 @@ class _AddPageState extends State<AddPage> {
             child: Align(
               alignment: Alignment.bottomRight,
               child: FloatingActionButton.extended(
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.green[400],
                 onPressed: () {
                   setState(
                     () {
@@ -415,24 +442,43 @@ class _AddPageState extends State<AddPage> {
                               DateFormat('yyyy/MM/dd').format(_dateTime!),
                             )
                           : addData(
-                              _selectedCategory!,
+                              CDB.categoryMap[_selectedCategory!]!,
                               _ingredientName.isNotEmpty
                                   ? _ingredientName
-                                  : _selectedSubcategory!,
+                                  : CDB.subCategoryMap[_selectedCategory!]
+                                          ?.firstWhere((subCategory) =>
+                                              subCategory.id ==
+                                              _selectedSubcategory)
+                                          .name ??
+                                      '',
                               DateFormat('yyyy/MM/dd').format(DateTime.now()),
                               DateFormat('yyyy/MM/dd').format(_dateTime!),
                             );
                       if (_addToSubcategory && _ingredientName.isNotEmpty) {
-                        List<String>? subCategoryList =
+                        List<SubCategory>? subCategoryList =
                             CDB.subCategoryMap[_selectedCategory!];
+
+                        // * Create a new SubCategory object
+                        SubCategory newSubCategory =
+                            SubCategory.fromNameWithMapCheck(
+                                _ingredientName, CDB.subCategoryMap);
+
+                        // * Add the new SubCategory object to the list
                         if (subCategoryList != null &&
                             subCategoryList.isNotEmpty) {
                           subCategoryList.insert(
-                              subCategoryList.length - 1, _ingredientName);
-                          CDB.updateData();
+                              subCategoryList.length - 1, newSubCategory);
                         } else {
-                          subCategoryList?.add(_ingredientName);
-                          CDB.updateData();
+                          // * If the list is empty, create a new list with the new SubCategory object and the 'Other' SubCategory object is the last one
+                          String otherNewIngredient =
+                              S.of(context).other + _selectedCategory!;
+                          SubCategory otherNewSubCategory =
+                              SubCategory.fromNameWithMapCheck(
+                                  otherNewIngredient, CDB.subCategoryMap);
+                          subCategoryList = [
+                            newSubCategory,
+                            otherNewSubCategory
+                          ];
                         }
                       }
                       _selectedCategory = null;
@@ -443,7 +489,7 @@ class _AddPageState extends State<AddPage> {
                   );
                 },
                 icon: const Icon(Icons.done, color: Colors.white),
-                label: const Text('Confirm',
+                label: Text(S.of(context).confirm,
                     style: TextStyle(color: Colors.white)),
                 elevation: 0,
               ),

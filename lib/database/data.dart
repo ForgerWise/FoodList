@@ -1,14 +1,20 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../generated/l10n.dart';
+
 class InputDataBase {
   List ingredientsList = [];
 
-  final _myBox = Hive.box("mybox");
+  var _myBox = Hive.box("mybox");
 
-  void createInitialData() {
+  Future<void> createInitialData() async {
+    // * Initialize ingredientsList with an example item
+    // * [Category, Subcategory, Date Added, Expiry Date]
     ingredientsList = [
-      ["Example", "Slide to Delete", "2020/09/29", "2030/09/29"],
+      [S.current.example, S.current.slideToDelete, "2020/09/29", "2999/09/29"],
     ];
+    await _myBox.put(
+        "INGREDIENTS_LIST", ingredientsList); // * save initial data
   }
 
   int compareIngredients(a, b) {
@@ -18,14 +24,13 @@ class InputDataBase {
     return dateA.compareTo(dateB);
   }
 
-  void loadData() {
-    ingredientsList = _myBox.get("INGREDIENTS_LIST");
+  Future<void> loadData() async {
+    ingredientsList = _myBox.get("INGREDIENTS_LIST", defaultValue: []);
     ingredientsList.sort(compareIngredients);
   }
 
-  void updateData() {
+  Future<void> updateData() async {
     ingredientsList.sort(compareIngredients);
-    print(ingredientsList);
     _myBox.put("INGREDIENTS_LIST", ingredientsList);
   }
 
@@ -47,5 +52,47 @@ class InputDataBase {
       }
     }
     return -1;
+  }
+
+  // * Get ingredients that are expiring in HowManyDays
+  // * Set HowManyDays to -1 to get expired ingredients
+  // * Set HowManyDays to 0 to get ingredients expiring today
+  // * Set HowManyDays to 1 to get ingredients expiring tomorrow
+  List getIngredientsExpiry(int HowManyDays) {
+    // * Check if the box is open
+    loadData();
+
+    List expiryList = [];
+    DateTime now = DateTime.now();
+    for (int i = 0; i < ingredientsList.length; i++) {
+      DateTime expDate =
+          DateTime.parse(ingredientsList[i][3].replaceAll("/", "-"));
+
+      // * Add Subcategory to expiryList
+      if (HowManyDays == -1) {
+        if (expDate.isBefore(now)) {
+          expiryList.add(ingredientsList[i][1]);
+        }
+      } else if (HowManyDays == 0) {
+        if (expDate.year == now.year &&
+            expDate.month == now.month &&
+            expDate.day == now.day) {
+          expiryList.add(ingredientsList[i][1]);
+        }
+      } else if (HowManyDays == 1) {
+        DateTime tomorrow = now.add(Duration(days: 1));
+        if (expDate.year == tomorrow.year &&
+            expDate.month == tomorrow.month &&
+            expDate.day == tomorrow.day) {
+          expiryList.add(ingredientsList[i][1]);
+        }
+      } else {
+        DateTime targetDate = now.add(Duration(days: HowManyDays));
+        if (expDate.isBefore(targetDate) && expDate.isAfter(now)) {
+          expiryList.add(ingredientsList[i][1]);
+        }
+      }
+    }
+    return expiryList;
   }
 }

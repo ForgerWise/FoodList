@@ -18,7 +18,7 @@ This project was developed as part of a university PBL (Project-Based Learning) 
 
 ## Installation
 
-To install the app, download the latest APK from the releases page in this repository and install it on your Android device.
+To install the app, download the latest APK from the releases page in this repository and install it on your Android device. You can find the releases [here](https://github.com/ForgerWise/FoodList/releases).
 
 Or, you can download the app from Google Play Store by clicking the badge below.
 

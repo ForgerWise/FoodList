@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:foodlist/database/data.dart';
+import '../generated/l10n.dart';
 import '../page/add_page.dart';
 
 class ListRifTile extends StatefulWidget {
@@ -93,13 +94,14 @@ class _ListRifTileState extends State<ListRifTile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Entry Date", style: TextStyle(fontSize: 10)),
+                  Text(S.of(context).entryDate, style: TextStyle(fontSize: 10)),
                   Text(
                     widget.inputdate,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  const Text("Expire Date", style: TextStyle(fontSize: 10)),
+                  Text(S.of(context).expireDate,
+                      style: TextStyle(fontSize: 10)),
                   Text(
                     widget.expdate,
                     style: const TextStyle(

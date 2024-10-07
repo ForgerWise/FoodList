@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../database/data.dart';
+import '../generated/l10n.dart';
 import 'add_page.dart';
 import '../util/list_tile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -97,7 +98,8 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
-                label: const Text('Add', style: TextStyle(color: Colors.white)),
+                label: Text(S.of(context).add,
+                    style: TextStyle(color: Colors.white)),
               )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

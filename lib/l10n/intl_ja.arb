@@ -1,0 +1,111 @@
+{
+  "@@locale": "ja",
+  "home": "ホーム",
+  "settings": "設定",
+  "add": "追加",
+  "editIngredients": "食材を編集する",
+  "addIngredients": "食材を追加する",
+  "category": "カテゴリ",
+  "subcategory": "サブカテゴリ",
+  "subcategoryName": "サブカテゴリ名",
+  "subcategoryNameInputHint": "サブカテゴリ名を入力してください",
+  "selectSubcategoryHint": "サブカテゴリを選択",
+  "selectCategoryHint": "カテゴリを選択",
+  "addToSubcategory": "サブカテゴリに追加",
+  "expireDate": "消費期限",
+  "selectDate": "日付を選択",
+  "expireDateConfirmMessage": "消費期限: {expireDate}",
+  "@expireDateConfirmMessage": {
+    "placeholders": {
+      "expireDate": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  },
+  "confirm": "確認",
+  "cancel": "キャンセル",
+  "notifications": "通知",
+  "languages": "言語",
+  "policy": "プライバシーポリシー",
+  "about": "このアプリについて",
+  "contactUs": "お問い合わせ",
+  "aboutContent": "このアプリは、フードロスを減らすために作成されました。実際、廃棄される食品のほぼ半分は家庭で発生しています。そこで、ユーザーが生鮮食品の賞味期限を簡単に管理できるツールを提供します。私たちの目標は、不必要な購入を減らし、家庭での食品廃棄物を減少させることです。",
+  "languageNotSupportedYetMessage": "この言語はまだサポートされていません！しかし、将来的にサポートされる予定です！",
+  "notificationSetting": "通知設定",
+  "notificationContent": "通知を受け取りたい時間を設定してください。これにより、すぐに期限切れになるアイテムを知ることができます。",
+  "privacyContent": "このプライバシーポリシーは、当社のモバイルアプリケーション（以下「アプリ」といいます）が、あなたの情報を収集、使用、開示する方法について説明しています。アプリはユーザーのプライバシー保護を重視しています。当社のプライバシーポリシーは、あなたが共有することを決めた個人情報をどのように収集・使用するかを理解し、アプリを使用する際に十分な判断を行えるように設計されています。\n\nアプリを使用またはアクセスすることで、あなたはこのプライバシーポリシーに記載されている慣行に同意したものとみなされます。本ポリシーに同意しない場合は、アプリを使用しないでください。当社は、このポリシーを随時変更する権利を留保しており、頻繁にご確認ください。アプリの継続的な使用は、改訂されたプライバシーポリシーに同意したことを意味します。\n\n1. 収集データ\n現在、アプリは個人データを一切収集していません。アプリは、あなたの食品に関するすべてのデータをデバイス内に保存するよう設計されており、個人データを収集する機能はありません。\n\n2. データの保存と保護\nデータはあなたのデバイスに保存されており、デバイスの提供者やあなたが共有しない限り、他者がアクセスすることはできません。\n\n3. 将来の更新\n将来、同期機能などのためにユーザーデータのアップロード機能が追加された場合でも、この情報を第三者に開示することはありません。これらの機能が追加された際には、プライバシーポリシーの更新をお知らせします。\n\n4. プライバシーポリシーの変更\nアプリは、このポリシーおよびサービス利用規約をいつでも変更する権利を有します。当社は、あなたのアカウントに指定された主要な電子メールアドレスに通知を送信するか、当社サイトに目立つ通知を掲示することで、プライバシーポリシーの重要な変更をお知らせします。重要な変更は通知後30日以内に有効となります。軽微な変更や明確化は即時に有効となります。最新の情報を確認するために、サイトおよびこのプライバシーページを定期的に確認してください。",
+  "entryDate": "入力日付",
+  "none": "なし",
+  "notificationMoreItems": "と {number} 件のその他の食材",
+  "@notificationMoreItems": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "foodlistExpiryNotification": "FoodList 消費期限通知",
+  "foodlistExpiryNotificationContent": "今日まで: {todayItems}\n明日まで: {tomorrowItems}",
+  "@foodlistExpiryNotificationContent": {
+    "placeholders": {
+      "todayItems": {
+        "type": "String"
+      },
+      "tomorrowItems": {
+        "type": "String"
+      }
+    }
+  },
+  "example": "例",
+  "slideToDelete": "スライドして削除",
+  "meat": "肉類",
+  "fish": "魚",
+  "vegetable": "野菜",
+  "fruit": "果物",
+  "bean": "豆類",
+  "eggMilk": "卵と乳製品",
+  "mushroom": "キノコ",
+  "processedfood": "加工食品",
+  "others": "その他",
+  "beef": "牛肉",
+  "pork": "豚肉",
+  "chicken": "鶏肉",
+  "otherMeats": "その他の肉類",
+  "tuna": "マグロ",
+  "salmon": "サーモン",
+  "oyster": "牡蠣",
+  "otherFishes": "その他の魚類",
+  "carrot": "ニンジン",
+  "otherVegetables": "その他の野菜",
+  "apple": "リンゴ",
+  "otherFruits": "その他の果物",
+  "soybean": "大豆",
+  "otherBeans": "その他の豆類",
+  "egg": "卵",
+  "milk": "牛乳",
+  "otherEggMilk": "その他の卵と乳製品",
+  "otherMushrooms": "その他のキノコ",
+  "otherProcessedFoods": "その他の加工食品",
+  "otherItems": "その他のアイテム",
+  "selectedTime": "選択した時間: {selectedHour}:{selectedMinute}",
+  "@selectedTime": {
+    "placeholders": {
+      "selectedHour": {
+        "type": "String"
+      },
+      "selectedMinute": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationContentWarn": "一部のデバイスでは、バッテリー最適化設定や Android の制限により、通知が遅れる可能性があります。",
+  "other": "その他",
+  "faq": "よくある質問",
+  "faqWhyEditNotLoad": "なぜデータが自動的に編集ページにロードされなかったのですか？",
+  "faqWhyEditNotLoadAns": "データ構造のため、以前に異なる言語で保存されたデータは自動的にロードされません。ただし、空の状態から編集を開始することはできます。",
+  "faqWhyNotificationNotWork": "なぜ通知が機能していないのですか？",
+  "faqWhyNotificationNotWorkAns": "デバイスの設定でアプリの通知が有効になっていることを確認してください。それでも動作しない場合は、バッテリー最適化設定を確認し、アプリのバッテリー最適化を無効にしてください。",
+  "faqWhyNotificationDelay": "なぜ通知が遅れているのですか？",
+  "faqWhyNotificationDelayAns": "バッテリー最適化設定やAndroidの制限により、一部のデバイスでは通知が遅れる場合があります。"
+}

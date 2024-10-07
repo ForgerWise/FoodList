@@ -43,6 +43,7 @@ android {
         coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
         implementation 'androidx.window:window:1.0.0'
         implementation 'androidx.window:window-java:1.0.0'
+        implementation 'androidx.multidex:multidex:2.0.1'
     }
 
     kotlinOptions {
@@ -56,6 +57,7 @@ android {
     defaultConfig {
         applicationId "com.forgerwise.foodlist"
         minSdkVersion flutter.minSdkVersion
+        minSdkVersion 24
         targetSdkVersion 34 // ! Update to API level 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -71,11 +73,21 @@ android {
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             signingConfig signingConfigs.release
         }
     }
 }
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.appcompat:appcompat:1.6.1'
+    }
+}
+
 
 flutter {
     source '../..'

@@ -96,8 +96,19 @@ class CategoryDataBase {
     if (_myBox.get("SUB_CATEGORY_MAP") != null && subCategoryVersion == null) {
       // * Convert the old subCategoryMap to the new format
       print("Converting old subCategoryMap to new format");
-      Map<String, List<String>> oldSubCategoryMap =
-          _myBox.get("SUB_CATEGORY_MAP");
+      Map<dynamic, dynamic> rawMap = _myBox.get("SUB_CATEGORY_MAP");
+      Map<String, List<String>> oldSubCategoryMap = rawMap.map((key, value) =>
+          MapEntry<String, List<String>>(
+              key as String, List<String>.from(value as List)));
+      // * Change first letter of each word in key and value to lowercase, others word in value will remain the same
+      oldSubCategoryMap = oldSubCategoryMap.map((key, value) => MapEntry(
+          (key[0].toLowerCase() + key.substring(1))
+              .replaceAll("_", "")
+              .replaceAll("&", "")
+              .replaceAll(" ", ""),
+          value.map((sub) {
+            return sub[0].toLowerCase() + sub.substring(1);
+          }).toList()));
       subCategoryMap = oldSubCategoryMap.map(
         (key, value) {
           return MapEntry(
@@ -113,7 +124,6 @@ class CategoryDataBase {
       );
       _myBox.delete("SUB_CATEGORY_MAP");
       print("Convert complete");
-      print("New subCategoryMap: $subCategoryMap");
       updateSubCategoryData();
       prefs.setString('subcategory_version', '1');
     } else if (_myBox.get("SUB_CATEGORY_MAP") == null ||
@@ -144,6 +154,16 @@ class CategoryDataBase {
 
   void updateSubCategoryData() {
     _myBox.put("SUB_CATEGORY_MAP", subCategoryMap);
+  }
+
+  void resetIngredients() {
+    _myBox.delete("CATEGORY_MAP");
+    _myBox.delete("SUB_CATEGORY_MAP");
+    createInitialCategoryData();
+    createInitialSubCategoryData();
+    updateCategoryData();
+    updateSubCategoryData();
+    updateLanguage();
   }
 
   void updateLanguage() {

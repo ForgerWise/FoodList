@@ -107,5 +107,13 @@
   "faqWhyNotificationNotWork": "為什麼通知沒有正常運作？",
   "faqWhyNotificationNotWorkAns": "請確保您在裝置的設定中已啟用應用程式的通知。如果仍然無法正常運作，請檢查電池最佳化設定，並為該應用程式禁用電池最佳化。",
   "faqWhyNotificationDelay": "為什麼通知會延遲？",
-  "faqWhyNotificationDelayAns": "由於電池最佳化設定或 Android 限制，某些裝置上的通知可能會延遲。"
+  "faqWhyNotificationDelayAns": "由於電池最佳化設定或 Android 限制，某些裝置上的通知可能會延遲。",
+  "editResetCategories": "編輯/重置類別",
+  "editCategoriesNotSupportedHint": "編輯類別功能尚未支援！",
+  "edit": "編輯",
+  "reset": "重置",
+  "confirmReset": "確認重置",
+  "categoriesResetHint": "確認重置類別為預設值？",
+  "faqWhatWillResetCategoriesDo": "重設類別會發生什麼事？",
+  "faqWhatWillResetCategoriesDoAns": "重設類別將會將所有類別和子類別重設為預設值。"
 }

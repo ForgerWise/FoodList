@@ -13,6 +13,7 @@ import 'generated/l10n.dart';
 import 'page/add_page.dart';
 import 'page/homepage.dart';
 import 'page/setting_page.dart';
+import 'setting/editCategories.dart';
 import 'setting/faq.dart';
 import 'setting/language.dart';
 import 'setting/notification.dart';
@@ -78,13 +79,14 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (context) => const MainPage(),
         '/home': (context) => const HomePage(),
-        '/add': (context) => AddPage(),
-        '/setting': (context) => SettingPage(),
-        '/language': (context) => LanguagePage(),
+        '/add': (context) => const AddPage(),
+        '/setting': (context) => const SettingPage(),
+        '/language': (context) => const LanguagePage(),
         '/policy': (context) => const PolicyPage(),
         '/about': (context) => const AboutPage(),
         '/notification': (context) => const NotificationSettingPage(),
         '/faq': (context) => FAQPage(),
+        '/editIngredients': (context) => EditCategoriesPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
@@ -147,13 +149,13 @@ class _MainPageState extends State<MainPage> {
           },
           destinations: [
             NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home, color: Colors.white),
+              icon: const Icon(Icons.home_outlined),
+              selectedIcon: const Icon(Icons.home, color: Colors.white),
               label: S.of(context).home,
             ),
             NavigationDestination(
-              icon: Icon(Icons.settings_outlined),
-              selectedIcon: Icon(Icons.settings, color: Colors.white),
+              icon: const Icon(Icons.settings_outlined),
+              selectedIcon: const Icon(Icons.settings, color: Colors.white),
               label: S.of(context).settings,
             ),
           ],

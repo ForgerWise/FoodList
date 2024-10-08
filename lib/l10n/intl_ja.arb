@@ -107,5 +107,13 @@
   "faqWhyNotificationNotWork": "なぜ通知が機能していないのですか？",
   "faqWhyNotificationNotWorkAns": "デバイスの設定でアプリの通知が有効になっていることを確認してください。それでも動作しない場合は、バッテリー最適化設定を確認し、アプリのバッテリー最適化を無効にしてください。",
   "faqWhyNotificationDelay": "なぜ通知が遅れているのですか？",
-  "faqWhyNotificationDelayAns": "バッテリー最適化設定やAndroidの制限により、一部のデバイスでは通知が遅れる場合があります。"
+  "faqWhyNotificationDelayAns": "バッテリー最適化設定やAndroidの制限により、一部のデバイスでは通知が遅れる場合があります。",
+  "editResetCategories": "カテゴリを編集/リセット",
+  "editCategoriesNotSupportedHint": "カテゴリの編集機能はまだサポートされていません！",
+  "edit": "編集",
+  "reset": "リセット",
+  "confirmReset": "リセットを確認",
+  "categoriesResetHint": "カテゴリをデフォルトにリセットしますか？",
+  "faqWhatWillResetCategoriesDo": "カテゴリをリセットすると何が起こりますか？",
+  "faqWhatWillResetCategoriesDoAns": "カテゴリをリセットすると、すべてのカテゴリとサブカテゴリがデフォルト値にリセットされます。"
 }

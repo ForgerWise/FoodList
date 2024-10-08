@@ -66,7 +66,7 @@
   "bean": "Bean",
   "eggMilk": "Egg & Milk",
   "mushroom": "Mushroom",
-  "processedfood": "Processed_food",
+  "processedfood": "Processed Food",
   "others": "Others",
   "beef": "Beef",
   "pork": "Pork",
@@ -107,5 +107,13 @@
   "faqWhyNotificationNotWork": "Why isn''t the notification working?",
   "faqWhyNotificationNotWorkAns": "Please ensure that you have enabled notifications for the app in your device settings. If it still doesn''t work, check the battery optimization settings and disable battery optimization for the app.",
   "faqWhyNotificationDelay": "Why is the notification being delayed?",
-  "faqWhyNotificationDelayAns": "Notifications may be delayed on some devices due to battery optimization settings or android restrictions."
+  "faqWhyNotificationDelayAns": "Notifications may be delayed on some devices due to battery optimization settings or android restrictions.",
+  "editResetCategories": "Edit/Reset Categories",
+  "editCategoriesNotSupportedHint": "Edit categories is not supported yet!",
+  "edit": "Edit",
+  "reset": "Reset",
+  "confirmReset": "Confirm Reset",
+  "categoriesResetHint": "Are you sure you want to reset the categories to default?",
+  "faqWhatWillResetCategoriesDo": "What will happen if I reset the categories?",
+  "faqWhatWillResetCategoriesDoAns": "Resetting the categories will reset all the categories and subcategories to their default values."
 }

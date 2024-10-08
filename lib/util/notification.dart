@@ -40,7 +40,6 @@ class NotificationService {
 
   // * Get notification strings
   String _getExpiryNotificationDetails(List items) {
-    print(items);
     if (items.isEmpty) {
       return S.current.none;
     }
@@ -93,6 +92,7 @@ class NotificationService {
         importance: Importance.max,
         priority: Priority.high,
         showWhen: false,
+        icon: '@drawable/ic_stat_foodlist',
       ),
     );
   }

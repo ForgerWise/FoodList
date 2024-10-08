@@ -7,6 +7,8 @@ import '../database/sub_category.dart';
 import '../generated/l10n.dart';
 
 class AddPage extends StatefulWidget {
+  const AddPage({super.key});
+
   @override
   State<AddPage> createState() => _AddPageState();
 }
@@ -33,8 +35,6 @@ class _AddPageState extends State<AddPage> {
       if (arguments is AddPageArguments) {
         final AddPageArguments data = arguments;
         setState(() {
-          _selectedCategory = data.category;
-          _selectedSubcategory = data.subcategory;
           _dateTime = DateFormat('yyyy/MM/dd').parse(data.expdate);
           loadEditData(data);
         });
@@ -46,7 +46,9 @@ class _AddPageState extends State<AddPage> {
 
   Future<void> loadDataAsync() async {
     await CDB.loadData();
-    setState(() {});
+    setState(() {
+      print(CDB.subCategoryMap);
+    });
   }
 
   Future<void> loadEditData(data) async {
@@ -152,9 +154,9 @@ class _AddPageState extends State<AddPage> {
     return AppBar(
       title: editIndex != null && editIndex != -1
           ? Text(S.of(context).editIngredients,
-              style: TextStyle(color: Colors.white))
+              style: const TextStyle(color: Colors.white))
           : Text(S.of(context).addIngredients,
-              style: TextStyle(color: Colors.white)),
+              style: const TextStyle(color: Colors.white)),
       backgroundColor: Colors.blueGrey,
       elevation: 0,
       centerTitle: true,
@@ -209,7 +211,7 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: Text(
             S.of(context).category,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold),
@@ -252,7 +254,7 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: Text(
             S.of(context).subcategory,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold),
@@ -295,7 +297,7 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: Text(
             S.of(context).subcategoryName,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold),
@@ -361,7 +363,7 @@ class _AddPageState extends State<AddPage> {
           padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
           child: Text(
             S.of(context).expireDate,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold),
@@ -415,7 +417,7 @@ class _AddPageState extends State<AddPage> {
               },
               icon: const Icon(Icons.cancel, color: Colors.white),
               label: Text(S.of(context).cancel,
-                  style: TextStyle(color: Colors.white)),
+                  style: const TextStyle(color: Colors.white)),
               elevation: 0,
             ),
           ),
@@ -435,10 +437,15 @@ class _AddPageState extends State<AddPage> {
                       editIndex != null && editIndex != -1
                           ? editData(
                               editIndex!,
-                              _selectedCategory!,
+                              CDB.categoryMap[_selectedCategory!]!,
                               _ingredientName.isNotEmpty
                                   ? _ingredientName
-                                  : _selectedSubcategory!,
+                                  : CDB.subCategoryMap[_selectedCategory!]
+                                          ?.firstWhere((subCategory) =>
+                                              subCategory.id ==
+                                              _selectedSubcategory)
+                                          .name ??
+                                      '',
                               DateFormat('yyyy/MM/dd').format(_dateTime!),
                             )
                           : addData(
@@ -480,6 +487,11 @@ class _AddPageState extends State<AddPage> {
                             otherNewSubCategory
                           ];
                         }
+
+                        // * Update the SubCategoryMap
+                        CDB.subCategoryMap[_selectedCategory!] =
+                            subCategoryList;
+                        CDB.updateSubCategoryData();
                       }
                       _selectedCategory = null;
                       _selectedSubcategory = null;
@@ -490,7 +502,7 @@ class _AddPageState extends State<AddPage> {
                 },
                 icon: const Icon(Icons.done, color: Colors.white),
                 label: Text(S.of(context).confirm,
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
                 elevation: 0,
               ),
             ),

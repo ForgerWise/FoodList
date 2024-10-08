@@ -45,12 +45,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "beef": MessageLookupByLibrary.simpleMessage("Beef"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "carrot": MessageLookupByLibrary.simpleMessage("Carrot"),
+        "categoriesResetHint": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to reset the categories to default?"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "chicken": MessageLookupByLibrary.simpleMessage("Chicken"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmReset": MessageLookupByLibrary.simpleMessage("Confirm Reset"),
         "contactUs": MessageLookupByLibrary.simpleMessage("Contact Us"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "editCategoriesNotSupportedHint": MessageLookupByLibrary.simpleMessage(
+            "Edit categories is not supported yet!"),
         "editIngredients":
             MessageLookupByLibrary.simpleMessage("Edit Ingredients"),
+        "editResetCategories":
+            MessageLookupByLibrary.simpleMessage("Edit/Reset Categories"),
         "egg": MessageLookupByLibrary.simpleMessage("Egg"),
         "eggMilk": MessageLookupByLibrary.simpleMessage("Egg & Milk"),
         "entryDate": MessageLookupByLibrary.simpleMessage("Entry Date"),
@@ -58,6 +66,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "expireDate": MessageLookupByLibrary.simpleMessage("Expire Date"),
         "expireDateConfirmMessage": m0,
         "faq": MessageLookupByLibrary.simpleMessage("FAQ"),
+        "faqWhatWillResetCategoriesDo": MessageLookupByLibrary.simpleMessage(
+            "What will happen if I reset the categories?"),
+        "faqWhatWillResetCategoriesDoAns": MessageLookupByLibrary.simpleMessage(
+            "Resetting the categories will reset all the categories and subcategories to their default values."),
         "faqWhyEditNotLoad": MessageLookupByLibrary.simpleMessage(
             "Why didn\'\'t the data load to the edit page automatically?"),
         "faqWhyEditNotLoadAns": MessageLookupByLibrary.simpleMessage(
@@ -111,7 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pork": MessageLookupByLibrary.simpleMessage("Pork"),
         "privacyContent": MessageLookupByLibrary.simpleMessage(
             "This Privacy Policy describes how our mobile application, (hereinafter referred to as \'\'the App\'\'), collects, uses, and discloses your information. The App is committed to maintaining robust privacy protections for its users. Our Privacy Policy is designed to help you understand how we collect and use the personal information you decide to share and help you make informed decisions when using the App.\n\nBy using or accessing the App, you accept the practices described in this Privacy Policy. If you do not agree to this policy, please do not use the App. We reserve the right to modify this policy from time to time, so please review it frequently. Your continued use of the App signifies your acceptance of our Privacy Policy as modified.\n\n1. Data We Collect\nCurrently, the App does not collect any personal data. The App is designed to store all data related to your food within the device itself and does not have any feature to collect your personal data.\n\n2. Data Storage and Protection\nYour data is stored on your device and is not accessible by anyone but you, unless the data on your device is shared by you or your device provider.\n\n3. Future Updates\nIn future updates, if there is a feature that allows user data upload for functionalities such as synchronization, we still will not disclose this information to any third party. We will announce the update of our privacy policy when these features are added.\n\n4. Changes to Our Privacy Policy\nThe App reserves the right to change this policy and our Terms of Service at any time. We will notify users of significant changes to our Privacy Policy by sending a notice to the primary email address specified in your account or by placing a prominent notice on our site. Significant changes will go into effect 30 days following such notification. Non-material changes or clarifications will take effect immediately. You should periodically check the Site and this privacy page for updates."),
-        "processedfood": MessageLookupByLibrary.simpleMessage("Processed_food"),
+        "processedfood": MessageLookupByLibrary.simpleMessage("Processed Food"),
+        "reset": MessageLookupByLibrary.simpleMessage("Reset"),
         "salmon": MessageLookupByLibrary.simpleMessage("Salmon"),
         "selectCategoryHint":
             MessageLookupByLibrary.simpleMessage("Select Category"),

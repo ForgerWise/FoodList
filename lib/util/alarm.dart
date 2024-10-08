@@ -51,6 +51,9 @@ class AlarmService {
     // * Initialize Flutter bindings
     WidgetsFlutterBinding.ensureInitialized();
 
+    // * Initialize alarm service to load the notification icon
+    await AlarmService().init();
+
     // * Initialize Hive and open the box before using it
     await Hive.initFlutter();
     if (!Hive.isAdapterRegistered(1)) {

@@ -465,10 +465,10 @@ class S {
     );
   }
 
-  /// `Processed_food`
+  /// `Processed Food`
   String get processedfood {
     return Intl.message(
-      'Processed_food',
+      'Processed Food',
       name: 'processedfood',
       desc: '',
       args: [],
@@ -780,6 +780,86 @@ class S {
     return Intl.message(
       'Notifications may be delayed on some devices due to battery optimization settings or android restrictions.',
       name: 'faqWhyNotificationDelayAns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit/Reset Categories`
+  String get editResetCategories {
+    return Intl.message(
+      'Edit/Reset Categories',
+      name: 'editResetCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit categories is not supported yet!`
+  String get editCategoriesNotSupportedHint {
+    return Intl.message(
+      'Edit categories is not supported yet!',
+      name: 'editCategoriesNotSupportedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message(
+      'Reset',
+      name: 'reset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Reset`
+  String get confirmReset {
+    return Intl.message(
+      'Confirm Reset',
+      name: 'confirmReset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to reset the categories to default?`
+  String get categoriesResetHint {
+    return Intl.message(
+      'Are you sure you want to reset the categories to default?',
+      name: 'categoriesResetHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What will happen if I reset the categories?`
+  String get faqWhatWillResetCategoriesDo {
+    return Intl.message(
+      'What will happen if I reset the categories?',
+      name: 'faqWhatWillResetCategoriesDo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resetting the categories will reset all the categories and subcategories to their default values.`
+  String get faqWhatWillResetCategoriesDoAns {
+    return Intl.message(
+      'Resetting the categories will reset all the categories and subcategories to their default values.',
+      name: 'faqWhatWillResetCategoriesDoAns',
       desc: '',
       args: [],
     );

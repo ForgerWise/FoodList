@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
 
 class FAQPage extends StatelessWidget {
+  const FAQPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,11 +13,11 @@ class FAQPage extends StatelessWidget {
             bottom: BorderSide(color: Colors.black54, style: BorderStyle.none)),
         backgroundColor: Colors.blueGrey,
         title: Text(S.of(context).faq,
-            style: TextStyle(color: Colors.white, fontSize: 24)),
+            style: const TextStyle(color: Colors.white, fontSize: 24)),
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           faqCard(S.of(context).faqWhyEditNotLoad,
               S.of(context).faqWhyEditNotLoadAns),
@@ -23,6 +25,8 @@ class FAQPage extends StatelessWidget {
               S.of(context).faqWhyNotificationNotWorkAns),
           faqCard(S.of(context).faqWhyNotificationDelay,
               S.of(context).faqWhyNotificationDelayAns),
+          faqCard(S.of(context).faqWhatWillResetCategoriesDo,
+              S.of(context).faqWhatWillResetCategoriesDoAns),
           // Add more FAQ cards here
         ],
       ),
@@ -33,20 +37,20 @@ class FAQPage extends StatelessWidget {
   Widget faqCard(String question, String answer) {
     return Card(
       color: Colors.blueGrey[300],
-      margin: EdgeInsets.only(bottom: 16.0),
+      margin: const EdgeInsets.only(bottom: 16.0),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               question,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(answer),
           ],
         ),

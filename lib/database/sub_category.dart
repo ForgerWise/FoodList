@@ -28,7 +28,7 @@ class SubCategory {
 
   static SubCategory fromNameWithMapCheck(
       String name, Map<String, List<SubCategory>> subCategoryMap) {
-    String generatedId = name.replaceAll(' ', '_');
+    String generatedId = name.replaceAll(' ', '').replaceAll('&', '');
 
     bool idExists = subCategoryMap.values.any((subCategories) =>
         subCategories.any((subCategory) => subCategory.id == generatedId));

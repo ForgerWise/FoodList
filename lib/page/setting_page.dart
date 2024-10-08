@@ -3,6 +3,7 @@ import 'package:foodlist/util/alarm.dart';
 import 'package:foodlist/util/permission.dart';
 
 import '../generated/l10n.dart';
+import '../setting/editCategories.dart';
 import '../setting/faq.dart';
 import '../setting/language.dart';
 import '../setting/notification.dart';
@@ -99,7 +100,7 @@ class _SettingPageState extends State<SettingPage> {
     return ListTile(
       leading: const Icon(Icons.notifications, color: Colors.black, size: 24),
       title: Text(S.of(context).notifications,
-          style: TextStyle(color: Colors.black, fontSize: 24)),
+          style: const TextStyle(color: Colors.black, fontSize: 24)),
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -125,7 +126,7 @@ class _SettingPageState extends State<SettingPage> {
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
         title: Text(S.of(context).settings,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold)),
@@ -138,6 +139,9 @@ class _SettingPageState extends State<SettingPage> {
                 const LanguagePage()),
             const Divider(),
             buildNotificationTile(context),
+            const Divider(),
+            buildSettingTile(context, Icons.edit,
+                S.of(context).editResetCategories, EditCategoriesPage()),
             const Divider(),
             buildSettingTile(context, Icons.policy, S.of(context).policy,
                 const PolicyPage()),
@@ -152,7 +156,7 @@ class _SettingPageState extends State<SettingPage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _sendMail,
         label: Text(S.of(context).contactUs,
-            style: TextStyle(color: Colors.white)),
+            style: const TextStyle(color: Colors.white)),
         icon: const Icon(Icons.email, color: Colors.white),
         backgroundColor: Colors.blueGrey,
       ),

@@ -43,11 +43,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "beef": MessageLookupByLibrary.simpleMessage("牛肉"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "carrot": MessageLookupByLibrary.simpleMessage("ニンジン"),
+        "categoriesResetHint":
+            MessageLookupByLibrary.simpleMessage("カテゴリをデフォルトにリセットしますか？"),
         "category": MessageLookupByLibrary.simpleMessage("カテゴリ"),
         "chicken": MessageLookupByLibrary.simpleMessage("鶏肉"),
         "confirm": MessageLookupByLibrary.simpleMessage("確認"),
+        "confirmReset": MessageLookupByLibrary.simpleMessage("リセットを確認"),
         "contactUs": MessageLookupByLibrary.simpleMessage("お問い合わせ"),
+        "edit": MessageLookupByLibrary.simpleMessage("編集"),
+        "editCategoriesNotSupportedHint":
+            MessageLookupByLibrary.simpleMessage("カテゴリの編集機能はまだサポートされていません！"),
         "editIngredients": MessageLookupByLibrary.simpleMessage("食材を編集する"),
+        "editResetCategories":
+            MessageLookupByLibrary.simpleMessage("カテゴリを編集/リセット"),
         "egg": MessageLookupByLibrary.simpleMessage("卵"),
         "eggMilk": MessageLookupByLibrary.simpleMessage("卵と乳製品"),
         "entryDate": MessageLookupByLibrary.simpleMessage("入力日付"),
@@ -55,6 +63,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "expireDate": MessageLookupByLibrary.simpleMessage("消費期限"),
         "expireDateConfirmMessage": m0,
         "faq": MessageLookupByLibrary.simpleMessage("よくある質問"),
+        "faqWhatWillResetCategoriesDo":
+            MessageLookupByLibrary.simpleMessage("カテゴリをリセットすると何が起こりますか？"),
+        "faqWhatWillResetCategoriesDoAns": MessageLookupByLibrary.simpleMessage(
+            "カテゴリをリセットすると、すべてのカテゴリとサブカテゴリがデフォルト値にリセットされます。"),
         "faqWhyEditNotLoad": MessageLookupByLibrary.simpleMessage(
             "なぜデータが自動的に編集ページにロードされなかったのですか？"),
         "faqWhyEditNotLoadAns": MessageLookupByLibrary.simpleMessage(
@@ -104,6 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacyContent": MessageLookupByLibrary.simpleMessage(
             "このプライバシーポリシーは、当社のモバイルアプリケーション（以下「アプリ」といいます）が、あなたの情報を収集、使用、開示する方法について説明しています。アプリはユーザーのプライバシー保護を重視しています。当社のプライバシーポリシーは、あなたが共有することを決めた個人情報をどのように収集・使用するかを理解し、アプリを使用する際に十分な判断を行えるように設計されています。\n\nアプリを使用またはアクセスすることで、あなたはこのプライバシーポリシーに記載されている慣行に同意したものとみなされます。本ポリシーに同意しない場合は、アプリを使用しないでください。当社は、このポリシーを随時変更する権利を留保しており、頻繁にご確認ください。アプリの継続的な使用は、改訂されたプライバシーポリシーに同意したことを意味します。\n\n1. 収集データ\n現在、アプリは個人データを一切収集していません。アプリは、あなたの食品に関するすべてのデータをデバイス内に保存するよう設計されており、個人データを収集する機能はありません。\n\n2. データの保存と保護\nデータはあなたのデバイスに保存されており、デバイスの提供者やあなたが共有しない限り、他者がアクセスすることはできません。\n\n3. 将来の更新\n将来、同期機能などのためにユーザーデータのアップロード機能が追加された場合でも、この情報を第三者に開示することはありません。これらの機能が追加された際には、プライバシーポリシーの更新をお知らせします。\n\n4. プライバシーポリシーの変更\nアプリは、このポリシーおよびサービス利用規約をいつでも変更する権利を有します。当社は、あなたのアカウントに指定された主要な電子メールアドレスに通知を送信するか、当社サイトに目立つ通知を掲示することで、プライバシーポリシーの重要な変更をお知らせします。重要な変更は通知後30日以内に有効となります。軽微な変更や明確化は即時に有効となります。最新の情報を確認するために、サイトおよびこのプライバシーページを定期的に確認してください。"),
         "processedfood": MessageLookupByLibrary.simpleMessage("加工食品"),
+        "reset": MessageLookupByLibrary.simpleMessage("リセット"),
         "salmon": MessageLookupByLibrary.simpleMessage("サーモン"),
         "selectCategoryHint": MessageLookupByLibrary.simpleMessage("カテゴリを選択"),
         "selectDate": MessageLookupByLibrary.simpleMessage("日付を選択"),

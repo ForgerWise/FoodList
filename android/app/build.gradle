@@ -64,6 +64,10 @@ android {
         multiDexEnabled true
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.0'
+    }
+
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
@@ -85,6 +89,7 @@ android {
 configurations.all {
     resolutionStrategy {
         force 'androidx.appcompat:appcompat:1.6.1'
+        force 'androidx.kotlin:kotlin-gradle-plugin:1.8.0'
     }
 }
 

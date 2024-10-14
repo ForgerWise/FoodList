@@ -99,11 +99,15 @@ class AlarmService {
   Future<DateTime> getAlarmTime() async {
     final prefs = await SharedPreferences.getInstance();
     String? timeString = prefs.getString('alarmTime');
-    if (timeString != null) {
-      return DateTime.parse(timeString);
-    } else {
-      // * Default to 7 AM if no time has been set
+
+    // * If the time is not set, return the default time
+    if (timeString == null) {
       return DateTime.now().copyWith(hour: 7, minute: 0);
     }
+
+    // * Change the date to today but keep the time
+    DateTime time = DateTime.parse(timeString);
+    DateTime now = DateTime.now();
+    return time.copyWith(year: now.year, month: now.month, day: now.day);
   }
 }

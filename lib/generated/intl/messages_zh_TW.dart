@@ -63,9 +63,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "expireDateConfirmMessage": m0,
         "faq": MessageLookupByLibrary.simpleMessage("常見問題"),
         "faqWhatWillResetCategoriesDo":
-            MessageLookupByLibrary.simpleMessage("重設類別會發生什麼事？"),
+            MessageLookupByLibrary.simpleMessage("重置類別會發生什麼事？"),
         "faqWhatWillResetCategoriesDoAns":
-            MessageLookupByLibrary.simpleMessage("重設類別將會將所有類別和子類別重設為預設值。"),
+            MessageLookupByLibrary.simpleMessage("重置類別將會將所有類別和子類別重設為預設值。"),
         "faqWhyEditNotLoad":
             MessageLookupByLibrary.simpleMessage("為什麼資料沒有自動載入到編輯頁面？"),
         "faqWhyEditNotLoadAns": MessageLookupByLibrary.simpleMessage(

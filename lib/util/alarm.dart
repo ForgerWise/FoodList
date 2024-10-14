@@ -54,6 +54,23 @@ class AlarmService {
     // * Initialize alarm service to load the notification icon
     await AlarmService().init();
 
+    //* Check the time now, reschedule if it is called just because of reboot
+    //* If this is a reboot, cancel the alarm and reschedule it
+    DateTime selectedTime = await AlarmService().getAlarmTime();
+    DateTime now = DateTime.now();
+    // * If time now is before the selected time, reschedule the alarm and return
+    if (now.isBefore(selectedTime)) {
+      await AlarmService().cancelAlarm();
+      await AlarmService().scheduleDailyAlarm();
+      return;
+    }
+    // * If the time if after the selected time 30 minutes, reschedule the alarm but keep the notification
+    else if (now.isAfter(selectedTime.add(const Duration(minutes: 30)))) {
+      await AlarmService().cancelAlarm();
+      await AlarmService().scheduleDailyAlarm();
+    }
+    // * Otherwise, continue with the alarm
+
     // * Initialize Hive and open the box before using it
     await Hive.initFlutter();
     if (!Hive.isAdapterRegistered(1)) {

@@ -85,7 +85,7 @@ class _MyAppState extends State<MyApp> {
         '/policy': (context) => const PolicyPage(),
         '/about': (context) => const AboutPage(),
         '/notification': (context) => const NotificationSettingPage(),
-        '/faq': (context) => FAQPage(),
+        '/faq': (context) => const FAQPage(),
         '/editIngredients': (context) => EditCategoriesPage(),
       },
       theme: ThemeData(

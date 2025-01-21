@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("このアプリについて"),
         "aboutContent": MessageLookupByLibrary.simpleMessage(
             "このアプリは、フードロスを減らすために作成されました。実際、廃棄される食品のほぼ半分は家庭で発生しています。そこで、ユーザーが生鮮食品の賞味期限を簡単に管理できるツールを提供します。私たちの目標は、不必要な購入を減らし、家庭での食品廃棄物を減少させることです。"),
+        "aboutContentGithub": MessageLookupByLibrary.simpleMessage(
+            "このアプリは完全にオープンソースで、無料で使用できます。ご意見やプロジェクトへの貢献がありましたら、GitHubリポジトリをご覧ください。"),
         "add": MessageLookupByLibrary.simpleMessage("追加"),
         "addIngredients": MessageLookupByLibrary.simpleMessage("食材を追加する"),
         "addToSubcategory": MessageLookupByLibrary.simpleMessage("サブカテゴリに追加"),
@@ -84,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("FoodList 消費期限通知"),
         "foodlistExpiryNotificationContent": m1,
         "fruit": MessageLookupByLibrary.simpleMessage("果物"),
+        "githubRepository": MessageLookupByLibrary.simpleMessage("GitHubリポジトリ"),
         "home": MessageLookupByLibrary.simpleMessage("ホーム"),
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "この言語はまだサポートされていません！しかし、将来的にサポートされる予定です！"),

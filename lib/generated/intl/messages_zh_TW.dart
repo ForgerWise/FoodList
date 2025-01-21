@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("關於"),
         "aboutContent": MessageLookupByLibrary.simpleMessage(
             "這個應用程式源自我們對抗食物浪費的承諾。由於家庭食物浪費佔了近一半，我們提供了一個簡單易用的工具，幫助使用者管理食物的保存期限。希望透過這個工具，減少不必要的購買，並減少家庭中的食物浪費。"),
+        "aboutContentGithub": MessageLookupByLibrary.simpleMessage(
+            "這個應用程式是完全開源且免費使用的。如果您有任何建議或想要貢獻此專案，請隨時訪問 GitHub 儲存庫。"),
         "add": MessageLookupByLibrary.simpleMessage("新增"),
         "addIngredients": MessageLookupByLibrary.simpleMessage("新增食材"),
         "addToSubcategory": MessageLookupByLibrary.simpleMessage("新增至子類別"),
@@ -83,6 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("FoodList 有效日期通知"),
         "foodlistExpiryNotificationContent": m1,
         "fruit": MessageLookupByLibrary.simpleMessage("水果"),
+        "githubRepository": MessageLookupByLibrary.simpleMessage("GitHub 儲存庫"),
         "home": MessageLookupByLibrary.simpleMessage("首頁"),
         "languageNotSupportedYetMessage":
             MessageLookupByLibrary.simpleMessage("此語言尚未支援！但我們預計會在未來支援此語言！"),

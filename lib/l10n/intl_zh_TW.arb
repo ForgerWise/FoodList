@@ -115,5 +115,7 @@
   "confirmReset": "確認重置",
   "categoriesResetHint": "確認重置類別為預設值？",
   "faqWhatWillResetCategoriesDo": "重置類別會發生什麼事？",
-  "faqWhatWillResetCategoriesDoAns": "重置類別將會將所有類別和子類別重設為預設值。"
+  "faqWhatWillResetCategoriesDoAns": "重置類別將會將所有類別和子類別重設為預設值。",
+  "aboutContentGithub": "這個應用程式是完全開源且免費使用的。如果您有任何建議或想要貢獻此專案，請隨時訪問 GitHub 儲存庫。",
+  "githubRepository": "GitHub 儲存庫"
 }

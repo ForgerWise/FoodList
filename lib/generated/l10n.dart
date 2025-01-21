@@ -864,6 +864,26 @@ class S {
       args: [],
     );
   }
+
+  /// `This app is totally open source and free to use. If you have any suggestions or want to contribute to this project, feel free to visit the GitHub repository.`
+  String get aboutContentGithub {
+    return Intl.message(
+      'This app is totally open source and free to use. If you have any suggestions or want to contribute to this project, feel free to visit the GitHub repository.',
+      name: 'aboutContentGithub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GitHub Repository`
+  String get githubRepository {
+    return Intl.message(
+      'GitHub Repository',
+      name: 'githubRepository',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

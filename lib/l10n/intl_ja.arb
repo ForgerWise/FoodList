@@ -115,5 +115,7 @@
   "confirmReset": "リセットを確認",
   "categoriesResetHint": "カテゴリをデフォルトにリセットしますか？",
   "faqWhatWillResetCategoriesDo": "カテゴリをリセットすると何が起こりますか？",
-  "faqWhatWillResetCategoriesDoAns": "カテゴリをリセットすると、すべてのカテゴリとサブカテゴリがデフォルト値にリセットされます。"
+  "faqWhatWillResetCategoriesDoAns": "カテゴリをリセットすると、すべてのカテゴリとサブカテゴリがデフォルト値にリセットされます。",
+  "aboutContentGithub": "このアプリは完全にオープンソースで、無料で使用できます。ご意見やプロジェクトへの貢献がありましたら、GitHubリポジトリをご覧ください。",
+  "githubRepository": "GitHubリポジトリ"
 }

@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "aboutContent": MessageLookupByLibrary.simpleMessage(
             "This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables\'\' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste."),
+        "aboutContentGithub": MessageLookupByLibrary.simpleMessage(
+            "This app is totally open source and free to use. If you have any suggestions or want to contribute to this project, feel free to visit the GitHub repository."),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addIngredients":
             MessageLookupByLibrary.simpleMessage("Add Ingredients"),
@@ -87,6 +89,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "FoodList Expiry Notification"),
         "foodlistExpiryNotificationContent": m1,
         "fruit": MessageLookupByLibrary.simpleMessage("Fruit"),
+        "githubRepository":
+            MessageLookupByLibrary.simpleMessage("GitHub Repository"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "This language is not supported yet! We\'\'re working on it!"),

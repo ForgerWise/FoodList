@@ -115,5 +115,7 @@
   "confirmReset": "Confirm Reset",
   "categoriesResetHint": "Are you sure you want to reset the categories to default?",
   "faqWhatWillResetCategoriesDo": "What will happen if I reset the categories?",
-  "faqWhatWillResetCategoriesDoAns": "Resetting the categories will reset all the categories and subcategories to their default values."
+  "faqWhatWillResetCategoriesDoAns": "Resetting the categories will reset all the categories and subcategories to their default values.",
+  "aboutContentGithub": "This app is totally open source and free to use. If you have any suggestions or want to contribute to this project, feel free to visit the GitHub repository.",
+  "githubRepository": "GitHub Repository"
 }

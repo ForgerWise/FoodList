@@ -7,6 +7,7 @@ import 'package:foodlist/util/alarm.dart';
 import 'package:foodlist/util/notification.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 import 'database/sub_category.dart';
 import 'generated/l10n.dart';
@@ -40,6 +41,14 @@ void main() async {
     locale = LanguageDB.languageToLocale(
         await LanguageDB.getLanguageWithoutContext());
   }
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.grey.shade100,
+    systemNavigationBarDividerColor: Colors.grey.shade100,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
 
   runApp(MyApp(locale: locale));
 }
@@ -141,6 +150,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
         child: NavigationBar(
+          backgroundColor: Colors.grey.shade100,
           selectedIndex: index,
           onDestinationSelected: (index) {
             setState(() {

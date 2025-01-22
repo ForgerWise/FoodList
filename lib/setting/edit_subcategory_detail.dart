@@ -10,11 +10,11 @@ class EditSubcategoryDetailPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _EditSubcategoryDetailPageState createState() =>
-      _EditSubcategoryDetailPageState();
+  EditSubcategoryDetailPageState createState() =>
+      EditSubcategoryDetailPageState();
 }
 
-class _EditSubcategoryDetailPageState extends State<EditSubcategoryDetailPage> {
+class EditSubcategoryDetailPageState extends State<EditSubcategoryDetailPage> {
   bool _isLoading = true;
   final CategoryDataBase cdb = CategoryDataBase();
 
@@ -33,6 +33,9 @@ class _EditSubcategoryDetailPageState extends State<EditSubcategoryDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
     List<SubCategory> subCategories = cdb.subCategoryMap[widget.catKey] ?? [];
     return Scaffold(
       appBar: SettingAppbar(title: S.of(context).editSubcategory),

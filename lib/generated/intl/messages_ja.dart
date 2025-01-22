@@ -35,34 +35,61 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("このアプリについて"),
         "aboutContent": MessageLookupByLibrary.simpleMessage(
             "このアプリは、フードロスを減らすために作成されました。実際、廃棄される食品のほぼ半分は家庭で発生しています。そこで、ユーザーが生鮮食品の賞味期限を簡単に管理できるツールを提供します。私たちの目標は、不必要な購入を減らし、家庭での食品廃棄物を減少させることです。"),
+        "aboutContentGithub": MessageLookupByLibrary.simpleMessage(
+            "このアプリは完全にオープンソースで、無料で使用できます。ご意見やプロジェクトへの貢献がありましたら、GitHubリポジトリをご覧ください。"),
+        "aboutContentHomepage": MessageLookupByLibrary.simpleMessage(
+            "他のプロジェクトにご興味がある場合は、公式サイトをご覧ください。"),
         "add": MessageLookupByLibrary.simpleMessage("追加"),
+        "addCategory": MessageLookupByLibrary.simpleMessage("カテゴリを追加"),
         "addIngredients": MessageLookupByLibrary.simpleMessage("食材を追加する"),
+        "addSubcategory": MessageLookupByLibrary.simpleMessage("サブカテゴリを追加"),
         "addToSubcategory": MessageLookupByLibrary.simpleMessage("サブカテゴリに追加"),
         "apple": MessageLookupByLibrary.simpleMessage("リンゴ"),
         "bean": MessageLookupByLibrary.simpleMessage("豆類"),
         "beef": MessageLookupByLibrary.simpleMessage("牛肉"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "carrot": MessageLookupByLibrary.simpleMessage("ニンジン"),
+        "catOrSubcatIsDelError": MessageLookupByLibrary.simpleMessage(
+            "この食材のカテゴリまたはサブカテゴリが削除されているため、編集できません。この食材の内容を編集するには、食材を削除して再度追加してください。"),
         "categoriesResetHint":
             MessageLookupByLibrary.simpleMessage("カテゴリをデフォルトにリセットしますか？"),
         "category": MessageLookupByLibrary.simpleMessage("カテゴリ"),
         "chicken": MessageLookupByLibrary.simpleMessage("鶏肉"),
         "confirm": MessageLookupByLibrary.simpleMessage("確認"),
+        "confirmCategoryDelete":
+            MessageLookupByLibrary.simpleMessage("このカテゴリを削除してもよろしいですか？"),
+        "confirmDelete": MessageLookupByLibrary.simpleMessage("削除を確認"),
         "confirmReset": MessageLookupByLibrary.simpleMessage("リセットを確認"),
+        "confirmsubcategorydelete":
+            MessageLookupByLibrary.simpleMessage("このサブカテゴリを削除してもよろしいですか？"),
         "contactUs": MessageLookupByLibrary.simpleMessage("お問い合わせ"),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
         "editCategoriesNotSupportedHint":
             MessageLookupByLibrary.simpleMessage("カテゴリの編集機能はまだサポートされていません！"),
+        "editCategory": MessageLookupByLibrary.simpleMessage("カテゴリを編集"),
         "editIngredients": MessageLookupByLibrary.simpleMessage("食材を編集する"),
         "editResetCategories":
             MessageLookupByLibrary.simpleMessage("カテゴリを編集/リセット"),
+        "editSubategory": MessageLookupByLibrary.simpleMessage("サブカテゴリを編集"),
+        "editSubcategory": MessageLookupByLibrary.simpleMessage("サブカテゴリを編集"),
         "egg": MessageLookupByLibrary.simpleMessage("卵"),
         "eggMilk": MessageLookupByLibrary.simpleMessage("卵と乳製品"),
+        "emailCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("電子メールがクリップボードにコピーされました"),
+        "enterNewCategoryName":
+            MessageLookupByLibrary.simpleMessage("新しいカテゴリ名を入力"),
+        "enterNewSubcategoryName":
+            MessageLookupByLibrary.simpleMessage("新しいサブカテゴリ名を入力"),
         "entryDate": MessageLookupByLibrary.simpleMessage("入力日付"),
+        "error": MessageLookupByLibrary.simpleMessage("エラー"),
         "example": MessageLookupByLibrary.simpleMessage("例"),
         "expireDate": MessageLookupByLibrary.simpleMessage("消費期限"),
         "expireDateConfirmMessage": m0,
         "faq": MessageLookupByLibrary.simpleMessage("よくある質問"),
+        "faqHowToEditSubcategories":
+            MessageLookupByLibrary.simpleMessage("サブカテゴリを編集する方法"),
+        "faqHowToEditSubcategoriesAns": MessageLookupByLibrary.simpleMessage(
+            "サブカテゴリを編集するには、編集したいカテゴリをタップしてください。その後、サブカテゴリ編集ページにリダイレクトされます。"),
         "faqWhatWillResetCategoriesDo":
             MessageLookupByLibrary.simpleMessage("カテゴリをリセットすると何が起こりますか？"),
         "faqWhatWillResetCategoriesDoAns": MessageLookupByLibrary.simpleMessage(
@@ -80,11 +107,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "デバイスの設定でアプリの通知が有効になっていることを確認してください。それでも動作しない場合は、バッテリー最適化設定を確認し、アプリのバッテリー最適化を無効にしてください。"),
         "fish": MessageLookupByLibrary.simpleMessage("魚"),
+        "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification":
             MessageLookupByLibrary.simpleMessage("FoodList 消費期限通知"),
         "foodlistExpiryNotificationContent": m1,
+        "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
         "fruit": MessageLookupByLibrary.simpleMessage("果物"),
+        "githubRepository": MessageLookupByLibrary.simpleMessage("GitHubリポジトリ"),
         "home": MessageLookupByLibrary.simpleMessage("ホーム"),
+        "homepage": MessageLookupByLibrary.simpleMessage("公式サイト"),
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "この言語はまだサポートされていません！しかし、将来的にサポートされる予定です！"),
         "languages": MessageLookupByLibrary.simpleMessage("言語"),
@@ -118,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "processedfood": MessageLookupByLibrary.simpleMessage("加工食品"),
         "reset": MessageLookupByLibrary.simpleMessage("リセット"),
         "salmon": MessageLookupByLibrary.simpleMessage("サーモン"),
+        "save": MessageLookupByLibrary.simpleMessage("保存"),
         "selectCategoryHint": MessageLookupByLibrary.simpleMessage("カテゴリを選択"),
         "selectDate": MessageLookupByLibrary.simpleMessage("日付を選択"),
         "selectSubcategoryHint":

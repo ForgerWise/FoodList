@@ -41,6 +41,6 @@ class SubCategory {
   }
 
   SubCategory copyWithName(String newName) {
-    return SubCategory(id: this.id, name: newName);
+    return SubCategory(id: id, name: newName);
   }
 }

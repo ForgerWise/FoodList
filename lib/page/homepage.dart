@@ -57,9 +57,9 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
-          title: const Text("FoodList",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          title: Text(S.of(context).foodlist,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
           backgroundColor: Colors.blueGrey,
           elevation: 0,
           centerTitle: true,
@@ -92,14 +92,16 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.blueGrey,
                 onPressed: () async {
                   await Navigator.pushNamed(context, '/add',
-                      arguments: AddPage());
-                  setState(() {
-                    IDB.loadData();
+                          arguments: const AddPage())
+                      .then((_) {
+                    setState(() {
+                      IDB.loadData();
+                    });
                   });
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
                 label: Text(S.of(context).add,
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
               )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

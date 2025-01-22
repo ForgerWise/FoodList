@@ -5,20 +5,9 @@ import '../generated/l10n.dart';
 import 'sub_category.dart';
 
 class CategoryDataBase {
-  List<String> categoryList = [
-    'meat',
-    'fish',
-    'vegetable',
-    'fruit',
-    'bean',
-    'eggMilk',
-    'mushroom',
-    'processedfood',
-    'others'
-  ];
-
   Map<String, String> categoryMap = {};
   Map<String, List<SubCategory>> subCategoryMap = {};
+  List<String> categoryKeys = [];
 
   final _myBox = Hive.box("mybox");
 
@@ -35,6 +24,7 @@ class CategoryDataBase {
       'processedfood': S.current.processedfood,
       'others': S.current.others,
     };
+    categoryKeys = categoryMap.keys.toList();
   }
 
   void createInitialSubCategoryData() {
@@ -87,7 +77,7 @@ class CategoryDataBase {
 
     if (_myBox.get("CATEGORY_MAP") == null || categoryVersion == null) {
       createInitialCategoryData();
-      updateCategoryData();
+      _updateCategoryData();
       prefs.setString('category_version', '1');
     } else {
       categoryMap = Map<String, String>.from(_myBox.get("CATEGORY_MAP"));
@@ -95,7 +85,6 @@ class CategoryDataBase {
 
     if (_myBox.get("SUB_CATEGORY_MAP") != null && subCategoryVersion == null) {
       // * Convert the old subCategoryMap to the new format
-      print("Converting old subCategoryMap to new format");
       Map<dynamic, dynamic> rawMap = _myBox.get("SUB_CATEGORY_MAP");
       Map<String, List<String>> oldSubCategoryMap = rawMap.map((key, value) =>
           MapEntry<String, List<String>>(
@@ -123,14 +112,13 @@ class CategoryDataBase {
         },
       );
       _myBox.delete("SUB_CATEGORY_MAP");
-      print("Convert complete");
-      updateSubCategoryData();
+      _updateSubCategoryData();
       prefs.setString('subcategory_version', '1');
     } else if (_myBox.get("SUB_CATEGORY_MAP") == null ||
         subCategoryVersion == null) {
       // * Create initial data for the subCategoryMap
       createInitialSubCategoryData();
-      updateSubCategoryData();
+      _updateSubCategoryData();
       prefs.setString('subcategory_version', '1');
     } else {
       subCategoryMap = (_myBox.get("SUB_CATEGORY_MAP") as Map<dynamic, dynamic>)
@@ -146,14 +134,25 @@ class CategoryDataBase {
       );
     }
     updateLanguage();
+
+    if (_myBox.get("CATEGORY_KEYS") == null) {
+      categoryKeys = categoryMap.keys.toList();
+      _updateCategoryKeys();
+    } else {
+      categoryKeys = List<String>.from(_myBox.get("CATEGORY_KEYS"));
+    }
   }
 
-  void updateCategoryData() {
+  void _updateCategoryData() {
     _myBox.put("CATEGORY_MAP", categoryMap);
   }
 
-  void updateSubCategoryData() {
+  void _updateSubCategoryData() {
     _myBox.put("SUB_CATEGORY_MAP", subCategoryMap);
+  }
+
+  void _updateCategoryKeys() {
+    _myBox.put("CATEGORY_KEYS", categoryKeys);
   }
 
   void resetIngredients() {
@@ -161,8 +160,9 @@ class CategoryDataBase {
     _myBox.delete("SUB_CATEGORY_MAP");
     createInitialCategoryData();
     createInitialSubCategoryData();
-    updateCategoryData();
-    updateSubCategoryData();
+    _updateCategoryData();
+    _updateSubCategoryData();
+    _updateCategoryKeys();
     updateLanguage();
   }
 
@@ -247,5 +247,104 @@ class CategoryDataBase {
         ).toList(),
       ),
     );
+  }
+
+  String _getNewCategoryKey() {
+    return "C${DateTime.now().millisecondsSinceEpoch}";
+  }
+
+  String _getNewSubCategoryKey() {
+    return "SC${DateTime.now().millisecondsSinceEpoch}";
+  }
+
+  void renameCategory(String oldKey, String newLabel) {
+    String newKey = _getNewCategoryKey();
+    if (categoryMap.containsKey(newKey)) {
+      return;
+    }
+    categoryMap[newKey] = newLabel;
+    subCategoryMap[newKey] = subCategoryMap[oldKey]!;
+    categoryMap.remove(oldKey);
+    subCategoryMap.remove(oldKey);
+    int index = categoryKeys.indexOf(oldKey);
+    categoryKeys[index] = newKey;
+    _updateCategoryData();
+    _updateCategoryKeys();
+    _updateSubCategoryData();
+  }
+
+  void renameSubCategory(String categoryKey, String oldKey, String newLabel) {
+    String newKey = _getNewSubCategoryKey();
+    if (subCategoryMap[categoryKey]!.any((element) => element.id == newKey)) {
+      return;
+    }
+    // * Create new SubCategory with the new key and label
+    SubCategory newSubCategory = SubCategory(id: newKey, name: newLabel);
+    // * Find the index of the old SubCategory
+    int index = subCategoryMap[categoryKey]!
+        .indexWhere((element) => element.id == oldKey);
+    // * Replace the old SubCategory with the new SubCategory
+    subCategoryMap[categoryKey]![index] = newSubCategory;
+    _updateSubCategoryData();
+  }
+
+  void addCategory(String label) {
+    String key = _getNewCategoryKey();
+    categoryMap[key] = label;
+    categoryKeys.add(key);
+    subCategoryMap[key] = [];
+    _updateCategoryData();
+    _updateCategoryKeys();
+    _updateSubCategoryData();
+  }
+
+  void addSubCategory(String categoryKey, String label) {
+    String key = _getNewSubCategoryKey();
+    if (subCategoryMap[categoryKey]!.any((element) => element.id == key)) {
+      return;
+    }
+    subCategoryMap[categoryKey]!.add(SubCategory(id: key, name: label));
+    _updateSubCategoryData();
+  }
+
+  void reorderCategory(int oldIndex, int newIndex) {
+    if (oldIndex < 0 || newIndex < 0) {
+      return;
+    }
+    if (newIndex > categoryKeys.length || oldIndex > categoryKeys.length) {
+      return;
+    }
+    // * Reorder the categoryKeys
+    String item = categoryKeys.removeAt(oldIndex);
+    categoryKeys.insert(newIndex, item);
+    _updateCategoryKeys();
+  }
+
+  void reorderSubCategory(String categoryKey, int oldIndex, int newIndex) {
+    if (oldIndex < 0 || newIndex < 0) {
+      return;
+    }
+    if (newIndex > subCategoryMap[categoryKey]!.length ||
+        oldIndex > subCategoryMap[categoryKey]!.length) {
+      return;
+    }
+    // * Reorder the subCategories
+    SubCategory item = subCategoryMap[categoryKey]!.removeAt(oldIndex);
+    subCategoryMap[categoryKey]!.insert(newIndex, item);
+    _updateSubCategoryData();
+  }
+
+  void removeCategory(String key) {
+    categoryMap.remove(key);
+    subCategoryMap.remove(key);
+    categoryKeys.remove(key);
+    _updateCategoryData();
+    _updateCategoryKeys();
+    _updateSubCategoryData();
+  }
+
+  void removeSubCategory(String categoryKey, String key) {
+    subCategoryMap[categoryKey]!.removeWhere((element) => element.id == key);
+    _updateSubCategoryData();
   }
 }

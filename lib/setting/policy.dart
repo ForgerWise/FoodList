@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
+import 'setting_appbar.dart';
 
 class PolicyPage extends StatefulWidget {
   const PolicyPage({Key? key}) : super(key: key);
@@ -13,14 +14,7 @@ class _PolicyState extends State<PolicyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shape: const Border(
-            bottom: BorderSide(color: Colors.black54, style: BorderStyle.none)),
-        backgroundColor: Colors.blueGrey,
-        centerTitle: true,
-        title: Text(S.of(context).policy,
-            style: TextStyle(color: Colors.white, fontSize: 24)),
-      ),
+      appBar: SettingAppbar(title: S.of(context).policy),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(

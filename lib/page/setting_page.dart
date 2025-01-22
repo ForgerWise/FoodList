@@ -3,7 +3,7 @@ import 'package:foodlist/util/alarm.dart';
 import 'package:foodlist/util/permission.dart';
 
 import '../generated/l10n.dart';
-import '../setting/editCategories.dart';
+import '../setting/edit_categories.dart';
 import '../setting/faq.dart';
 import '../setting/language.dart';
 import '../setting/notification.dart';
@@ -11,6 +11,7 @@ import '../setting/policy.dart';
 import '../setting/about.dart';
 import '../util/notification.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -68,16 +69,28 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  void _sendMail() {
+  Future<void> _sendMail() async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: email,
     );
-    try {
-      launchUrl(emailUri);
-    } catch (e) {
-      print('Error: $e');
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri);
+    } else {
+      // * If cannot launch email app, copy email to clipboard and show snackbar
+      await copyToClipboard(email);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(S.of(context).emailCopiedToClipboard),
+              backgroundColor: Colors.blueGrey),
+        );
+      }
     }
+  }
+
+  Future<void> copyToClipboard(String text) async {
+    await Clipboard.setData(ClipboardData(text: text));
   }
 
   Widget buildSettingTile(
@@ -141,7 +154,7 @@ class _SettingPageState extends State<SettingPage> {
             buildNotificationTile(context),
             const Divider(),
             buildSettingTile(context, Icons.edit,
-                S.of(context).editResetCategories, EditCategoriesPage()),
+                S.of(context).editResetCategories, const EditCategoriesPage()),
             const Divider(),
             buildSettingTile(context, Icons.policy, S.of(context).policy,
                 const PolicyPage()),
@@ -149,7 +162,8 @@ class _SettingPageState extends State<SettingPage> {
             buildSettingTile(
                 context, Icons.info, S.of(context).about, const AboutPage()),
             const Divider(),
-            buildSettingTile(context, Icons.help, S.of(context).faq, FAQPage()),
+            buildSettingTile(
+                context, Icons.help, S.of(context).faq, const FAQPage()),
           ],
         ),
       ),

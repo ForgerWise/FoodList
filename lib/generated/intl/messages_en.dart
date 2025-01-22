@@ -35,9 +35,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "aboutContent": MessageLookupByLibrary.simpleMessage(
             "This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables\'\' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste."),
+        "aboutContentGithub": MessageLookupByLibrary.simpleMessage(
+            "This app is totally open source and free to use. If you have any suggestions or want to contribute to this project, feel free to visit the GitHub repository."),
+        "aboutContentHomepage": MessageLookupByLibrary.simpleMessage(
+            "If you have interest in other our projects, please visit our homepage."),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addCategory": MessageLookupByLibrary.simpleMessage("Add Category"),
         "addIngredients":
             MessageLookupByLibrary.simpleMessage("Add Ingredients"),
+        "addSubcategory":
+            MessageLookupByLibrary.simpleMessage("Add Subcategory"),
         "addToSubcategory":
             MessageLookupByLibrary.simpleMessage("Add to Subcategory"),
         "apple": MessageLookupByLibrary.simpleMessage("Apple"),
@@ -45,27 +52,50 @@ class MessageLookup extends MessageLookupByLibrary {
         "beef": MessageLookupByLibrary.simpleMessage("Beef"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "carrot": MessageLookupByLibrary.simpleMessage("Carrot"),
+        "catOrSubcatIsDelError": MessageLookupByLibrary.simpleMessage(
+            "This ingredient\'s Category or Subcategory is deleted, cannot edit. If you want to edit the content of this ingredient, please delete the ingredient and add again."),
         "categoriesResetHint": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to reset the categories to default?"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "chicken": MessageLookupByLibrary.simpleMessage("Chicken"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmCategoryDelete": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this category?"),
+        "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm Delete"),
         "confirmReset": MessageLookupByLibrary.simpleMessage("Confirm Reset"),
+        "confirmsubcategorydelete": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this subcategory?"),
         "contactUs": MessageLookupByLibrary.simpleMessage("Contact Us"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editCategoriesNotSupportedHint": MessageLookupByLibrary.simpleMessage(
             "Edit categories is not supported yet!"),
+        "editCategory": MessageLookupByLibrary.simpleMessage("Edit Category"),
         "editIngredients":
             MessageLookupByLibrary.simpleMessage("Edit Ingredients"),
         "editResetCategories":
             MessageLookupByLibrary.simpleMessage("Edit/Reset Categories"),
+        "editSubategory":
+            MessageLookupByLibrary.simpleMessage("Edit Subategory"),
+        "editSubcategory":
+            MessageLookupByLibrary.simpleMessage("Edit Subcategory"),
         "egg": MessageLookupByLibrary.simpleMessage("Egg"),
         "eggMilk": MessageLookupByLibrary.simpleMessage("Egg & Milk"),
+        "emailCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("Email copied to clipboard"),
+        "enterNewCategoryName":
+            MessageLookupByLibrary.simpleMessage("Enter new category name"),
+        "enterNewSubcategoryName":
+            MessageLookupByLibrary.simpleMessage("Enter new subcategory name"),
         "entryDate": MessageLookupByLibrary.simpleMessage("Entry Date"),
+        "error": MessageLookupByLibrary.simpleMessage("Error"),
         "example": MessageLookupByLibrary.simpleMessage("Example"),
         "expireDate": MessageLookupByLibrary.simpleMessage("Expire Date"),
         "expireDateConfirmMessage": m0,
         "faq": MessageLookupByLibrary.simpleMessage("FAQ"),
+        "faqHowToEditSubcategories":
+            MessageLookupByLibrary.simpleMessage("How to edit subcategories?"),
+        "faqHowToEditSubcategoriesAns": MessageLookupByLibrary.simpleMessage(
+            "To edit subcategories, tap on the category you want to edit. Then you will be redirected to the subcategory edit page."),
         "faqWhatWillResetCategoriesDo": MessageLookupByLibrary.simpleMessage(
             "What will happen if I reset the categories?"),
         "faqWhatWillResetCategoriesDoAns": MessageLookupByLibrary.simpleMessage(
@@ -83,11 +113,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "Please ensure that you have enabled notifications for the app in your device settings. If it still doesn\'\'t work, check the battery optimization settings and disable battery optimization for the app."),
         "fish": MessageLookupByLibrary.simpleMessage("Fish"),
+        "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification": MessageLookupByLibrary.simpleMessage(
             "FoodList Expiry Notification"),
         "foodlistExpiryNotificationContent": m1,
+        "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
         "fruit": MessageLookupByLibrary.simpleMessage("Fruit"),
+        "githubRepository":
+            MessageLookupByLibrary.simpleMessage("GitHub Repository"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "homepage": MessageLookupByLibrary.simpleMessage("Homepage"),
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "This language is not supported yet! We\'\'re working on it!"),
         "languages": MessageLookupByLibrary.simpleMessage("Languages"),
@@ -126,6 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "processedfood": MessageLookupByLibrary.simpleMessage("Processed Food"),
         "reset": MessageLookupByLibrary.simpleMessage("Reset"),
         "salmon": MessageLookupByLibrary.simpleMessage("Salmon"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "selectCategoryHint":
             MessageLookupByLibrary.simpleMessage("Select Category"),
         "selectDate": MessageLookupByLibrary.simpleMessage("Select Date"),

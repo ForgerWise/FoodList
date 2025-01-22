@@ -94,14 +94,15 @@ class _ListRifTileState extends State<ListRifTile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(S.of(context).entryDate, style: TextStyle(fontSize: 10)),
+                  Text(S.of(context).entryDate,
+                      style: const TextStyle(fontSize: 10)),
                   Text(
                     widget.inputdate,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(S.of(context).expireDate,
-                      style: TextStyle(fontSize: 10)),
+                      style: const TextStyle(fontSize: 10)),
                   Text(
                     widget.expdate,
                     style: const TextStyle(

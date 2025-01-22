@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlist/setting/setting_appbar.dart';
 import 'package:foodlist/util/alarm.dart';
 import '../generated/l10n.dart';
 import '../util/notification.dart';
@@ -19,7 +20,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
   final AlarmService alarmService = AlarmService();
 
   // * Initialize selected time to 7 AM
-  TimeOfDay selectedTime = TimeOfDay(hour: 7, minute: 0);
+  TimeOfDay selectedTime = const TimeOfDay(hour: 7, minute: 0);
   DateTime selectedTimeDateTime = DateTime(
     DateTime.now().year,
     DateTime.now().month,
@@ -74,9 +75,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).notificationSetting),
-      ),
+      appBar: SettingAppbar(title: S.of(context).notificationSetting),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(

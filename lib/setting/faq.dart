@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlist/setting/setting_appbar.dart';
 
 import '../generated/l10n.dart';
 
@@ -8,14 +9,7 @@ class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shape: const Border(
-            bottom: BorderSide(color: Colors.black54, style: BorderStyle.none)),
-        backgroundColor: Colors.blueGrey,
-        title: Text(S.of(context).faq,
-            style: const TextStyle(color: Colors.white, fontSize: 24)),
-        centerTitle: true,
-      ),
+      appBar: SettingAppbar(title: S.of(context).faq),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
@@ -27,7 +21,8 @@ class FAQPage extends StatelessWidget {
               S.of(context).faqWhyNotificationDelayAns),
           faqCard(S.of(context).faqWhatWillResetCategoriesDo,
               S.of(context).faqWhatWillResetCategoriesDoAns),
-          // Add more FAQ cards here
+          faqCard(S.of(context).faqHowToEditSubcategories,
+              S.of(context).faqHowToEditSubcategoriesAns),
         ],
       ),
     );
@@ -36,7 +31,7 @@ class FAQPage extends StatelessWidget {
   // Function to create FAQ Card
   Widget faqCard(String question, String answer) {
     return Card(
-      color: Colors.blueGrey[300],
+      color: Colors.blueGrey[700],
       margin: const EdgeInsets.only(bottom: 16.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,10 +43,11 @@ class FAQPage extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 8.0),
-            Text(answer),
+            Text(answer, style: const TextStyle(color: Colors.white)),
           ],
         ),
       ),

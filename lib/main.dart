@@ -13,7 +13,7 @@ import 'generated/l10n.dart';
 import 'page/add_page.dart';
 import 'page/homepage.dart';
 import 'page/setting_page.dart';
-import 'setting/editCategories.dart';
+import 'setting/edit_categories.dart';
 import 'setting/faq.dart';
 import 'setting/language.dart';
 import 'setting/notification.dart';
@@ -48,14 +48,14 @@ class MyApp extends StatefulWidget {
   final Locale? locale;
   const MyApp({Key? key, this.locale}) : super(key: key);
 
-  static _MyAppState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>();
+  static MyAppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<MyAppState>();
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   Locale? _locale;
 
   void setLocale(Locale locale) {
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
         '/about': (context) => const AboutPage(),
         '/notification': (context) => const NotificationSettingPage(),
         '/faq': (context) => const FAQPage(),
-        '/editIngredients': (context) => EditCategoriesPage(),
+        '/editIngredients': (context) => const EditCategoriesPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,

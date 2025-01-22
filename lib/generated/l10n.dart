@@ -884,6 +884,206 @@ class S {
       args: [],
     );
   }
+
+  /// `If you have interest in other our projects, please visit our homepage.`
+  String get aboutContentHomepage {
+    return Intl.message(
+      'If you have interest in other our projects, please visit our homepage.',
+      name: 'aboutContentHomepage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ForgerWise`
+  String get forgerwise {
+    return Intl.message(
+      'ForgerWise',
+      name: 'forgerwise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FoodList`
+  String get foodlist {
+    return Intl.message(
+      'FoodList',
+      name: 'foodlist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This ingredient's Category or Subcategory is deleted, cannot edit. If you want to edit the content of this ingredient, please delete the ingredient and add again.`
+  String get catOrSubcatIsDelError {
+    return Intl.message(
+      'This ingredient\'s Category or Subcategory is deleted, cannot edit. If you want to edit the content of this ingredient, please delete the ingredient and add again.',
+      name: 'catOrSubcatIsDelError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message(
+      'Error',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Category`
+  String get editCategory {
+    return Intl.message(
+      'Edit Category',
+      name: 'editCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Delete`
+  String get confirmDelete {
+    return Intl.message(
+      'Confirm Delete',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this category?`
+  String get confirmCategoryDelete {
+    return Intl.message(
+      'Are you sure you want to delete this category?',
+      name: 'confirmCategoryDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter new category name`
+  String get enterNewCategoryName {
+    return Intl.message(
+      'Enter new category name',
+      name: 'enterNewCategoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Category`
+  String get addCategory {
+    return Intl.message(
+      'Add Category',
+      name: 'addCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Subcategory`
+  String get editSubcategory {
+    return Intl.message(
+      'Edit Subcategory',
+      name: 'editSubcategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this subcategory?`
+  String get confirmsubcategorydelete {
+    return Intl.message(
+      'Are you sure you want to delete this subcategory?',
+      name: 'confirmsubcategorydelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Subategory`
+  String get editSubategory {
+    return Intl.message(
+      'Edit Subategory',
+      name: 'editSubategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter new subcategory name`
+  String get enterNewSubcategoryName {
+    return Intl.message(
+      'Enter new subcategory name',
+      name: 'enterNewSubcategoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Subcategory`
+  String get addSubcategory {
+    return Intl.message(
+      'Add Subcategory',
+      name: 'addSubcategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To edit subcategories, tap on the category you want to edit. Then you will be redirected to the subcategory edit page.`
+  String get faqHowToEditSubcategoriesAns {
+    return Intl.message(
+      'To edit subcategories, tap on the category you want to edit. Then you will be redirected to the subcategory edit page.',
+      name: 'faqHowToEditSubcategoriesAns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How to edit subcategories?`
+  String get faqHowToEditSubcategories {
+    return Intl.message(
+      'How to edit subcategories?',
+      name: 'faqHowToEditSubcategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email copied to clipboard`
+  String get emailCopiedToClipboard {
+    return Intl.message(
+      'Email copied to clipboard',
+      name: 'emailCopiedToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Homepage`
+  String get homepage {
+    return Intl.message(
+      'Homepage',
+      name: 'homepage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

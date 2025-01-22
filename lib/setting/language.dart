@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:foodlist/main.dart';
+import 'package:foodlist/setting/setting_appbar.dart';
 import '../database/languageDB.dart';
 import '../generated/l10n.dart';
 
@@ -76,19 +77,12 @@ class _LanguageState extends State<LanguagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shape: const Border(
-            bottom: BorderSide(color: Colors.black54, style: BorderStyle.none)),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-        title: Text(S.of(context).languages,
-            style: TextStyle(color: Colors.white, fontSize: 24)),
-      ),
+      appBar: SettingAppbar(title: S.of(context).languages),
       body: FutureBuilder<String>(
         future: LanguageDB.getLanguage(context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           final selectedLanguage = snapshot.data ?? '';

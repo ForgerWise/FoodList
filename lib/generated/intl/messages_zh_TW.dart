@@ -37,33 +37,57 @@ class MessageLookup extends MessageLookupByLibrary {
             "這個應用程式源自我們對抗食物浪費的承諾。由於家庭食物浪費佔了近一半，我們提供了一個簡單易用的工具，幫助使用者管理食物的保存期限。希望透過這個工具，減少不必要的購買，並減少家庭中的食物浪費。"),
         "aboutContentGithub": MessageLookupByLibrary.simpleMessage(
             "這個應用程式是完全開源且免費使用的。如果您有任何建議或想要貢獻此專案，請隨時訪問 GitHub 儲存庫。"),
+        "aboutContentHomepage":
+            MessageLookupByLibrary.simpleMessage("如果您對我們的其他專案有興趣，歡迎造訪我們的官方網站。"),
         "add": MessageLookupByLibrary.simpleMessage("新增"),
+        "addCategory": MessageLookupByLibrary.simpleMessage("新增類別"),
         "addIngredients": MessageLookupByLibrary.simpleMessage("新增食材"),
+        "addSubcategory": MessageLookupByLibrary.simpleMessage("新增子類別"),
         "addToSubcategory": MessageLookupByLibrary.simpleMessage("新增至子類別"),
         "apple": MessageLookupByLibrary.simpleMessage("蘋果"),
         "bean": MessageLookupByLibrary.simpleMessage("豆類"),
         "beef": MessageLookupByLibrary.simpleMessage("牛肉"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "carrot": MessageLookupByLibrary.simpleMessage("紅蘿蔔"),
+        "catOrSubcatIsDelError": MessageLookupByLibrary.simpleMessage(
+            "此食材的類別或子類別已被刪除，無法編輯。如果要編輯此食材的內容，請刪除該食材並重新添加。"),
         "categoriesResetHint":
             MessageLookupByLibrary.simpleMessage("確認重置類別為預設值？"),
         "category": MessageLookupByLibrary.simpleMessage("類別"),
         "chicken": MessageLookupByLibrary.simpleMessage("雞肉"),
         "confirm": MessageLookupByLibrary.simpleMessage("確認"),
+        "confirmCategoryDelete":
+            MessageLookupByLibrary.simpleMessage("您確定要刪除此類別嗎？"),
+        "confirmDelete": MessageLookupByLibrary.simpleMessage("確認刪除"),
         "confirmReset": MessageLookupByLibrary.simpleMessage("確認重置"),
+        "confirmsubcategorydelete":
+            MessageLookupByLibrary.simpleMessage("您確定要刪除此子類別嗎？"),
         "contactUs": MessageLookupByLibrary.simpleMessage("聯絡我們"),
         "edit": MessageLookupByLibrary.simpleMessage("編輯"),
         "editCategoriesNotSupportedHint":
             MessageLookupByLibrary.simpleMessage("編輯類別功能尚未支援！"),
+        "editCategory": MessageLookupByLibrary.simpleMessage("編輯類別"),
         "editIngredients": MessageLookupByLibrary.simpleMessage("編輯食材"),
         "editResetCategories": MessageLookupByLibrary.simpleMessage("編輯/重置類別"),
+        "editSubategory": MessageLookupByLibrary.simpleMessage("編輯子類別"),
+        "editSubcategory": MessageLookupByLibrary.simpleMessage("編輯子類別"),
         "egg": MessageLookupByLibrary.simpleMessage("蛋"),
         "eggMilk": MessageLookupByLibrary.simpleMessage("蛋奶"),
+        "emailCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("電子郵件已複製到剪貼簿"),
+        "enterNewCategoryName": MessageLookupByLibrary.simpleMessage("輸入新類別名稱"),
+        "enterNewSubcategoryName":
+            MessageLookupByLibrary.simpleMessage("輸入新子類別名稱"),
         "entryDate": MessageLookupByLibrary.simpleMessage("輸入日期"),
+        "error": MessageLookupByLibrary.simpleMessage("錯誤"),
         "example": MessageLookupByLibrary.simpleMessage("範例"),
         "expireDate": MessageLookupByLibrary.simpleMessage("有效日期"),
         "expireDateConfirmMessage": m0,
         "faq": MessageLookupByLibrary.simpleMessage("常見問題"),
+        "faqHowToEditSubcategories":
+            MessageLookupByLibrary.simpleMessage("如何編輯子類別？"),
+        "faqHowToEditSubcategoriesAns": MessageLookupByLibrary.simpleMessage(
+            "要編輯子類別，請點擊您想要編輯的類別。接著您將移動到子類別編輯頁面。"),
         "faqWhatWillResetCategoriesDo":
             MessageLookupByLibrary.simpleMessage("重置類別會發生什麼事？"),
         "faqWhatWillResetCategoriesDoAns":
@@ -81,12 +105,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "請確保您在裝置的設定中已啟用應用程式的通知。如果仍然無法正常運作，請檢查電池最佳化設定，並為該應用程式禁用電池最佳化。"),
         "fish": MessageLookupByLibrary.simpleMessage("魚類"),
+        "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification":
             MessageLookupByLibrary.simpleMessage("FoodList 有效日期通知"),
         "foodlistExpiryNotificationContent": m1,
+        "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
         "fruit": MessageLookupByLibrary.simpleMessage("水果"),
         "githubRepository": MessageLookupByLibrary.simpleMessage("GitHub 儲存庫"),
         "home": MessageLookupByLibrary.simpleMessage("首頁"),
+        "homepage": MessageLookupByLibrary.simpleMessage("官方網站"),
         "languageNotSupportedYetMessage":
             MessageLookupByLibrary.simpleMessage("此語言尚未支援！但我們預計會在未來支援此語言！"),
         "languages": MessageLookupByLibrary.simpleMessage("語言"),
@@ -120,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "processedfood": MessageLookupByLibrary.simpleMessage("加工食品"),
         "reset": MessageLookupByLibrary.simpleMessage("重置"),
         "salmon": MessageLookupByLibrary.simpleMessage("鮭魚"),
+        "save": MessageLookupByLibrary.simpleMessage("儲存"),
         "selectCategoryHint": MessageLookupByLibrary.simpleMessage("選擇類別"),
         "selectDate": MessageLookupByLibrary.simpleMessage("選擇日期"),
         "selectSubcategoryHint": MessageLookupByLibrary.simpleMessage("選擇子類別"),

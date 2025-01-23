@@ -137,5 +137,30 @@
   "faqHowToEditSubcategoriesAns": "To edit subcategories, tap on the category you want to edit. Then you will be redirected to the subcategory edit page.",
   "faqHowToEditSubcategories": "How to edit subcategories?",
   "emailCopiedToClipboard": "Email copied to clipboard",
-  "homepage": "Homepage"
+  "homepage": "Homepage",
+  "urlCopiedToClipboard": "URL copied to clipboard",
+  "feedback": "Feedback",
+  "rateThisApp": "Rate this app",
+  "officialWebsite": "Official website",
+  "translationError": "Translation error",
+  "contributeTranslation": "Contribute translation",
+  "contributeCode": "Contribute code",
+  "forgerwisesGithub": "ForgerWise's GitHub",
+  "bugReport": "Bug report",
+  "aboutFoodlist": "About FoodList",
+  "bugReportOfFoodlist": "Bug Report of FoodList",
+  "mesOfBugReport": "Bug: \n\nDevice: \n\nOS: \n\nApp version: \n\nSteps to reproduce: \n\n*If you have a screenshot, please attach it.\n\n*If you don't know details of your device, you can skip writing it.",
+  "translationErrorOfFoodlist": "Translation Error of FoodList",
+  "mesOfTransError": "Language: \n\nError translation: \n\nCorrect translation: \n\n",
+  "contributeTranslationOfFoodlist": "Contribute Translation of FoodList",
+  "mesOfContributeTrans": "Language I want to contribute: \n\n*If you want to contribute a whole new language, we will send you a file to translate.",
+  "versionVersion": "Version: {version}",
+  "@versionVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "specialThanksToAllContributorsBelow": "Special thanks to all contributors below!"
 }

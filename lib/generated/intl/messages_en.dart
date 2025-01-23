@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m3(selectedHour, selectedMinute) =>
       "Selected Time: ${selectedHour}:${selectedMinute}";
 
+  static String m4(version) => "Version: ${version}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About"),
@@ -39,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This app is totally open source and free to use. If you have any suggestions or want to contribute to this project, feel free to visit the GitHub repository."),
         "aboutContentHomepage": MessageLookupByLibrary.simpleMessage(
             "If you have interest in other our projects, please visit our homepage."),
+        "aboutFoodlist": MessageLookupByLibrary.simpleMessage("About FoodList"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add Category"),
         "addIngredients":
@@ -50,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "apple": MessageLookupByLibrary.simpleMessage("Apple"),
         "bean": MessageLookupByLibrary.simpleMessage("Bean"),
         "beef": MessageLookupByLibrary.simpleMessage("Beef"),
+        "bugReport": MessageLookupByLibrary.simpleMessage("Bug report"),
+        "bugReportOfFoodlist":
+            MessageLookupByLibrary.simpleMessage("Bug Report of FoodList"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "carrot": MessageLookupByLibrary.simpleMessage("Carrot"),
         "catOrSubcatIsDelError": MessageLookupByLibrary.simpleMessage(
@@ -66,6 +72,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmsubcategorydelete": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this subcategory?"),
         "contactUs": MessageLookupByLibrary.simpleMessage("Contact Us"),
+        "contributeCode":
+            MessageLookupByLibrary.simpleMessage("Contribute code"),
+        "contributeTranslation":
+            MessageLookupByLibrary.simpleMessage("Contribute translation"),
+        "contributeTranslationOfFoodlist": MessageLookupByLibrary.simpleMessage(
+            "Contribute Translation of FoodList"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editCategoriesNotSupportedHint": MessageLookupByLibrary.simpleMessage(
             "Edit categories is not supported yet!"),
@@ -112,12 +124,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "Why isn\'\'t the notification working?"),
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "Please ensure that you have enabled notifications for the app in your device settings. If it still doesn\'\'t work, check the battery optimization settings and disable battery optimization for the app."),
+        "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "fish": MessageLookupByLibrary.simpleMessage("Fish"),
         "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification": MessageLookupByLibrary.simpleMessage(
             "FoodList Expiry Notification"),
         "foodlistExpiryNotificationContent": m1,
         "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
+        "forgerwisesGithub":
+            MessageLookupByLibrary.simpleMessage("ForgerWise\'s GitHub"),
         "fruit": MessageLookupByLibrary.simpleMessage("Fruit"),
         "githubRepository":
             MessageLookupByLibrary.simpleMessage("GitHub Repository"),
@@ -127,6 +142,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "This language is not supported yet! We\'\'re working on it!"),
         "languages": MessageLookupByLibrary.simpleMessage("Languages"),
         "meat": MessageLookupByLibrary.simpleMessage("Meat"),
+        "mesOfBugReport": MessageLookupByLibrary.simpleMessage(
+            "Bug: \n\nDevice: \n\nOS: \n\nApp version: \n\nSteps to reproduce: \n\n*If you have a screenshot, please attach it.\n\n*If you don\'t know details of your device, you can skip writing it."),
+        "mesOfContributeTrans": MessageLookupByLibrary.simpleMessage(
+            "Language I want to contribute: \n\n*If you want to contribute a whole new language, we will send you a file to translate."),
+        "mesOfTransError": MessageLookupByLibrary.simpleMessage(
+            "Language: \n\nError translation: \n\nCorrect translation: \n\n"),
         "milk": MessageLookupByLibrary.simpleMessage("Milk"),
         "mushroom": MessageLookupByLibrary.simpleMessage("Mushroom"),
         "none": MessageLookupByLibrary.simpleMessage("None"),
@@ -138,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationSetting":
             MessageLookupByLibrary.simpleMessage("Notification Setting"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "officialWebsite":
+            MessageLookupByLibrary.simpleMessage("Official website"),
         "other": MessageLookupByLibrary.simpleMessage("other"),
         "otherBeans": MessageLookupByLibrary.simpleMessage("Other Beans"),
         "otherEggMilk":
@@ -159,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacyContent": MessageLookupByLibrary.simpleMessage(
             "This Privacy Policy describes how our mobile application, (hereinafter referred to as \'\'the App\'\'), collects, uses, and discloses your information. The App is committed to maintaining robust privacy protections for its users. Our Privacy Policy is designed to help you understand how we collect and use the personal information you decide to share and help you make informed decisions when using the App.\n\nBy using or accessing the App, you accept the practices described in this Privacy Policy. If you do not agree to this policy, please do not use the App. We reserve the right to modify this policy from time to time, so please review it frequently. Your continued use of the App signifies your acceptance of our Privacy Policy as modified.\n\n1. Data We Collect\nCurrently, the App does not collect any personal data. The App is designed to store all data related to your food within the device itself and does not have any feature to collect your personal data.\n\n2. Data Storage and Protection\nYour data is stored on your device and is not accessible by anyone but you, unless the data on your device is shared by you or your device provider.\n\n3. Future Updates\nIn future updates, if there is a feature that allows user data upload for functionalities such as synchronization, we still will not disclose this information to any third party. We will announce the update of our privacy policy when these features are added.\n\n4. Changes to Our Privacy Policy\nThe App reserves the right to change this policy and our Terms of Service at any time. We will notify users of significant changes to our Privacy Policy by sending a notice to the primary email address specified in your account or by placing a prominent notice on our site. Significant changes will go into effect 30 days following such notification. Non-material changes or clarifications will take effect immediately. You should periodically check the Site and this privacy page for updates."),
         "processedfood": MessageLookupByLibrary.simpleMessage("Processed Food"),
+        "rateThisApp": MessageLookupByLibrary.simpleMessage("Rate this app"),
         "reset": MessageLookupByLibrary.simpleMessage("Reset"),
         "salmon": MessageLookupByLibrary.simpleMessage("Salmon"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -172,11 +196,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "slideToDelete":
             MessageLookupByLibrary.simpleMessage("Slide to Delete"),
         "soybean": MessageLookupByLibrary.simpleMessage("Soybean"),
+        "specialThanksToAllContributorsBelow":
+            MessageLookupByLibrary.simpleMessage(
+                "Special thanks to all contributors below!"),
         "subcategory": MessageLookupByLibrary.simpleMessage("Subcategory"),
         "subcategoryName": MessageLookupByLibrary.simpleMessage("Name"),
         "subcategoryNameInputHint": MessageLookupByLibrary.simpleMessage(
             "Please input the name of the ingredient"),
+        "translationError":
+            MessageLookupByLibrary.simpleMessage("Translation error"),
+        "translationErrorOfFoodlist": MessageLookupByLibrary.simpleMessage(
+            "Translation Error of FoodList"),
         "tuna": MessageLookupByLibrary.simpleMessage("Tuna"),
-        "vegetable": MessageLookupByLibrary.simpleMessage("Vegetable")
+        "urlCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("URL copied to clipboard"),
+        "vegetable": MessageLookupByLibrary.simpleMessage("Vegetable"),
+        "versionVersion": m4
       };
 }

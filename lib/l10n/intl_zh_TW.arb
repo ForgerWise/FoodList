@@ -137,5 +137,30 @@
   "faqHowToEditSubcategoriesAns": "要編輯子類別，請點擊您想要編輯的類別。接著您將移動到子類別編輯頁面。",
   "faqHowToEditSubcategories": "如何編輯子類別？",
   "emailCopiedToClipboard": "電子郵件已複製到剪貼簿",
-  "homepage": "官方網站"
+  "homepage": "官方網站",
+  "urlCopiedToClipboard": "網址已複製到剪貼簿",
+  "feedback": "回饋",
+  "rateThisApp": "為此應用程式評分",
+  "officialWebsite": "官方網站",
+  "translationError": "翻譯錯誤",
+  "contributeTranslation": "貢獻翻譯",
+  "contributeCode": "貢獻程式碼",
+  "forgerwisesGithub": "ForgerWise 的 GitHub",
+  "bugReport": "錯誤報告",
+  "aboutFoodlist": "關於 FoodList",
+  "bugReportOfFoodlist": "FoodList 的錯誤報告",
+  "mesOfBugReport": "錯誤: \n\n裝置: \n\n作業系統: \n\n應用程式版本: \n\n重現錯誤的流程: \n\n*如果您有螢幕截圖，請一併附上。\n\n*如果您不清楚您的裝置詳細資訊，可以跳過該部分不填寫。",
+  "translationErrorOfFoodlist": "FoodList 的翻譯錯誤",
+  "mesOfTransError": "語言: \n\n錯誤的翻譯: \n\n正確的翻譯: \n\n",
+  "contributeTranslationOfFoodlist": "貢獻 FoodList 的翻譯",
+  "mesOfContributeTrans": "我想貢獻的語言: \n\n*如果您想貢獻一項新語言，我們將提供翻譯檔案。",
+  "versionVersion": "版本: {version}",
+  "@versionVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "specialThanksToAllContributorsBelow": "特別感謝以下所有貢獻者！"
 }

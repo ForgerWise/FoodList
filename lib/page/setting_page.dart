@@ -5,6 +5,7 @@ import 'package:foodlist/util/permission.dart';
 import '../generated/l10n.dart';
 import '../setting/edit_categories.dart';
 import '../setting/faq.dart';
+import '../setting/feedback.dart';
 import '../setting/language.dart';
 import '../setting/notification.dart';
 import '../setting/policy.dart';
@@ -74,9 +75,9 @@ class _SettingPageState extends State<SettingPage> {
       scheme: 'mailto',
       path: email,
     );
-    if (await canLaunchUrl(emailUri)) {
+    try {
       await launchUrl(emailUri);
-    } else {
+    } catch (e) {
       // * If cannot launch email app, copy email to clipboard and show snackbar
       await copyToClipboard(email);
       if (mounted) {
@@ -156,22 +157,25 @@ class _SettingPageState extends State<SettingPage> {
             buildSettingTile(context, Icons.edit,
                 S.of(context).editResetCategories, const EditCategoriesPage()),
             const Divider(),
+            buildSettingTile(
+                context, Icons.help, S.of(context).faq, const FAQPage()),
+            const Divider(),
             buildSettingTile(context, Icons.policy, S.of(context).policy,
                 const PolicyPage()),
             const Divider(),
             buildSettingTile(
                 context, Icons.info, S.of(context).about, const AboutPage()),
-            const Divider(),
-            buildSettingTile(
-                context, Icons.help, S.of(context).faq, const FAQPage()),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _sendMail,
-        label: Text(S.of(context).contactUs,
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FeedbackPage()),
+        ),
+        label: Text(S.of(context).feedback,
             style: const TextStyle(color: Colors.white)),
-        icon: const Icon(Icons.email, color: Colors.white),
+        icon: const Icon(Icons.rate_review, color: Colors.white),
         backgroundColor: Colors.blueGrey,
       ),
     );

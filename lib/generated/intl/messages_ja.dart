@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m3(selectedHour, selectedMinute) =>
       "選択した時間: ${selectedHour}:${selectedMinute}";
 
+  static String m4(version) => "バージョン: ${version}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("このアプリについて"),
@@ -39,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "このアプリは完全にオープンソースで、無料で使用できます。ご意見やプロジェクトへの貢献がありましたら、GitHubリポジトリをご覧ください。"),
         "aboutContentHomepage": MessageLookupByLibrary.simpleMessage(
             "他のプロジェクトにご興味がある場合は、公式サイトをご覧ください。"),
+        "aboutFoodlist": MessageLookupByLibrary.simpleMessage("FoodListについて"),
         "add": MessageLookupByLibrary.simpleMessage("追加"),
         "addCategory": MessageLookupByLibrary.simpleMessage("カテゴリを追加"),
         "addIngredients": MessageLookupByLibrary.simpleMessage("食材を追加する"),
@@ -47,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "apple": MessageLookupByLibrary.simpleMessage("リンゴ"),
         "bean": MessageLookupByLibrary.simpleMessage("豆類"),
         "beef": MessageLookupByLibrary.simpleMessage("牛肉"),
+        "bugReport": MessageLookupByLibrary.simpleMessage("バグ報告"),
+        "bugReportOfFoodlist":
+            MessageLookupByLibrary.simpleMessage("FoodListのバグ報告"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "carrot": MessageLookupByLibrary.simpleMessage("ニンジン"),
         "catOrSubcatIsDelError": MessageLookupByLibrary.simpleMessage(
@@ -63,6 +69,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmsubcategorydelete":
             MessageLookupByLibrary.simpleMessage("このサブカテゴリを削除してもよろしいですか？"),
         "contactUs": MessageLookupByLibrary.simpleMessage("お問い合わせ"),
+        "contributeCode": MessageLookupByLibrary.simpleMessage("コードに貢献"),
+        "contributeTranslation": MessageLookupByLibrary.simpleMessage("翻訳に貢献"),
+        "contributeTranslationOfFoodlist":
+            MessageLookupByLibrary.simpleMessage("FoodListの翻訳に貢献"),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
         "editCategoriesNotSupportedHint":
             MessageLookupByLibrary.simpleMessage("カテゴリの編集機能はまだサポートされていません！"),
@@ -106,12 +116,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("なぜ通知が機能していないのですか？"),
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "デバイスの設定でアプリの通知が有効になっていることを確認してください。それでも動作しない場合は、バッテリー最適化設定を確認し、アプリのバッテリー最適化を無効にしてください。"),
+        "feedback": MessageLookupByLibrary.simpleMessage("フィードバック"),
         "fish": MessageLookupByLibrary.simpleMessage("魚"),
         "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification":
             MessageLookupByLibrary.simpleMessage("FoodList 消費期限通知"),
         "foodlistExpiryNotificationContent": m1,
         "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
+        "forgerwisesGithub":
+            MessageLookupByLibrary.simpleMessage("ForgerWiseのGitHub"),
         "fruit": MessageLookupByLibrary.simpleMessage("果物"),
         "githubRepository": MessageLookupByLibrary.simpleMessage("GitHubリポジトリ"),
         "home": MessageLookupByLibrary.simpleMessage("ホーム"),
@@ -120,6 +133,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "この言語はまだサポートされていません！しかし、将来的にサポートされる予定です！"),
         "languages": MessageLookupByLibrary.simpleMessage("言語"),
         "meat": MessageLookupByLibrary.simpleMessage("肉類"),
+        "mesOfBugReport": MessageLookupByLibrary.simpleMessage(
+            "バグ: \n\nデバイス: \n\nOS: \n\nアプリバージョン: \n\n再現手順: \n\n*スクリーンショットがある場合は添付してください。\n\n*デバイスの部分の詳細資料がわからない場合は、スキップして書かなくでも大丈夫です。"),
+        "mesOfContributeTrans": MessageLookupByLibrary.simpleMessage(
+            "貢献したい言語: \n\n*新しい言語に貢献したい場合は、翻訳するファイルをお送りします。"),
+        "mesOfTransError": MessageLookupByLibrary.simpleMessage(
+            "言語: \n\n翻訳エラー: \n\n正しい翻訳: \n\n"),
         "milk": MessageLookupByLibrary.simpleMessage("牛乳"),
         "mushroom": MessageLookupByLibrary.simpleMessage("キノコ"),
         "none": MessageLookupByLibrary.simpleMessage("なし"),
@@ -130,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationMoreItems": m2,
         "notificationSetting": MessageLookupByLibrary.simpleMessage("通知設定"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
+        "officialWebsite": MessageLookupByLibrary.simpleMessage("公式サイト"),
         "other": MessageLookupByLibrary.simpleMessage("その他"),
         "otherBeans": MessageLookupByLibrary.simpleMessage("その他の豆類"),
         "otherEggMilk": MessageLookupByLibrary.simpleMessage("その他の卵と乳製品"),
@@ -147,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacyContent": MessageLookupByLibrary.simpleMessage(
             "このプライバシーポリシーは、当社のモバイルアプリケーション（以下「アプリ」といいます）が、あなたの情報を収集、使用、開示する方法について説明しています。アプリはユーザーのプライバシー保護を重視しています。当社のプライバシーポリシーは、あなたが共有することを決めた個人情報をどのように収集・使用するかを理解し、アプリを使用する際に十分な判断を行えるように設計されています。\n\nアプリを使用またはアクセスすることで、あなたはこのプライバシーポリシーに記載されている慣行に同意したものとみなされます。本ポリシーに同意しない場合は、アプリを使用しないでください。当社は、このポリシーを随時変更する権利を留保しており、頻繁にご確認ください。アプリの継続的な使用は、改訂されたプライバシーポリシーに同意したことを意味します。\n\n1. 収集データ\n現在、アプリは個人データを一切収集していません。アプリは、あなたの食品に関するすべてのデータをデバイス内に保存するよう設計されており、個人データを収集する機能はありません。\n\n2. データの保存と保護\nデータはあなたのデバイスに保存されており、デバイスの提供者やあなたが共有しない限り、他者がアクセスすることはできません。\n\n3. 将来の更新\n将来、同期機能などのためにユーザーデータのアップロード機能が追加された場合でも、この情報を第三者に開示することはありません。これらの機能が追加された際には、プライバシーポリシーの更新をお知らせします。\n\n4. プライバシーポリシーの変更\nアプリは、このポリシーおよびサービス利用規約をいつでも変更する権利を有します。当社は、あなたのアカウントに指定された主要な電子メールアドレスに通知を送信するか、当社サイトに目立つ通知を掲示することで、プライバシーポリシーの重要な変更をお知らせします。重要な変更は通知後30日以内に有効となります。軽微な変更や明確化は即時に有効となります。最新の情報を確認するために、サイトおよびこのプライバシーページを定期的に確認してください。"),
         "processedfood": MessageLookupByLibrary.simpleMessage("加工食品"),
+        "rateThisApp": MessageLookupByLibrary.simpleMessage("このアプリを評価する"),
         "reset": MessageLookupByLibrary.simpleMessage("リセット"),
         "salmon": MessageLookupByLibrary.simpleMessage("サーモン"),
         "save": MessageLookupByLibrary.simpleMessage("保存"),
@@ -158,11 +179,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "slideToDelete": MessageLookupByLibrary.simpleMessage("スライドして削除"),
         "soybean": MessageLookupByLibrary.simpleMessage("大豆"),
+        "specialThanksToAllContributorsBelow":
+            MessageLookupByLibrary.simpleMessage("以下のすべての貢献者に特別な感謝を！"),
         "subcategory": MessageLookupByLibrary.simpleMessage("サブカテゴリ"),
         "subcategoryName": MessageLookupByLibrary.simpleMessage("サブカテゴリ名"),
         "subcategoryNameInputHint":
             MessageLookupByLibrary.simpleMessage("サブカテゴリ名を入力してください"),
+        "translationError": MessageLookupByLibrary.simpleMessage("翻訳エラー"),
+        "translationErrorOfFoodlist":
+            MessageLookupByLibrary.simpleMessage("FoodListの翻訳エラー"),
         "tuna": MessageLookupByLibrary.simpleMessage("マグロ"),
-        "vegetable": MessageLookupByLibrary.simpleMessage("野菜")
+        "urlCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("URLがクリップボードにコピーされました"),
+        "vegetable": MessageLookupByLibrary.simpleMessage("野菜"),
+        "versionVersion": m4
       };
 }

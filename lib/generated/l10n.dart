@@ -1084,6 +1084,186 @@ class S {
       args: [],
     );
   }
+
+  /// `URL copied to clipboard`
+  String get urlCopiedToClipboard {
+    return Intl.message(
+      'URL copied to clipboard',
+      name: 'urlCopiedToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback`
+  String get feedback {
+    return Intl.message(
+      'Feedback',
+      name: 'feedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate this app`
+  String get rateThisApp {
+    return Intl.message(
+      'Rate this app',
+      name: 'rateThisApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Official website`
+  String get officialWebsite {
+    return Intl.message(
+      'Official website',
+      name: 'officialWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Translation error`
+  String get translationError {
+    return Intl.message(
+      'Translation error',
+      name: 'translationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contribute translation`
+  String get contributeTranslation {
+    return Intl.message(
+      'Contribute translation',
+      name: 'contributeTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contribute code`
+  String get contributeCode {
+    return Intl.message(
+      'Contribute code',
+      name: 'contributeCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ForgerWise's GitHub`
+  String get forgerwisesGithub {
+    return Intl.message(
+      'ForgerWise\'s GitHub',
+      name: 'forgerwisesGithub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bug report`
+  String get bugReport {
+    return Intl.message(
+      'Bug report',
+      name: 'bugReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About FoodList`
+  String get aboutFoodlist {
+    return Intl.message(
+      'About FoodList',
+      name: 'aboutFoodlist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bug Report of FoodList`
+  String get bugReportOfFoodlist {
+    return Intl.message(
+      'Bug Report of FoodList',
+      name: 'bugReportOfFoodlist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bug: \n\nDevice: \n\nOS: \n\nApp version: \n\nSteps to reproduce: \n\n*If you have a screenshot, please attach it.\n\n*If you don't know details of your device, you can skip writing it.`
+  String get mesOfBugReport {
+    return Intl.message(
+      'Bug: \n\nDevice: \n\nOS: \n\nApp version: \n\nSteps to reproduce: \n\n*If you have a screenshot, please attach it.\n\n*If you don\'t know details of your device, you can skip writing it.',
+      name: 'mesOfBugReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Translation Error of FoodList`
+  String get translationErrorOfFoodlist {
+    return Intl.message(
+      'Translation Error of FoodList',
+      name: 'translationErrorOfFoodlist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language: \n\nError translation: \n\nCorrect translation: \n\n`
+  String get mesOfTransError {
+    return Intl.message(
+      'Language: \n\nError translation: \n\nCorrect translation: \n\n',
+      name: 'mesOfTransError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contribute Translation of FoodList`
+  String get contributeTranslationOfFoodlist {
+    return Intl.message(
+      'Contribute Translation of FoodList',
+      name: 'contributeTranslationOfFoodlist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language I want to contribute: \n\n*If you want to contribute a whole new language, we will send you a file to translate.`
+  String get mesOfContributeTrans {
+    return Intl.message(
+      'Language I want to contribute: \n\n*If you want to contribute a whole new language, we will send you a file to translate.',
+      name: 'mesOfContributeTrans',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Version: {version}`
+  String versionVersion(String version) {
+    return Intl.message(
+      'Version: $version',
+      name: 'versionVersion',
+      desc: '',
+      args: [version],
+    );
+  }
+
+  /// `Special thanks to all contributors below!`
+  String get specialThanksToAllContributorsBelow {
+    return Intl.message(
+      'Special thanks to all contributors below!',
+      name: 'specialThanksToAllContributorsBelow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

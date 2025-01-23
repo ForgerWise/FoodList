@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodlist/setting/setting_appbar.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../generated/l10n.dart';
+import 'feedback.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -42,65 +41,19 @@ class _AboutState extends State<AboutPage> {
                 style: const TextStyle(
                     fontSize: 14, fontWeight: FontWeight.normal),
               ),
-              const SizedBox(height: 36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton.icon(
-                    icon: SvgPicture.asset(
-                      'assets/images/github-mark.svg',
-                      width: 24,
-                      height: 24,
-                      colorFilter:
-                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                    ),
-                    label: Text(
-                      S.of(context).githubRepository,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      if (await canLaunchUrl(githubUri)) {
-                        await launchUrl(githubUri);
-                      } else {
-                        throw 'Could not launch $githubUri';
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                    icon: Image.asset(
-                      'assets/images/FW-logo-icon.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                    label: Text(
-                      S.of(context).homepage,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      if (await canLaunchUrl(homepageUri)) {
-                        await launchUrl(homepageUri);
-                      } else {
-                        throw 'Could not launch $homepageUri';
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FeedbackPage()),
+        ),
+        label: Text(S.of(context).feedback,
+            style: const TextStyle(color: Colors.white)),
+        icon: const Icon(Icons.rate_review, color: Colors.white),
+        backgroundColor: Colors.blueGrey,
       ),
     );
   }

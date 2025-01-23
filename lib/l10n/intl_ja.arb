@@ -137,5 +137,30 @@
   "faqHowToEditSubcategoriesAns": "サブカテゴリを編集するには、編集したいカテゴリをタップしてください。その後、サブカテゴリ編集ページにリダイレクトされます。",
   "faqHowToEditSubcategories": "サブカテゴリを編集する方法",
   "emailCopiedToClipboard": "電子メールがクリップボードにコピーされました",
-  "homepage": "公式サイト"
+  "homepage": "公式サイト",
+  "urlCopiedToClipboard": "URLがクリップボードにコピーされました",
+  "feedback": "フィードバック",
+  "rateThisApp": "このアプリを評価する",
+  "officialWebsite": "公式サイト",
+  "translationError": "翻訳エラー",
+  "contributeTranslation": "翻訳に貢献",
+  "contributeCode": "コードに貢献",
+  "forgerwisesGithub": "ForgerWiseのGitHub",
+  "bugReport": "バグ報告",
+  "aboutFoodlist": "FoodListについて",
+  "bugReportOfFoodlist": "FoodListのバグ報告",
+  "mesOfBugReport": "バグ: \n\nデバイス: \n\nOS: \n\nアプリバージョン: \n\n再現手順: \n\n*スクリーンショットがある場合は添付してください。\n\n*デバイスの部分の詳細資料がわからない場合は、スキップして書かなくでも大丈夫です。",
+  "translationErrorOfFoodlist": "FoodListの翻訳エラー",
+  "mesOfTransError": "言語: \n\n翻訳エラー: \n\n正しい翻訳: \n\n",
+  "contributeTranslationOfFoodlist": "FoodListの翻訳に貢献",
+  "mesOfContributeTrans": "貢献したい言語: \n\n*新しい言語に貢献したい場合は、翻訳するファイルをお送りします。",
+  "versionVersion": "バージョン: {version}",
+  "@versionVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "specialThanksToAllContributorsBelow": "以下のすべての貢献者に特別な感謝を！"
 }

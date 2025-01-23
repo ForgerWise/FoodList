@@ -176,6 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "slideToDelete": MessageLookupByLibrary.simpleMessage("滑動以刪除"),
         "soybean": MessageLookupByLibrary.simpleMessage("黃豆"),
+        "specialThanksToAllContributorsBelow":
+            MessageLookupByLibrary.simpleMessage("特別感謝以下所有貢獻者！"),
         "subcategory": MessageLookupByLibrary.simpleMessage("子類別"),
         "subcategoryName": MessageLookupByLibrary.simpleMessage("子類別名稱"),
         "subcategoryNameInputHint":

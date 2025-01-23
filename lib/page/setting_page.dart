@@ -157,11 +157,11 @@ class _SettingPageState extends State<SettingPage> {
             buildSettingTile(context, Icons.edit,
                 S.of(context).editResetCategories, const EditCategoriesPage()),
             const Divider(),
-            buildSettingTile(context, Icons.policy, S.of(context).policy,
-                const PolicyPage()),
-            const Divider(),
             buildSettingTile(
                 context, Icons.help, S.of(context).faq, const FAQPage()),
+            const Divider(),
+            buildSettingTile(context, Icons.policy, S.of(context).policy,
+                const PolicyPage()),
             const Divider(),
             buildSettingTile(
                 context, Icons.info, S.of(context).about, const AboutPage()),

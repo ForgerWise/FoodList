@@ -196,6 +196,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "slideToDelete":
             MessageLookupByLibrary.simpleMessage("Slide to Delete"),
         "soybean": MessageLookupByLibrary.simpleMessage("Soybean"),
+        "specialThanksToAllContributorsBelow":
+            MessageLookupByLibrary.simpleMessage(
+                "Special thanks to all contributors below!"),
         "subcategory": MessageLookupByLibrary.simpleMessage("Subcategory"),
         "subcategoryName": MessageLookupByLibrary.simpleMessage("Name"),
         "subcategoryNameInputHint": MessageLookupByLibrary.simpleMessage(

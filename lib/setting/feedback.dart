@@ -101,20 +101,20 @@ class FeedbackState extends State<FeedbackPage> {
           }),
           const Divider(),
           const SizedBox(height: 12),
-          const Center(
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Special thanks to all contributors below!",
-                  style: TextStyle(
+                  S.of(context).specialThanksToAllContributorsBelow,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
+                const SizedBox(height: 8),
+                const Text(
                   "PBL 12班のみんな",
                   style: TextStyle(
                     fontSize: 14,

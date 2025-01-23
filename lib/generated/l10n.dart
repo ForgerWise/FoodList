@@ -1254,6 +1254,16 @@ class S {
       args: [version],
     );
   }
+
+  /// `Special thanks to all contributors below!`
+  String get specialThanksToAllContributorsBelow {
+    return Intl.message(
+      'Special thanks to all contributors below!',
+      name: 'specialThanksToAllContributorsBelow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

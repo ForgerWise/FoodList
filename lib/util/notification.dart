@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,9 +79,8 @@ class NotificationService {
         S.current.foodlistExpiryNotificationContent(todayItems, tomorrowItems),
         _notificationDetails(),
       );
-      print('Daily notification sent');
     } catch (e) {
-      print(e);
+      debugPrint('Error sending daily notification: $e');
     }
   }
 
@@ -109,22 +109,36 @@ class NotificationService {
       bool isNotificationPermissionGranted =
           await PermissionManager.checkAndRequestNotificationPermission();
       if (isAlarmPermissionGranted && isNotificationPermissionGranted) {
-        print('Notifications enabled');
+        debugPrint('Notifications enabled');
       } else {
         // * Cancel all notifications if permission is not granted
         await flutterLocalNotificationsPlugin.cancelAll();
         await prefs.setBool('notificationsEnabled', false);
-        print('Notifications disabled');
+        debugPrint('Notifications disabled');
       }
     } else {
       // * Cancel all notifications if disabled
       await flutterLocalNotificationsPlugin.cancelAll();
-      print('Notifications disabled');
+      debugPrint('Notifications disabled');
     }
   }
 
   Future<bool> areNotificationsEnabled() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('notificationsEnabled') ?? false;
+    if (prefs.getBool('notificationsEnabled') == null) {
+      await prefs.setBool('notificationsEnabled', false);
+      return false;
+    } else if (prefs.getBool('notificationsEnabled')!) {
+      if (await PermissionManager
+              .checkAndRequestScheduleExactAlarmPermission() &&
+          await PermissionManager.checkAndRequestNotificationPermission()) {
+        return true;
+      } else {
+        await prefs.setBool('notificationsEnabled', false);
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

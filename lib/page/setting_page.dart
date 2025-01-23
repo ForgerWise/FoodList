@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlist/util/alarm.dart';
-import 'package:foodlist/util/permission.dart';
 
 import '../generated/l10n.dart';
 import '../setting/edit_categories.dart';
@@ -10,9 +8,9 @@ import '../setting/language.dart';
 import '../setting/notification.dart';
 import '../setting/policy.dart';
 import '../setting/about.dart';
+import '../util/alarm.dart';
 import '../util/notification.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart';
+import '../util/permission.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -44,9 +42,11 @@ class _SettingPageState extends State<SettingPage> {
   Future<void> _setNotificationSetting() async {
     bool isEnabled = await notificationService.areNotificationsEnabled();
     bool isAlarmPermissionGranted =
-        await PermissionManager.checkAndRequestScheduleExactAlarmPermission();
+        await PermissionManager.checkAndRequestScheduleExactAlarmPermission(
+            toSetting: true);
     bool isNotificationPermissionGranted =
-        await PermissionManager.checkAndRequestNotificationPermission();
+        await PermissionManager.checkAndRequestNotificationPermission(
+            toSetting: true);
 
     if (isEnabled &&
         (!isAlarmPermissionGranted || !isNotificationPermissionGranted)) {
@@ -68,30 +68,6 @@ class _SettingPageState extends State<SettingPage> {
         isNotificationPermissionGranted) {
       await alarmService.cancelAlarm();
     }
-  }
-
-  Future<void> _sendMail() async {
-    final Uri emailUri = Uri(
-      scheme: 'mailto',
-      path: email,
-    );
-    try {
-      await launchUrl(emailUri);
-    } catch (e) {
-      // * If cannot launch email app, copy email to clipboard and show snackbar
-      await copyToClipboard(email);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(S.of(context).emailCopiedToClipboard),
-              backgroundColor: Colors.blueGrey),
-        );
-      }
-    }
-  }
-
-  Future<void> copyToClipboard(String text) async {
-    await Clipboard.setData(ClipboardData(text: text));
   }
 
   Widget buildSettingTile(

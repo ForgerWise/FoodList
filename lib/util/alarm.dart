@@ -35,18 +35,18 @@ class AlarmService {
     await AndroidAlarmManager.periodic(
         const Duration(days: 1), 0, alarmCallback,
         startAt: selectedTime, rescheduleOnReboot: true);
-    print('Scheduled daily alarm at $selectedTime');
+    debugPrint('Scheduled daily alarm at $selectedTime');
   }
 
   Future<void> cancelAlarm() async {
     await AndroidAlarmManager.cancel(0);
-    print('Cancelled daily alarm');
+    debugPrint('Cancelled daily alarm');
   }
 
   // * The callback function that runs when the alarm is triggered
   @pragma('vm:entry-point')
   static Future<void> alarmCallback() async {
-    print("Alarm triggered: Updating expired food items...");
+    debugPrint("Alarm triggered: Updating expired food items...");
 
     // * Initialize Flutter bindings
     WidgetsFlutterBinding.ensureInitialized();
@@ -86,7 +86,7 @@ class AlarmService {
     // * Call the notification service to send the daily notification
     NotificationService notificationService = NotificationService();
     notificationService.sendDailyNotification();
-    print("Alarm completed");
+    debugPrint("Alarm completed");
   }
 
   // * Save the selected time for alarms

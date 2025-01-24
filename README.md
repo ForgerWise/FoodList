@@ -28,7 +28,7 @@ Or, you can download the app from Google Play Store by clicking the badge below.
 
 1. **Add Food Items**: Open the app and log any food items you have at home along with their expiration dates.
 2. **Monitor Expiration**: The app will automatically display color-coded indicators based on the remaining time until expiration.
-3. **Manage Notifications**: (Planned) Receive alerts as expiration dates approach to ensure timely consumption or disposal.
+3. **Manage Notifications**: Receive alerts as expiration dates approach to ensure timely consumption or disposal.
 
 ## Contributing
 

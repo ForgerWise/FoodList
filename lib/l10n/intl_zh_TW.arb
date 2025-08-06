@@ -162,5 +162,6 @@
       }
     }
   },
-  "specialThanksToAllContributorsBelow": "特別感謝以下所有貢獻者！"
+  "specialThanksToAllContributorsBelow": "特別感謝以下所有貢獻者！",
+  "license": "授權"
 }

@@ -132,6 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "この言語はまだサポートされていません！しかし、将来的にサポートされる予定です！"),
         "languages": MessageLookupByLibrary.simpleMessage("言語"),
+        "license": MessageLookupByLibrary.simpleMessage("ライセンス"),
         "meat": MessageLookupByLibrary.simpleMessage("肉類"),
         "mesOfBugReport": MessageLookupByLibrary.simpleMessage(
             "バグ: \n\nデバイス: \n\nOS: \n\nアプリバージョン: \n\n再現手順: \n\n*スクリーンショットがある場合は添付してください。\n\n*デバイスの部分の詳細資料がわからない場合は、スキップして書かなくでも大丈夫です。"),

@@ -130,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "languageNotSupportedYetMessage":
             MessageLookupByLibrary.simpleMessage("此語言尚未支援！但我們預計會在未來支援此語言！"),
         "languages": MessageLookupByLibrary.simpleMessage("語言"),
+        "license": MessageLookupByLibrary.simpleMessage("授權"),
         "meat": MessageLookupByLibrary.simpleMessage("肉類"),
         "mesOfBugReport": MessageLookupByLibrary.simpleMessage(
             "錯誤: \n\n裝置: \n\n作業系統: \n\n應用程式版本: \n\n重現錯誤的流程: \n\n*如果您有螢幕截圖，請一併附上。\n\n*如果您不清楚您的裝置詳細資訊，可以跳過該部分不填寫。"),

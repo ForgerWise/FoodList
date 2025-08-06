@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.forgerwise.foodlist"
-    compileSdkVersion 34 // ! Update to API level 34
+    compileSdkVersion 35 // ! Updated to API level 35 (Android 15)
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -58,7 +58,7 @@ android {
         applicationId "com.forgerwise.foodlist"
         minSdkVersion flutter.minSdkVersion
         minSdkVersion 24
-        targetSdkVersion 34 // ! Update to API level 34
+        targetSdkVersion 35 // ! Updated to API level 35 (Android 15)
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

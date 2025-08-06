@@ -141,6 +141,9 @@ class _SettingPageState extends State<SettingPage> {
             const Divider(),
             buildSettingTile(
                 context, Icons.info, S.of(context).about, const AboutPage()),
+            const Divider(),
+            buildSettingTile(
+                context, Icons.description, S.of(context).license, const LicensePage()),
           ],
         ),
       ),

@@ -103,6 +103,7 @@ class MyAppState extends State<MyApp> {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.blueGrey,
           iconTheme: IconThemeData(color: Colors.white),
+          centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.white,
             fontSize: 24,

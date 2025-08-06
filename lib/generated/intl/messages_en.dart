@@ -141,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "This language is not supported yet! We\'\'re working on it!"),
         "languages": MessageLookupByLibrary.simpleMessage("Languages"),
+        "license": MessageLookupByLibrary.simpleMessage("License"),
         "meat": MessageLookupByLibrary.simpleMessage("Meat"),
         "mesOfBugReport": MessageLookupByLibrary.simpleMessage(
             "Bug: \n\nDevice: \n\nOS: \n\nApp version: \n\nSteps to reproduce: \n\n*If you have a screenshot, please attach it.\n\n*If you don\'t know details of your device, you can skip writing it."),

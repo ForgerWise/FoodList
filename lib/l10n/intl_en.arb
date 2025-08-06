@@ -162,5 +162,6 @@
       }
     }
   },
-  "specialThanksToAllContributorsBelow": "Special thanks to all contributors below!"
+  "specialThanksToAllContributorsBelow": "Special thanks to all contributors below!",
+  "license": "License"
 }

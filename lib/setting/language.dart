@@ -36,28 +36,39 @@ class _LanguageState extends State<LanguagePage> {
       position: languagesList.indexOf(languageCode),
       duration: const Duration(milliseconds: 375),
       child: SlideAnimation(
-        verticalOffset: 150.0,
+        verticalOffset: 50.0,
         child: FadeInAnimation(
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
             decoration: BoxDecoration(
-              color: isSelected ? Colors.blueGrey[100] : Colors.transparent,
-              borderRadius: BorderRadius.circular(8.0),
+              color: isSelected ? Colors.blueGrey.withOpacity(0.08) : Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+              border: Border.all(
+                color: isSelected ? Colors.blueGrey.withOpacity(0.5) : Colors.grey.shade200,
+                width: 1,
+              ),
+              boxShadow: isSelected ? [] : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.02),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: ListTile(
-              title: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  languageName,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
-                    color: isSelected ? Colors.blueGrey : Colors.grey[400],
-                  ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              title: Text(
+                languageName,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                  color: isSelected ? Colors.blueGrey.shade800 : Colors.black87,
                 ),
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              trailing: isSelected
+                  ? const Icon(Icons.check_circle, color: Colors.blueGrey)
+                  : null,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
               onTap: () => _onLanguageTap(languageCode, isSelected),
             ),
           ),
@@ -77,6 +88,7 @@ class _LanguageState extends State<LanguagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).languages),
       body: FutureBuilder<String>(
         future: LanguageDB.getLanguage(context),
@@ -89,6 +101,7 @@ class _LanguageState extends State<LanguagePage> {
 
           return AnimationLimiter(
             child: ListView.builder(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 40.0),
               itemCount: languagesList.length,
               itemBuilder: (context, index) {
                 final languageCode = languagesList[index];

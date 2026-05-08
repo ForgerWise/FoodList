@@ -192,5 +192,14 @@
   "clickToChangeReminderTime": "タップして時間を変更",
   "dragToReorderHint": "右側のハンドルを長押しして並べ替える",
   "categoryName": "カテゴリー名",
-  "icon": "アイコン"
+  "icon": "アイコン",
+  "itemDeleted": "\"{itemName}\" を削除しました",
+  "@itemDeleted": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "undo": "元に戻す"
 }

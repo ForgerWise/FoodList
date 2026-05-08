@@ -192,5 +192,14 @@
   "clickToChangeReminderTime": "點擊修改提醒時間",
   "dragToReorderHint": "長按右側拖動手柄可調整排列順序",
   "categoryName": "類別名稱",
-  "icon": "圖示"
+  "icon": "圖示",
+  "itemDeleted": "\"{itemName}\" 已刪除",
+  "@itemDeleted": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "undo": "復原"
 }

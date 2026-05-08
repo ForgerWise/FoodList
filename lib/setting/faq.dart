@@ -9,9 +9,10 @@ class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).faq),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         children: [
           faqCard(S.of(context).faqWhyEditNotLoad,
               S.of(context).faqWhyEditNotLoadAns),
@@ -30,24 +31,58 @@ class FAQPage extends StatelessWidget {
 
   // Function to create FAQ Card
   Widget faqCard(String question, String answer) {
-    return Card(
-      color: Colors.blueGrey[700],
+    return Container(
       margin: const EdgeInsets.only(bottom: 16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              question,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-                color: Colors.white,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.help_outline_rounded, color: Colors.blueGrey.shade500, size: 22),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    question,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.black87,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 34.0, top: 12.0, bottom: 12.0),
+              child: Divider(height: 1, color: Colors.grey.shade100),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 34.0),
+              child: Text(
+                answer,
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontSize: 15.0,
+                  height: 1.6,
+                ),
               ),
             ),
-            const SizedBox(height: 8.0),
-            Text(answer, style: const TextStyle(color: Colors.white)),
           ],
         ),
       ),

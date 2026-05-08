@@ -64,6 +64,7 @@ class NotificationService {
   // * Schedule a daily notification call by AlarmService
   Future<void> sendDailyNotification() async {
     final InputDataBase inputDataBase = InputDataBase();
+    await inputDataBase.loadData();
 
     // * List of items that will expire today and tomorrow
     // * If item is more than 3, will show "and x more items"

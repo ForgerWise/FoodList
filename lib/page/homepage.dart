@@ -244,19 +244,19 @@ class _HomePageState extends State<HomePage> {
           _summaryCard(
             stats['expired'] ?? 0,
             S.of(context).summaryExpired,
-            const Color(0xFFE53935),
+            const Color(0xFFD32F2F),
           ),
           const SizedBox(width: 8),
           _summaryCard(
             stats['expiringSoon'] ?? 0,
             S.of(context).summaryExpiringSoon,
-            const Color(0xFFFFA726),
+            const Color(0xFFF57C00),
           ),
           const SizedBox(width: 8),
           _summaryCard(
             stats['fresh'] ?? 0,
             S.of(context).summaryFresh,
-            const Color(0xFF43A047),
+            const Color(0xFF388E3C),
           ),
         ],
       ),
@@ -278,8 +278,8 @@ class _HomePageState extends State<HomePage> {
               '$count',
               style: TextStyle(
                 fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: count > 0 ? color : Colors.white54,
+                fontWeight: FontWeight.w900,
+                color: count > 0 ? color : Colors.white,
               ),
             ),
             Text(

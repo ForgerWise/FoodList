@@ -81,11 +81,11 @@ class AlarmService {
 
     // * Initialize the localizations
     String locale = await LanguageDB.getLanguageWithoutContext();
-    S.load(Locale(locale));
+    await S.load(Locale(locale));
 
     // * Call the notification service to send the daily notification
     NotificationService notificationService = NotificationService();
-    notificationService.sendDailyNotification();
+    await notificationService.sendDailyNotification();
     debugPrint("Alarm completed");
   }
 

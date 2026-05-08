@@ -107,8 +107,10 @@ class _AboutState extends State<AboutPage> {
     if (url != null) {
       return InkWell(
         onTap: () async {
-          if (await canLaunchUrl(url)) {
-            await launchUrl(url, mode: LaunchMode.externalApplication);
+          try {
+            await launchUrl(url);
+          } catch (e) {
+            debugPrint('Could not launch $url: $e');
           }
         },
         borderRadius: BorderRadius.circular(8),

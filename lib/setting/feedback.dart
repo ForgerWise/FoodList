@@ -48,10 +48,11 @@ class FeedbackState extends State<FeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).feedback),
       body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         children: [
-          const SizedBox(height: 12),
           Center(
             child: Text(S.of(context).versionVersion(_version),
                 style: const TextStyle(
@@ -59,48 +60,57 @@ class FeedbackState extends State<FeedbackPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.grey)),
           ),
-          const SizedBox(height: 12),
-          const Divider(),
-          _buildTextButton(S.of(context).rateThisApp, () {
-            _launchUrl(Uri.parse(foodlistPlayStoreUrl));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).officialWebsite, () {
-            _launchUrl(Uri.parse(forgerwiseOfficialWebsite));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).forgerwisesGithub, () {
-            _launchUrl(Uri.parse(forgerwiseGithub));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).contactUs, () {
-            _launchUrl(_combineEmailAndTitleAndMessage(
-                forgerwiseEmail, titleOfContactUs));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).bugReport, () {
-            _launchUrl(_combineEmailAndTitleAndMessage(
+          const SizedBox(height: 32),
+          _buildListItem(
+            icon: Icons.star_rate_rounded,
+            title: S.of(context).rateThisApp,
+            onTap: () => _launchUrl(Uri.parse(foodlistPlayStoreUrl)),
+          ),
+          _buildListItem(
+            icon: Icons.language_rounded,
+            title: S.of(context).officialWebsite,
+            onTap: () => _launchUrl(Uri.parse(forgerwiseOfficialWebsite)),
+          ),
+          _buildListItem(
+            icon: Icons.code_rounded,
+            title: S.of(context).forgerwisesGithub,
+            onTap: () => _launchUrl(Uri.parse(forgerwiseGithub)),
+          ),
+          const SizedBox(height: 16),
+          _buildListItem(
+            icon: Icons.mail_outline_rounded,
+            title: S.of(context).contactUs,
+            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
+                forgerwiseEmail, titleOfContactUs)),
+          ),
+          _buildListItem(
+            icon: Icons.bug_report_outlined,
+            title: S.of(context).bugReport,
+            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
                 forgerwiseEmail, titleOfBugReport,
-                message: messageOfBugReport));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).translationError, () {
-            _launchUrl(_combineEmailAndTitleAndMessage(
+                message: messageOfBugReport)),
+          ),
+          _buildListItem(
+            icon: Icons.g_translate_rounded,
+            title: S.of(context).translationError,
+            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
                 forgerwiseEmail, titleOfTranslationError,
-                message: messageOfTranslationError));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).contributeTranslation, () {
-            _launchUrl(_combineEmailAndTitleAndMessage(
+                message: messageOfTranslationError)),
+          ),
+          const SizedBox(height: 16),
+          _buildListItem(
+            icon: Icons.translate_rounded,
+            title: S.of(context).contributeTranslation,
+            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
                 forgerwiseEmail, titleOfContributeTranslation,
-                message: messageOfContributeTranslation));
-          }),
-          const Divider(),
-          _buildTextButton(S.of(context).contributeCode, () {
-            _launchUrl(Uri.parse(foodlistGithubRepository));
-          }),
-          const Divider(),
-          const SizedBox(height: 12),
+                message: messageOfContributeTranslation)),
+          ),
+          _buildListItem(
+            icon: Icons.integration_instructions_outlined,
+            title: S.of(context).contributeCode,
+            onTap: () => _launchUrl(Uri.parse(foodlistGithubRepository)),
+          ),
+          const SizedBox(height: 48),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +120,7 @@ class FeedbackState extends State<FeedbackPage> {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey,
+                    color: Colors.blueGrey,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -119,9 +129,10 @@ class FeedbackState extends State<FeedbackPage> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
-                    color: Colors.grey,
+                    color: Colors.blueGrey,
                   ),
                 ),
+                const SizedBox(height: 40),
               ],
             ),
           ),
@@ -130,14 +141,40 @@ class FeedbackState extends State<FeedbackPage> {
     );
   }
 
-  TextButton _buildTextButton(String text, Function() onPressed) {
-    return TextButton(onPressed: onPressed, child: _buildTextText(text));
-  }
-
-  Text _buildTextText(String text) {
-    return Text(text,
-        style: const TextStyle(
-            fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blueGrey));
+  Widget _buildListItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.blueGrey.shade500),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: Colors.black87,
+          ),
+        ),
+        trailing: Icon(Icons.chevron_right, color: Colors.grey.shade300, size: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        onTap: onTap,
+      ),
+    );
   }
 
   Uri _combineEmailAndTitleAndMessage(String email, String title,

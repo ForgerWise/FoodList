@@ -20,17 +20,23 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(expireDate) => "Expire Date: ${expireDate}";
+  static String m0(days) => "${days} days left";
 
-  static String m1(todayItems, tomorrowItems) =>
+  static String m1(expireDate) => "Expire Date: ${expireDate}";
+
+  static String m2(days) => "Expired ${days} days ago";
+
+  static String m3(todayItems, tomorrowItems) =>
       "Expiring today: ${todayItems}\nExpiring tomorrow: ${tomorrowItems}";
 
-  static String m2(number) => "and ${number} more items";
+  static String m4(itemName) => "\"${itemName}\" Deleted";
 
-  static String m3(selectedHour, selectedMinute) =>
+  static String m5(number) => "and ${number} more items";
+
+  static String m6(selectedHour, selectedMinute) =>
       "Selected Time: ${selectedHour}:${selectedMinute}";
 
-  static String m4(version) => "Version: ${version}";
+  static String m7(version) => "Version: ${version}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -45,11 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add Category"),
         "addIngredients":
-            MessageLookupByLibrary.simpleMessage("Add Ingredients"),
+            MessageLookupByLibrary.simpleMessage("Add Ingredient"),
         "addSubcategory":
             MessageLookupByLibrary.simpleMessage("Add Subcategory"),
-        "addToSubcategory":
-            MessageLookupByLibrary.simpleMessage("Add to Subcategory"),
         "apple": MessageLookupByLibrary.simpleMessage("Apple"),
         "bean": MessageLookupByLibrary.simpleMessage("Bean"),
         "beef": MessageLookupByLibrary.simpleMessage("Beef"),
@@ -63,7 +67,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoriesResetHint": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to reset the categories to default?"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
+        "categoryName": MessageLookupByLibrary.simpleMessage("Category Name"),
         "chicken": MessageLookupByLibrary.simpleMessage("Chicken"),
+        "clickToChangeReminderTime": MessageLookupByLibrary.simpleMessage(
+            "Click to change reminder time"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmCategoryDelete": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this category?"),
@@ -78,12 +85,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Contribute translation"),
         "contributeTranslationOfFoodlist": MessageLookupByLibrary.simpleMessage(
             "Contribute Translation of FoodList"),
+        "daysLeft": m0,
+        "disabled": MessageLookupByLibrary.simpleMessage("Disabled"),
+        "dragToReorderHint": MessageLookupByLibrary.simpleMessage(
+            "Long press the right handle to reorder"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editCategoriesNotSupportedHint": MessageLookupByLibrary.simpleMessage(
             "Edit categories is not supported yet!"),
         "editCategory": MessageLookupByLibrary.simpleMessage("Edit Category"),
         "editIngredients":
-            MessageLookupByLibrary.simpleMessage("Edit Ingredients"),
+            MessageLookupByLibrary.simpleMessage("Edit Ingredient"),
         "editResetCategories":
             MessageLookupByLibrary.simpleMessage("Edit/Reset Categories"),
         "editSubategory":
@@ -94,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "eggMilk": MessageLookupByLibrary.simpleMessage("Egg & Milk"),
         "emailCopiedToClipboard":
             MessageLookupByLibrary.simpleMessage("Email copied to clipboard"),
+        "enabled": MessageLookupByLibrary.simpleMessage("Enabled"),
         "enterNewCategoryName":
             MessageLookupByLibrary.simpleMessage("Enter new category name"),
         "enterNewSubcategoryName":
@@ -101,8 +113,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "entryDate": MessageLookupByLibrary.simpleMessage("Entry Date"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "example": MessageLookupByLibrary.simpleMessage("Example"),
-        "expireDate": MessageLookupByLibrary.simpleMessage("Expire Date"),
-        "expireDateConfirmMessage": m0,
+        "expireDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
+        "expireDateConfirmMessage": m1,
+        "expiredDaysAgo": m2,
+        "expiresToday": MessageLookupByLibrary.simpleMessage("Expires today!"),
+        "expiresTomorrow":
+            MessageLookupByLibrary.simpleMessage("Expires tomorrow!"),
         "faq": MessageLookupByLibrary.simpleMessage("FAQ"),
         "faqHowToEditSubcategories":
             MessageLookupByLibrary.simpleMessage("How to edit subcategories?"),
@@ -125,11 +141,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "Please ensure that you have enabled notifications for the app in your device settings. If it still doesn\'\'t work, check the battery optimization settings and disable battery optimization for the app."),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
+        "filterAll": MessageLookupByLibrary.simpleMessage("All"),
+        "filterExpired": MessageLookupByLibrary.simpleMessage("Expired"),
+        "filterExpiringSoon":
+            MessageLookupByLibrary.simpleMessage("Expiring Soon"),
         "fish": MessageLookupByLibrary.simpleMessage("Fish"),
         "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification": MessageLookupByLibrary.simpleMessage(
             "FoodList Expiry Notification"),
-        "foodlistExpiryNotificationContent": m1,
+        "foodlistExpiryNotificationContent": m3,
         "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
         "forgerwisesGithub":
             MessageLookupByLibrary.simpleMessage("ForgerWise\'s GitHub"),
@@ -138,6 +158,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("GitHub Repository"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homepage": MessageLookupByLibrary.simpleMessage("Homepage"),
+        "icon": MessageLookupByLibrary.simpleMessage("Icon"),
+        "ingredientManagement":
+            MessageLookupByLibrary.simpleMessage("Ingredient Management"),
+        "ingredientName": MessageLookupByLibrary.simpleMessage("Name"),
+        "ingredientNameHint":
+            MessageLookupByLibrary.simpleMessage("e.g. Eggplant, Spinach..."),
+        "itemDeleted": m4,
         "languageNotSupportedYetMessage": MessageLookupByLibrary.simpleMessage(
             "This language is not supported yet! We\'\'re working on it!"),
         "languages": MessageLookupByLibrary.simpleMessage("Languages"),
@@ -151,12 +178,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Language: \n\nError translation: \n\nCorrect translation: \n\n"),
         "milk": MessageLookupByLibrary.simpleMessage("Milk"),
         "mushroom": MessageLookupByLibrary.simpleMessage("Mushroom"),
+        "noIngredients":
+            MessageLookupByLibrary.simpleMessage("No ingredients yet"),
+        "noIngredientsHint": MessageLookupByLibrary.simpleMessage(
+            "Tap + to add your first ingredient!"),
         "none": MessageLookupByLibrary.simpleMessage("None"),
         "notificationContent": MessageLookupByLibrary.simpleMessage(
             "Set the time at which you would like to receive notifications. This helps you to know which items are expiring soon. "),
         "notificationContentWarn": MessageLookupByLibrary.simpleMessage(
             "Notifications may be delayed on some devices due to battery optimization settings or android restrictions."),
-        "notificationMoreItems": m2,
+        "notificationMoreItems": m5,
         "notificationSetting":
             MessageLookupByLibrary.simpleMessage("Notification Setting"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
@@ -180,19 +211,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "oyster": MessageLookupByLibrary.simpleMessage("Oyster"),
         "policy": MessageLookupByLibrary.simpleMessage("Policy"),
         "pork": MessageLookupByLibrary.simpleMessage("Pork"),
+        "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "privacyContent": MessageLookupByLibrary.simpleMessage(
             "This Privacy Policy describes how our mobile application, (hereinafter referred to as \'\'the App\'\'), collects, uses, and discloses your information. The App is committed to maintaining robust privacy protections for its users. Our Privacy Policy is designed to help you understand how we collect and use the personal information you decide to share and help you make informed decisions when using the App.\n\nBy using or accessing the App, you accept the practices described in this Privacy Policy. If you do not agree to this policy, please do not use the App. We reserve the right to modify this policy from time to time, so please review it frequently. Your continued use of the App signifies your acceptance of our Privacy Policy as modified.\n\n1. Data We Collect\nCurrently, the App does not collect any personal data. The App is designed to store all data related to your food within the device itself and does not have any feature to collect your personal data.\n\n2. Data Storage and Protection\nYour data is stored on your device and is not accessible by anyone but you, unless the data on your device is shared by you or your device provider.\n\n3. Future Updates\nIn future updates, if there is a feature that allows user data upload for functionalities such as synchronization, we still will not disclose this information to any third party. We will announce the update of our privacy policy when these features are added.\n\n4. Changes to Our Privacy Policy\nThe App reserves the right to change this policy and our Terms of Service at any time. We will notify users of significant changes to our Privacy Policy by sending a notice to the primary email address specified in your account or by placing a prominent notice on our site. Significant changes will go into effect 30 days following such notification. Non-material changes or clarifications will take effect immediately. You should periodically check the Site and this privacy page for updates."),
         "processedfood": MessageLookupByLibrary.simpleMessage("Processed Food"),
+        "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
         "rateThisApp": MessageLookupByLibrary.simpleMessage("Rate this app"),
+        "reminderTime": MessageLookupByLibrary.simpleMessage("Reminder Time"),
         "reset": MessageLookupByLibrary.simpleMessage("Reset"),
         "salmon": MessageLookupByLibrary.simpleMessage("Salmon"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "selectCategoryHint":
-            MessageLookupByLibrary.simpleMessage("Select Category"),
+        "searchHint":
+            MessageLookupByLibrary.simpleMessage("Search ingredients..."),
         "selectDate": MessageLookupByLibrary.simpleMessage("Select Date"),
-        "selectSubcategoryHint":
-            MessageLookupByLibrary.simpleMessage("Select Subcategory"),
-        "selectedTime": m3,
+        "selectedTime": m6,
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "slideToDelete":
             MessageLookupByLibrary.simpleMessage("Slide to Delete"),
@@ -200,18 +232,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "specialThanksToAllContributorsBelow":
             MessageLookupByLibrary.simpleMessage(
                 "Special thanks to all contributors below!"),
-        "subcategory": MessageLookupByLibrary.simpleMessage("Subcategory"),
-        "subcategoryName": MessageLookupByLibrary.simpleMessage("Name"),
-        "subcategoryNameInputHint": MessageLookupByLibrary.simpleMessage(
-            "Please input the name of the ingredient"),
+        "summaryExpired": MessageLookupByLibrary.simpleMessage("Expired"),
+        "summaryExpiringSoon":
+            MessageLookupByLibrary.simpleMessage("Expiring Soon"),
+        "summaryFresh": MessageLookupByLibrary.simpleMessage("Fresh"),
         "translationError":
             MessageLookupByLibrary.simpleMessage("Translation error"),
         "translationErrorOfFoodlist": MessageLookupByLibrary.simpleMessage(
             "Translation Error of FoodList"),
         "tuna": MessageLookupByLibrary.simpleMessage("Tuna"),
+        "undo": MessageLookupByLibrary.simpleMessage("Undo"),
         "urlCopiedToClipboard":
             MessageLookupByLibrary.simpleMessage("URL copied to clipboard"),
         "vegetable": MessageLookupByLibrary.simpleMessage("Vegetable"),
-        "versionVersion": m4
+        "versionVersion": m7
       };
 }

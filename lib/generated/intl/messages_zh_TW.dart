@@ -20,17 +20,23 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_TW';
 
-  static String m0(expireDate) => "有效日期: ${expireDate}";
+  static String m0(days) => "還剩 ${days} 天";
 
-  static String m1(todayItems, tomorrowItems) =>
+  static String m1(expireDate) => "有效日期: ${expireDate}";
+
+  static String m2(days) => "已過期 ${days} 天";
+
+  static String m3(todayItems, tomorrowItems) =>
       "今日過期: ${todayItems}\n明日過期: ${tomorrowItems}";
 
-  static String m2(number) => "以及 ${number} 項其他食材";
+  static String m4(itemName) => "\"${itemName}\" 已刪除";
 
-  static String m3(selectedHour, selectedMinute) =>
+  static String m5(number) => "以及 ${number} 項其他食材";
+
+  static String m6(selectedHour, selectedMinute) =>
       "選擇的時間: ${selectedHour}:${selectedMinute}";
 
-  static String m4(version) => "版本: ${version}";
+  static String m7(version) => "版本: ${version}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -46,7 +52,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "addCategory": MessageLookupByLibrary.simpleMessage("新增類別"),
         "addIngredients": MessageLookupByLibrary.simpleMessage("新增食材"),
         "addSubcategory": MessageLookupByLibrary.simpleMessage("新增子類別"),
-        "addToSubcategory": MessageLookupByLibrary.simpleMessage("新增至子類別"),
         "apple": MessageLookupByLibrary.simpleMessage("蘋果"),
         "bean": MessageLookupByLibrary.simpleMessage("豆類"),
         "beef": MessageLookupByLibrary.simpleMessage("牛肉"),
@@ -60,7 +65,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoriesResetHint":
             MessageLookupByLibrary.simpleMessage("確認重置類別為預設值？"),
         "category": MessageLookupByLibrary.simpleMessage("類別"),
+        "categoryName": MessageLookupByLibrary.simpleMessage("類別名稱"),
         "chicken": MessageLookupByLibrary.simpleMessage("雞肉"),
+        "clickToChangeReminderTime":
+            MessageLookupByLibrary.simpleMessage("點擊修改提醒時間"),
         "confirm": MessageLookupByLibrary.simpleMessage("確認"),
         "confirmCategoryDelete":
             MessageLookupByLibrary.simpleMessage("您確定要刪除此類別嗎？"),
@@ -73,6 +81,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "contributeTranslation": MessageLookupByLibrary.simpleMessage("貢獻翻譯"),
         "contributeTranslationOfFoodlist":
             MessageLookupByLibrary.simpleMessage("貢獻 FoodList 的翻譯"),
+        "daysLeft": m0,
+        "disabled": MessageLookupByLibrary.simpleMessage("已關閉"),
+        "dragToReorderHint":
+            MessageLookupByLibrary.simpleMessage("長按右側拖動手柄可調整排列順序"),
         "edit": MessageLookupByLibrary.simpleMessage("編輯"),
         "editCategoriesNotSupportedHint":
             MessageLookupByLibrary.simpleMessage("編輯類別功能尚未支援！"),
@@ -85,6 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "eggMilk": MessageLookupByLibrary.simpleMessage("蛋奶"),
         "emailCopiedToClipboard":
             MessageLookupByLibrary.simpleMessage("電子郵件已複製到剪貼簿"),
+        "enabled": MessageLookupByLibrary.simpleMessage("已開啟"),
         "enterNewCategoryName": MessageLookupByLibrary.simpleMessage("輸入新類別名稱"),
         "enterNewSubcategoryName":
             MessageLookupByLibrary.simpleMessage("輸入新子類別名稱"),
@@ -92,7 +105,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "error": MessageLookupByLibrary.simpleMessage("錯誤"),
         "example": MessageLookupByLibrary.simpleMessage("範例"),
         "expireDate": MessageLookupByLibrary.simpleMessage("有效日期"),
-        "expireDateConfirmMessage": m0,
+        "expireDateConfirmMessage": m1,
+        "expiredDaysAgo": m2,
+        "expiresToday": MessageLookupByLibrary.simpleMessage("今天到期！"),
+        "expiresTomorrow": MessageLookupByLibrary.simpleMessage("明天到期！"),
         "faq": MessageLookupByLibrary.simpleMessage("常見問題"),
         "faqHowToEditSubcategories":
             MessageLookupByLibrary.simpleMessage("如何編輯子類別？"),
@@ -115,11 +131,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "faqWhyNotificationNotWorkAns": MessageLookupByLibrary.simpleMessage(
             "請確保您在裝置的設定中已啟用應用程式的通知。如果仍然無法正常運作，請檢查電池最佳化設定，並為該應用程式禁用電池最佳化。"),
         "feedback": MessageLookupByLibrary.simpleMessage("回饋"),
+        "filterAll": MessageLookupByLibrary.simpleMessage("全部"),
+        "filterExpired": MessageLookupByLibrary.simpleMessage("已過期"),
+        "filterExpiringSoon": MessageLookupByLibrary.simpleMessage("即將到期"),
         "fish": MessageLookupByLibrary.simpleMessage("魚類"),
         "foodlist": MessageLookupByLibrary.simpleMessage("FoodList"),
         "foodlistExpiryNotification":
             MessageLookupByLibrary.simpleMessage("FoodList 有效日期通知"),
-        "foodlistExpiryNotificationContent": m1,
+        "foodlistExpiryNotificationContent": m3,
         "forgerwise": MessageLookupByLibrary.simpleMessage("ForgerWise"),
         "forgerwisesGithub":
             MessageLookupByLibrary.simpleMessage("ForgerWise 的 GitHub"),
@@ -127,6 +146,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "githubRepository": MessageLookupByLibrary.simpleMessage("GitHub 儲存庫"),
         "home": MessageLookupByLibrary.simpleMessage("首頁"),
         "homepage": MessageLookupByLibrary.simpleMessage("官方網站"),
+        "icon": MessageLookupByLibrary.simpleMessage("圖示"),
+        "ingredientManagement": MessageLookupByLibrary.simpleMessage("食材管理"),
+        "ingredientName": MessageLookupByLibrary.simpleMessage("食材名稱"),
+        "ingredientNameHint":
+            MessageLookupByLibrary.simpleMessage("例：茄子、菠菜..."),
+        "itemDeleted": m4,
         "languageNotSupportedYetMessage":
             MessageLookupByLibrary.simpleMessage("此語言尚未支援！但我們預計會在未來支援此語言！"),
         "languages": MessageLookupByLibrary.simpleMessage("語言"),
@@ -140,12 +165,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "語言: \n\n錯誤的翻譯: \n\n正確的翻譯: \n\n"),
         "milk": MessageLookupByLibrary.simpleMessage("牛奶"),
         "mushroom": MessageLookupByLibrary.simpleMessage("菇類"),
+        "noIngredients": MessageLookupByLibrary.simpleMessage("尚無食材"),
+        "noIngredientsHint":
+            MessageLookupByLibrary.simpleMessage("點擊 + 新增第一個食材！"),
         "none": MessageLookupByLibrary.simpleMessage("無"),
         "notificationContent": MessageLookupByLibrary.simpleMessage(
             "設定您希望接收通知的時間，這將幫助您了解哪些物品即將過期。"),
         "notificationContentWarn": MessageLookupByLibrary.simpleMessage(
             "在部分設備可能因為電池優化設定或 Android 限制而導致通知延遲。"),
-        "notificationMoreItems": m2,
+        "notificationMoreItems": m5,
         "notificationSetting": MessageLookupByLibrary.simpleMessage("通知設定"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
         "officialWebsite": MessageLookupByLibrary.simpleMessage("官方網站"),
@@ -163,33 +191,35 @@ class MessageLookup extends MessageLookupByLibrary {
         "oyster": MessageLookupByLibrary.simpleMessage("牡蠣"),
         "policy": MessageLookupByLibrary.simpleMessage("隱私政策"),
         "pork": MessageLookupByLibrary.simpleMessage("豬肉"),
+        "preferences": MessageLookupByLibrary.simpleMessage("偏好設定"),
         "privacyContent": MessageLookupByLibrary.simpleMessage(
             "本隱私政策說明我們的應用程式（以下簡稱為“應用程式”）如何收集、使用及披露您的資訊。應用程式致力於維護用戶的隱私權。我們的隱私政策旨在幫助您了解我們如何收集及使用您決定分享的個人資訊，並幫助您在使用應用程式時做出明智的決定。\n\n使用或訪問應用程式即表示您接受本隱私政策中描述的做法。如果您不同意此政策，請勿使用應用程式。我們保留隨時修改此政策的權利，請經常查看更新。您繼續使用應用程式即表示接受我們修改後的隱私政策。\n\n1. 我們收集的數據\n目前，應用程式不會收集任何個人數據。應用程式的設計是將與您的食物相關的所有數據儲存在裝置內，並且沒有任何功能可用來收集您的個人數據。\n\n2. 數據儲存與保護\n您的數據儲存在您的裝置中，除非由您或裝置提供商分享，否則其他人無法存取。\n\n3. 未來更新\n未來若有允許用戶上傳數據以進行同步的功能，我們仍不會將此資訊透露給第三方。我們將在這些功能新增時公告隱私政策的更新。\n\n4. 隱私政策變更\n應用程式保留隨時更改本政策及服務條款的權利。我們將通過向您帳戶中指定的主要電子郵件地址發送通知或在我們的網站上放置醒目的通知來告知您對隱私政策的重大更改。重大更改將在通知後30天生效。非重大更改或澄清將立即生效。您應定期檢查網站和本隱私頁面以了解更新。"),
         "processedfood": MessageLookupByLibrary.simpleMessage("加工食品"),
+        "quantity": MessageLookupByLibrary.simpleMessage("數量"),
         "rateThisApp": MessageLookupByLibrary.simpleMessage("為此應用程式評分"),
+        "reminderTime": MessageLookupByLibrary.simpleMessage("提醒時間"),
         "reset": MessageLookupByLibrary.simpleMessage("重置"),
         "salmon": MessageLookupByLibrary.simpleMessage("鮭魚"),
         "save": MessageLookupByLibrary.simpleMessage("儲存"),
-        "selectCategoryHint": MessageLookupByLibrary.simpleMessage("選擇類別"),
+        "searchHint": MessageLookupByLibrary.simpleMessage("搜尋食材..."),
         "selectDate": MessageLookupByLibrary.simpleMessage("選擇日期"),
-        "selectSubcategoryHint": MessageLookupByLibrary.simpleMessage("選擇子類別"),
-        "selectedTime": m3,
+        "selectedTime": m6,
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "slideToDelete": MessageLookupByLibrary.simpleMessage("滑動以刪除"),
         "soybean": MessageLookupByLibrary.simpleMessage("黃豆"),
         "specialThanksToAllContributorsBelow":
             MessageLookupByLibrary.simpleMessage("特別感謝以下所有貢獻者！"),
-        "subcategory": MessageLookupByLibrary.simpleMessage("子類別"),
-        "subcategoryName": MessageLookupByLibrary.simpleMessage("子類別名稱"),
-        "subcategoryNameInputHint":
-            MessageLookupByLibrary.simpleMessage("請輸入子類別名稱"),
+        "summaryExpired": MessageLookupByLibrary.simpleMessage("已過期"),
+        "summaryExpiringSoon": MessageLookupByLibrary.simpleMessage("即將到期"),
+        "summaryFresh": MessageLookupByLibrary.simpleMessage("新鮮"),
         "translationError": MessageLookupByLibrary.simpleMessage("翻譯錯誤"),
         "translationErrorOfFoodlist":
             MessageLookupByLibrary.simpleMessage("FoodList 的翻譯錯誤"),
         "tuna": MessageLookupByLibrary.simpleMessage("鮪魚"),
+        "undo": MessageLookupByLibrary.simpleMessage("復原"),
         "urlCopiedToClipboard":
             MessageLookupByLibrary.simpleMessage("網址已複製到剪貼簿"),
         "vegetable": MessageLookupByLibrary.simpleMessage("蔬菜"),
-        "versionVersion": m4
+        "versionVersion": m7
       };
 }

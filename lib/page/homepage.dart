@@ -70,9 +70,9 @@ class _HomePageState extends State<HomePage> {
       ..removeCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text('"${removedItem[1]}" 已刪除'),
+          content: Text(S.of(context).itemDeleted(removedItem[1])),
           action: SnackBarAction(
-            label: '復原',
+            label: S.of(context).undo,
             onPressed: () {
               setState(() {
                 _myBox.ingredientsList.insert(origIndex, removedItem);

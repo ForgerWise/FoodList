@@ -192,5 +192,14 @@
   "clickToChangeReminderTime": "Click to change reminder time",
   "dragToReorderHint": "Long press the right handle to reorder",
   "categoryName": "Category Name",
-  "icon": "Icon"
+  "icon": "Icon",
+  "itemDeleted": "\"{itemName}\" Deleted",
+  "@itemDeleted": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "undo": "Undo"
 }

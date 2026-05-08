@@ -1274,7 +1274,143 @@ class S {
       args: [],
     );
   }
+
+  /// `Name`
+  String get ingredientName {
+    return Intl.message('Name', name: 'ingredientName', desc: '', args: []);
+  }
+
+  /// `e.g. Eggplant, Spinach...`
+  String get ingredientNameHint {
+    return Intl.message('e.g. Eggplant, Spinach...',
+        name: 'ingredientNameHint', desc: '', args: []);
+  }
+
+  /// `Quantity`
+  String get quantity {
+    return Intl.message('Quantity', name: 'quantity', desc: '', args: []);
+  }
+
+  /// `{days} days left`
+  String daysLeft(int days) {
+    return Intl.message('$days days left',
+        name: 'daysLeft', desc: '', args: [days]);
+  }
+
+  /// `Expires today!`
+  String get expiresToday {
+    return Intl.message('Expires today!',
+        name: 'expiresToday', desc: '', args: []);
+  }
+
+  /// `Expires tomorrow!`
+  String get expiresTomorrow {
+    return Intl.message('Expires tomorrow!',
+        name: 'expiresTomorrow', desc: '', args: []);
+  }
+
+  /// `Expired {days} days ago`
+  String expiredDaysAgo(int days) {
+    return Intl.message('Expired $days days ago',
+        name: 'expiredDaysAgo', desc: '', args: [days]);
+  }
+
+  /// `Expired`
+  String get summaryExpired {
+    return Intl.message('Expired', name: 'summaryExpired', desc: '', args: []);
+  }
+
+  /// `Expiring Soon`
+  String get summaryExpiringSoon {
+    return Intl.message('Expiring Soon',
+        name: 'summaryExpiringSoon', desc: '', args: []);
+  }
+
+  /// `Fresh`
+  String get summaryFresh {
+    return Intl.message('Fresh', name: 'summaryFresh', desc: '', args: []);
+  }
+
+  /// `All`
+  String get filterAll {
+    return Intl.message('All', name: 'filterAll', desc: '', args: []);
+  }
+
+  /// `Expiring Soon`
+  String get filterExpiringSoon {
+    return Intl.message('Expiring Soon',
+        name: 'filterExpiringSoon', desc: '', args: []);
+  }
+
+  /// `Expired`
+  String get filterExpired {
+    return Intl.message('Expired', name: 'filterExpired', desc: '', args: []);
+  }
+
+  /// `Search ingredients...`
+  String get searchHint {
+    return Intl.message('Search ingredients...',
+        name: 'searchHint', desc: '', args: []);
+  }
+
+  /// `No ingredients yet`
+  String get noIngredients {
+    return Intl.message('No ingredients yet',
+        name: 'noIngredients', desc: '', args: []);
+  }
+
+  /// `Tap + to add your first ingredient!`
+  String get noIngredientsHint {
+    return Intl.message('Tap + to add your first ingredient!',
+        name: 'noIngredientsHint', desc: '', args: []);
+  }
+
+  /// `Preferences`
+  String get preferences {
+    return Intl.message('Preferences', name: 'preferences', desc: '', args: []);
+  }
+
+  /// `Enabled`
+  String get enabled {
+    return Intl.message('Enabled', name: 'enabled', desc: '', args: []);
+  }
+
+  /// `Disabled`
+  String get disabled {
+    return Intl.message('Disabled', name: 'disabled', desc: '', args: []);
+  }
+
+  /// `Ingredient Management`
+  String get ingredientManagement {
+    return Intl.message('Ingredient Management', name: 'ingredientManagement', desc: '', args: []);
+  }
+
+  /// `Reminder Time`
+  String get reminderTime {
+    return Intl.message('Reminder Time', name: 'reminderTime', desc: '', args: []);
+  }
+
+  /// `Click to change reminder time`
+  String get clickToChangeReminderTime {
+    return Intl.message('Click to change reminder time', name: 'clickToChangeReminderTime', desc: '', args: []);
+  }
+
+  /// `Long press the right handle to reorder`
+  String get dragToReorderHint {
+    return Intl.message('Long press the right handle to reorder', name: 'dragToReorderHint', desc: '', args: []);
+  }
+
+  /// `Category Name`
+  String get categoryName {
+    return Intl.message('Category Name', name: 'categoryName', desc: '', args: []);
+  }
+
+  /// `Icon`
+  String get icon {
+    return Intl.message('Icon', name: 'icon', desc: '', args: []);
+  }
 }
+
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();

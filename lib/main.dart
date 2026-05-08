@@ -1,4 +1,3 @@
-// ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,7 +25,7 @@ void main() async {
 
   await Hive.initFlutter();
   Hive.registerAdapter(SubCategoryAdapter());
-  var box = await Hive.openBox("mybox");
+  await Hive.openBox("mybox");
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? languageCode = prefs.getString('selectedLanguage');
@@ -42,12 +41,13 @@ void main() async {
         await LanguageDB.getLanguageWithoutContext());
   }
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  // Enable edge-to-edge rendering (required for Android 15 / SDK 35)
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    systemNavigationBarColor: Colors.grey.shade100,
-    systemNavigationBarDividerColor: Colors.grey.shade100,
     statusBarIconBrightness: Brightness.light,
-    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarContrastEnforced: false,
   ));
 
   runApp(MyApp(locale: locale));
@@ -151,7 +151,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
         child: NavigationBar(
-          backgroundColor: Colors.grey.shade100,
+          backgroundColor: Colors.white,
           selectedIndex: index,
           onDestinationSelected: (index) {
             setState(() {

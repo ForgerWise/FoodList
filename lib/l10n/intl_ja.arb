@@ -6,12 +6,9 @@
   "editIngredients": "食材を編集する",
   "addIngredients": "食材を追加する",
   "category": "カテゴリ",
-  "subcategory": "サブカテゴリ",
-  "subcategoryName": "サブカテゴリ名",
-  "subcategoryNameInputHint": "サブカテゴリ名を入力してください",
-  "selectSubcategoryHint": "サブカテゴリを選択",
-  "selectCategoryHint": "カテゴリを選択",
-  "addToSubcategory": "サブカテゴリに追加",
+  "ingredientName": "食材名",
+  "ingredientNameHint": "例：なす、ほうれん草...",
+  "quantity": "数量",
   "expireDate": "消費期限",
   "selectDate": "日付を選択",
   "expireDateConfirmMessage": "消費期限: {expireDate}",
@@ -36,6 +33,29 @@
   "notificationContent": "通知を受け取りたい時間を設定してください。これにより、すぐに期限切れになるアイテムを知ることができます。",
   "privacyContent": "このプライバシーポリシーは、当社のモバイルアプリケーション（以下「アプリ」といいます）が、あなたの情報を収集、使用、開示する方法について説明しています。アプリはユーザーのプライバシー保護を重視しています。当社のプライバシーポリシーは、あなたが共有することを決めた個人情報をどのように収集・使用するかを理解し、アプリを使用する際に十分な判断を行えるように設計されています。\n\nアプリを使用またはアクセスすることで、あなたはこのプライバシーポリシーに記載されている慣行に同意したものとみなされます。本ポリシーに同意しない場合は、アプリを使用しないでください。当社は、このポリシーを随時変更する権利を留保しており、頻繁にご確認ください。アプリの継続的な使用は、改訂されたプライバシーポリシーに同意したことを意味します。\n\n1. 収集データ\n現在、アプリは個人データを一切収集していません。アプリは、あなたの食品に関するすべてのデータをデバイス内に保存するよう設計されており、個人データを収集する機能はありません。\n\n2. データの保存と保護\nデータはあなたのデバイスに保存されており、デバイスの提供者やあなたが共有しない限り、他者がアクセスすることはできません。\n\n3. 将来の更新\n将来、同期機能などのためにユーザーデータのアップロード機能が追加された場合でも、この情報を第三者に開示することはありません。これらの機能が追加された際には、プライバシーポリシーの更新をお知らせします。\n\n4. プライバシーポリシーの変更\nアプリは、このポリシーおよびサービス利用規約をいつでも変更する権利を有します。当社は、あなたのアカウントに指定された主要な電子メールアドレスに通知を送信するか、当社サイトに目立つ通知を掲示することで、プライバシーポリシーの重要な変更をお知らせします。重要な変更は通知後30日以内に有効となります。軽微な変更や明確化は即時に有効となります。最新の情報を確認するために、サイトおよびこのプライバシーページを定期的に確認してください。",
   "entryDate": "入力日付",
+  "daysLeft": "あと {days} 日",
+  "@daysLeft": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "expiresToday": "今日期限切れ！",
+  "expiresTomorrow": "明日期限切れ！",
+  "expiredDaysAgo": "{days} 日前に期限切れ",
+  "@expiredDaysAgo": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "summaryExpired": "期限切れ",
+  "summaryExpiringSoon": "もうすぐ期限",
+  "summaryFresh": "新鮮",
+  "filterAll": "すべて",
+  "filterExpiringSoon": "もうすぐ期限",
+  "filterExpired": "期限切れ",
+  "searchHint": "食材を検索...",
+  "noIngredients": "食材がまだありません",
+  "noIngredientsHint": "+ をタップして最初の食材を追加！",
   "none": "なし",
   "notificationMoreItems": "と {number} 件のその他の食材",
   "@notificationMoreItems": {
@@ -163,5 +183,14 @@
     }
   },
   "specialThanksToAllContributorsBelow": "以下のすべての貢献者に特別な感謝を！",
-  "license": "ライセンス"
+  "license": "ライセンス",
+  "preferences": "設定",
+  "enabled": "オン",
+  "disabled": "オフ",
+  "ingredientManagement": "食材の管理",
+  "reminderTime": "通知時間",
+  "clickToChangeReminderTime": "タップして時間を変更",
+  "dragToReorderHint": "右側のハンドルを長押しして並べ替える",
+  "categoryName": "カテゴリー名",
+  "icon": "アイコン"
 }

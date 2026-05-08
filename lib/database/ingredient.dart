@@ -4,14 +4,54 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../generated/l10n.dart';
 import 'sub_category.dart';
 
+// ---------------------------------------------------------------------------
+// Built-in category icons (fallback for keys without a custom icon)
+// ---------------------------------------------------------------------------
+const Map<String, String> kCategoryIcons = {
+  'meat': '🥩',
+  'fish': '🐟',
+  'vegetable': '🥦',
+  'fruit': '🍎',
+  'bean': '🫘',
+  'eggMilk': '🥚',
+  'mushroom': '🍄',
+  'processedfood': '🧃',
+  'others': '📦',
+};
+
+// Module-level cache — populated when CategoryDataBase.loadData() is called.
+// Used by getCategoryIcon() which is called from list_tile, homepage, etc.
+Map<String, String> _customIconMap = {};
+
+/// Returns the emoji icon for [categoryKey].
+/// Checks user-saved icons first, then built-in defaults, then falls back to 🏷️.
+String getCategoryIcon(String categoryKey) {
+  return _customIconMap[categoryKey] ??
+      kCategoryIcons[categoryKey] ??
+      '🏷️';
+}
+
+// ---------------------------------------------------------------------------
+// Preset emoji list shown in the category bottom-sheet picker
+// ---------------------------------------------------------------------------
+const List<String> kEmojiPresets = [
+  '🥩', '🐟', '🥦', '🍎', '🥚', '🍄', '🫘', '🧃', '📦',
+  '🥛', '🍞', '🍗', '🥬', '🥕', '🍊', '🧅', '🧄', '🫑',
+  '🍜', '🍳', '🥗', '🧆', '🫙', '🍶', '🥤', '🧁', '🫐',
+  '🏷️',
+];
+
+// ---------------------------------------------------------------------------
+// CategoryDataBase
+// ---------------------------------------------------------------------------
 class CategoryDataBase {
   Map<String, String> categoryMap = {};
-  Map<String, List<SubCategory>> subCategoryMap = {};
   List<String> categoryKeys = [];
 
   final _myBox = Hive.box("mybox");
 
-  // * Create initial data for the subCategoryMap
+  // ── Initialisation ─────────────────────────────────────────────────────────
+
   void createInitialCategoryData() {
     categoryMap = {
       'meat': S.current.meat,
@@ -27,53 +67,9 @@ class CategoryDataBase {
     categoryKeys = categoryMap.keys.toList();
   }
 
-  void createInitialSubCategoryData() {
-    subCategoryMap = {
-      'meat': [
-        SubCategory.fromNameWithMapCheck("beef", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("pork", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("chicken", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("otherMeats", subCategoryMap),
-      ],
-      'fish': [
-        SubCategory.fromNameWithMapCheck("tuna", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("salmon", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("oyster", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("otherFishes", subCategoryMap),
-      ],
-      'vegetable': [
-        SubCategory.fromNameWithMapCheck("carrot", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("otherVegetables", subCategoryMap),
-      ],
-      'fruit': [
-        SubCategory.fromNameWithMapCheck("apple", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("otherFruits", subCategoryMap),
-      ],
-      'bean': [
-        SubCategory.fromNameWithMapCheck("soybean", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("otherBeans", subCategoryMap),
-      ],
-      'eggMilk': [
-        SubCategory.fromNameWithMapCheck("egg", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("milk", subCategoryMap),
-        SubCategory.fromNameWithMapCheck("otherEggMilk", subCategoryMap),
-      ],
-      'mushroom': [
-        SubCategory.fromNameWithMapCheck("otherMushrooms", subCategoryMap),
-      ],
-      'processedfood': [
-        SubCategory.fromNameWithMapCheck("otherProcessedFoods", subCategoryMap),
-      ],
-      'others': [
-        SubCategory.fromNameWithMapCheck("otherItems", subCategoryMap),
-      ],
-    };
-  }
-
   Future<void> loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? categoryVersion = prefs.getString('category_version');
-    String? subCategoryVersion = prefs.getString('subcategory_version');
 
     if (_myBox.get("CATEGORY_MAP") == null || categoryVersion == null) {
       createInitialCategoryData();
@@ -83,56 +79,14 @@ class CategoryDataBase {
       categoryMap = Map<String, String>.from(_myBox.get("CATEGORY_MAP"));
     }
 
-    if (_myBox.get("SUB_CATEGORY_MAP") != null && subCategoryVersion == null) {
-      // * Convert the old subCategoryMap to the new format
-      Map<dynamic, dynamic> rawMap = _myBox.get("SUB_CATEGORY_MAP");
-      Map<String, List<String>> oldSubCategoryMap = rawMap.map((key, value) =>
-          MapEntry<String, List<String>>(
-              key as String, List<String>.from(value as List)));
-      // * Change first letter of each word in key and value to lowercase, others word in value will remain the same
-      oldSubCategoryMap = oldSubCategoryMap.map((key, value) => MapEntry(
-          (key[0].toLowerCase() + key.substring(1))
-              .replaceAll("_", "")
-              .replaceAll("&", "")
-              .replaceAll(" ", ""),
-          value.map((sub) {
-            return sub[0].toLowerCase() + sub.substring(1);
-          }).toList()));
-      subCategoryMap = oldSubCategoryMap.map(
-        (key, value) {
-          return MapEntry(
-            key,
-            value
-                .map<SubCategory>(
-                  (sub) =>
-                      SubCategory.fromNameWithMapCheck(sub, subCategoryMap),
-                )
-                .toList(),
-          );
-        },
-      );
+    // Clean up legacy sub-category data if present
+    if (_myBox.get("SUB_CATEGORY_MAP") != null) {
       _myBox.delete("SUB_CATEGORY_MAP");
-      _updateSubCategoryData();
-      prefs.setString('subcategory_version', '1');
-    } else if (_myBox.get("SUB_CATEGORY_MAP") == null ||
-        subCategoryVersion == null) {
-      // * Create initial data for the subCategoryMap
-      createInitialSubCategoryData();
-      _updateSubCategoryData();
-      prefs.setString('subcategory_version', '1');
-    } else {
-      subCategoryMap = (_myBox.get("SUB_CATEGORY_MAP") as Map<dynamic, dynamic>)
-          .map<String, List<SubCategory>>(
-        (key, value) {
-          return MapEntry(
-            key as String,
-            (value as List<dynamic>)
-                .map<SubCategory>((item) => item as SubCategory)
-                .toList(),
-          );
-        },
-      );
     }
+    if (prefs.getString('subcategory_version') != null) {
+      prefs.remove('subcategory_version');
+    }
+
     updateLanguage();
 
     if (_myBox.get("CATEGORY_KEYS") == null) {
@@ -141,210 +95,97 @@ class CategoryDataBase {
     } else {
       categoryKeys = List<String>.from(_myBox.get("CATEGORY_KEYS"));
     }
+
+    // Load user-saved custom icons into the module-level cache
+    final rawIconMap = _myBox.get("CATEGORY_ICONS", defaultValue: {});
+    _customIconMap = Map<String, String>.from(rawIconMap);
   }
 
-  void _updateCategoryData() {
-    _myBox.put("CATEGORY_MAP", categoryMap);
-  }
+  // ── Persistence helpers ────────────────────────────────────────────────────
 
-  void _updateSubCategoryData() {
-    _myBox.put("SUB_CATEGORY_MAP", subCategoryMap);
-  }
+  void _updateCategoryData() => _myBox.put("CATEGORY_MAP", categoryMap);
+  void _updateCategoryKeys() => _myBox.put("CATEGORY_KEYS", categoryKeys);
+  void _updateIconMap() => _myBox.put("CATEGORY_ICONS", _customIconMap);
 
-  void _updateCategoryKeys() {
-    _myBox.put("CATEGORY_KEYS", categoryKeys);
-  }
+  // ── Category CRUD ──────────────────────────────────────────────────────────
 
   void resetIngredients() {
     _myBox.delete("CATEGORY_MAP");
     _myBox.delete("SUB_CATEGORY_MAP");
+    // Reset icons to built-in defaults only
+    _customIconMap.clear();
+    _myBox.delete("CATEGORY_ICONS");
     createInitialCategoryData();
-    createInitialSubCategoryData();
     _updateCategoryData();
-    _updateSubCategoryData();
     _updateCategoryKeys();
     updateLanguage();
   }
 
   void updateLanguage() {
-    categoryMap = categoryMap.map(
-      (key, value) {
-        switch (key) {
-          case 'meat':
-            return MapEntry(key, S.current.meat);
-          case 'fish':
-            return MapEntry(key, S.current.fish);
-          case 'vegetable':
-            return MapEntry(key, S.current.vegetable);
-          case 'fruit':
-            return MapEntry(key, S.current.fruit);
-          case 'bean':
-            return MapEntry(key, S.current.bean);
-          case 'eggMilk':
-            return MapEntry(key, S.current.eggMilk);
-          case 'mushroom':
-            return MapEntry(key, S.current.mushroom);
-          case 'processedfood':
-            return MapEntry(key, S.current.processedfood);
-          case 'others':
-            return MapEntry(key, S.current.others);
-          default: // * Return the original value if the key is not found
-            return MapEntry(key, value);
-        }
-      },
-    );
-
-    subCategoryMap = subCategoryMap.map(
-      (key, value) => MapEntry<String, List<SubCategory>>(
-        key,
-        value.map(
-          (sub) {
-            switch (sub.id) {
-              case 'beef':
-                return sub.copyWithName(S.current.beef);
-              case 'pork':
-                return sub.copyWithName(S.current.pork);
-              case 'chicken':
-                return sub.copyWithName(S.current.chicken);
-              case 'otherMeats':
-                return sub.copyWithName(S.current.otherMeats);
-              case 'tuna':
-                return sub.copyWithName(S.current.tuna);
-              case 'salmon':
-                return sub.copyWithName(S.current.salmon);
-              case 'oyster':
-                return sub.copyWithName(S.current.oyster);
-              case 'otherFishes':
-                return sub.copyWithName(S.current.otherFishes);
-              case 'carrot':
-                return sub.copyWithName(S.current.carrot);
-              case 'otherVegetables':
-                return sub.copyWithName(S.current.otherVegetables);
-              case 'apple':
-                return sub.copyWithName(S.current.apple);
-              case 'otherFruits':
-                return sub.copyWithName(S.current.otherFruits);
-              case 'soybean':
-                return sub.copyWithName(S.current.soybean);
-              case 'otherBeans':
-                return sub.copyWithName(S.current.otherBeans);
-              case 'egg':
-                return sub.copyWithName(S.current.egg);
-              case 'milk':
-                return sub.copyWithName(S.current.milk);
-              case 'otherEggMilk':
-                return sub.copyWithName(S.current.otherEggMilk);
-              case 'otherMushrooms':
-                return sub.copyWithName(S.current.otherMushrooms);
-              case 'otherProcessedFoods':
-                return sub.copyWithName(S.current.otherProcessedFoods);
-              case 'otherItems':
-                return sub.copyWithName(S.current.otherItems);
-              default: // * Return the original value if the key is not found
-                return sub;
-            }
-          },
-        ).toList(),
-      ),
-    );
+    categoryMap = categoryMap.map((key, value) {
+      switch (key) {
+        case 'meat':        return MapEntry(key, S.current.meat);
+        case 'fish':        return MapEntry(key, S.current.fish);
+        case 'vegetable':   return MapEntry(key, S.current.vegetable);
+        case 'fruit':       return MapEntry(key, S.current.fruit);
+        case 'bean':        return MapEntry(key, S.current.bean);
+        case 'eggMilk':     return MapEntry(key, S.current.eggMilk);
+        case 'mushroom':    return MapEntry(key, S.current.mushroom);
+        case 'processedfood': return MapEntry(key, S.current.processedfood);
+        case 'others':      return MapEntry(key, S.current.others);
+        default:            return MapEntry(key, value);
+      }
+    });
   }
 
-  String _getNewCategoryKey() {
-    return "C${DateTime.now().millisecondsSinceEpoch}";
-  }
+  String _getNewCategoryKey() => "C${DateTime.now().millisecondsSinceEpoch}";
 
-  String _getNewSubCategoryKey() {
-    return "SC${DateTime.now().millisecondsSinceEpoch}";
+  void addCategory(String label, {String icon = '🏷️'}) {
+    String key = _getNewCategoryKey();
+    categoryMap[key] = label;
+    categoryKeys.add(key);
+    _customIconMap[key] = icon;
+    _updateCategoryData();
+    _updateCategoryKeys();
+    _updateIconMap();
   }
 
   void renameCategory(String oldKey, String newLabel) {
     String newKey = _getNewCategoryKey();
-    if (categoryMap.containsKey(newKey)) {
-      return;
+    if (categoryMap.containsKey(newKey)) return;
+    // Migrate icon to new key
+    if (_customIconMap.containsKey(oldKey)) {
+      _customIconMap[newKey] = _customIconMap.remove(oldKey)!;
     }
     categoryMap[newKey] = newLabel;
-    subCategoryMap[newKey] = subCategoryMap[oldKey]!;
     categoryMap.remove(oldKey);
-    subCategoryMap.remove(oldKey);
     int index = categoryKeys.indexOf(oldKey);
-    categoryKeys[index] = newKey;
+    if (index != -1) categoryKeys[index] = newKey;
     _updateCategoryData();
     _updateCategoryKeys();
-    _updateSubCategoryData();
+    _updateIconMap();
   }
 
-  void renameSubCategory(String categoryKey, String oldKey, String newLabel) {
-    String newKey = _getNewSubCategoryKey();
-    if (subCategoryMap[categoryKey]!.any((element) => element.id == newKey)) {
-      return;
-    }
-    // * Create new SubCategory with the new key and label
-    SubCategory newSubCategory = SubCategory(id: newKey, name: newLabel);
-    // * Find the index of the old SubCategory
-    int index = subCategoryMap[categoryKey]!
-        .indexWhere((element) => element.id == oldKey);
-    // * Replace the old SubCategory with the new SubCategory
-    subCategoryMap[categoryKey]![index] = newSubCategory;
-    _updateSubCategoryData();
-  }
-
-  void addCategory(String label) {
-    String key = _getNewCategoryKey();
-    categoryMap[key] = label;
-    categoryKeys.add(key);
-    subCategoryMap[key] = [];
-    _updateCategoryData();
-    _updateCategoryKeys();
-    _updateSubCategoryData();
-  }
-
-  void addSubCategory(String categoryKey, String label) {
-    String key = _getNewSubCategoryKey();
-    if (subCategoryMap[categoryKey]!.any((element) => element.id == key)) {
-      return;
-    }
-    subCategoryMap[categoryKey]!.add(SubCategory(id: key, name: label));
-    _updateSubCategoryData();
+  /// Set or update the emoji icon for an existing category.
+  void setCategoryIcon(String key, String icon) {
+    _customIconMap[key] = icon;
+    _updateIconMap();
   }
 
   void reorderCategory(int oldIndex, int newIndex) {
-    if (oldIndex < 0 || newIndex < 0) {
-      return;
-    }
-    if (newIndex > categoryKeys.length || oldIndex > categoryKeys.length) {
-      return;
-    }
-    // * Reorder the categoryKeys
-    String item = categoryKeys.removeAt(oldIndex);
+    if (oldIndex < 0 || newIndex < 0) return;
+    if (newIndex > categoryKeys.length || oldIndex > categoryKeys.length) return;
+    final item = categoryKeys.removeAt(oldIndex);
     categoryKeys.insert(newIndex, item);
     _updateCategoryKeys();
   }
 
-  void reorderSubCategory(String categoryKey, int oldIndex, int newIndex) {
-    if (oldIndex < 0 || newIndex < 0) {
-      return;
-    }
-    if (newIndex > subCategoryMap[categoryKey]!.length ||
-        oldIndex > subCategoryMap[categoryKey]!.length) {
-      return;
-    }
-    // * Reorder the subCategories
-    SubCategory item = subCategoryMap[categoryKey]!.removeAt(oldIndex);
-    subCategoryMap[categoryKey]!.insert(newIndex, item);
-    _updateSubCategoryData();
-  }
-
   void removeCategory(String key) {
     categoryMap.remove(key);
-    subCategoryMap.remove(key);
     categoryKeys.remove(key);
+    _customIconMap.remove(key);
     _updateCategoryData();
     _updateCategoryKeys();
-    _updateSubCategoryData();
-  }
-
-  void removeSubCategory(String categoryKey, String key) {
-    subCategoryMap[categoryKey]!.removeWhere((element) => element.id == key);
-    _updateSubCategoryData();
+    _updateIconMap();
   }
 }

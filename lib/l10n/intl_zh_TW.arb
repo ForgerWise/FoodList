@@ -6,12 +6,9 @@
   "editIngredients": "編輯食材",
   "addIngredients": "新增食材",
   "category": "類別",
-  "subcategory": "子類別",
-  "subcategoryName": "子類別名稱",
-  "subcategoryNameInputHint": "請輸入子類別名稱",
-  "selectSubcategoryHint": "選擇子類別",
-  "selectCategoryHint": "選擇類別",
-  "addToSubcategory": "新增至子類別",
+  "ingredientName": "食材名稱",
+  "ingredientNameHint": "例：茄子、菠菜...",
+  "quantity": "數量",
   "expireDate": "有效日期",
   "selectDate": "選擇日期",
   "expireDateConfirmMessage": "有效日期: {expireDate}",
@@ -36,6 +33,29 @@
   "notificationContent": "設定您希望接收通知的時間，這將幫助您了解哪些物品即將過期。",
   "privacyContent": "本隱私政策說明我們的應用程式（以下簡稱為“應用程式”）如何收集、使用及披露您的資訊。應用程式致力於維護用戶的隱私權。我們的隱私政策旨在幫助您了解我們如何收集及使用您決定分享的個人資訊，並幫助您在使用應用程式時做出明智的決定。\n\n使用或訪問應用程式即表示您接受本隱私政策中描述的做法。如果您不同意此政策，請勿使用應用程式。我們保留隨時修改此政策的權利，請經常查看更新。您繼續使用應用程式即表示接受我們修改後的隱私政策。\n\n1. 我們收集的數據\n目前，應用程式不會收集任何個人數據。應用程式的設計是將與您的食物相關的所有數據儲存在裝置內，並且沒有任何功能可用來收集您的個人數據。\n\n2. 數據儲存與保護\n您的數據儲存在您的裝置中，除非由您或裝置提供商分享，否則其他人無法存取。\n\n3. 未來更新\n未來若有允許用戶上傳數據以進行同步的功能，我們仍不會將此資訊透露給第三方。我們將在這些功能新增時公告隱私政策的更新。\n\n4. 隱私政策變更\n應用程式保留隨時更改本政策及服務條款的權利。我們將通過向您帳戶中指定的主要電子郵件地址發送通知或在我們的網站上放置醒目的通知來告知您對隱私政策的重大更改。重大更改將在通知後30天生效。非重大更改或澄清將立即生效。您應定期檢查網站和本隱私頁面以了解更新。",
   "entryDate": "輸入日期",
+  "daysLeft": "還剩 {days} 天",
+  "@daysLeft": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "expiresToday": "今天到期！",
+  "expiresTomorrow": "明天到期！",
+  "expiredDaysAgo": "已過期 {days} 天",
+  "@expiredDaysAgo": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "summaryExpired": "已過期",
+  "summaryExpiringSoon": "即將到期",
+  "summaryFresh": "新鮮",
+  "filterAll": "全部",
+  "filterExpiringSoon": "即將到期",
+  "filterExpired": "已過期",
+  "searchHint": "搜尋食材...",
+  "noIngredients": "尚無食材",
+  "noIngredientsHint": "點擊 + 新增第一個食材！",
   "none": "無",
   "notificationMoreItems": "以及 {number} 項其他食材",
   "@notificationMoreItems": {
@@ -163,5 +183,14 @@
     }
   },
   "specialThanksToAllContributorsBelow": "特別感謝以下所有貢獻者！",
-  "license": "授權"
+  "license": "授權",
+  "preferences": "偏好設定",
+  "enabled": "已開啟",
+  "disabled": "已關閉",
+  "ingredientManagement": "食材管理",
+  "reminderTime": "提醒時間",
+  "clickToChangeReminderTime": "點擊修改提醒時間",
+  "dragToReorderHint": "長按右側拖動手柄可調整排列順序",
+  "categoryName": "類別名稱",
+  "icon": "圖示"
 }

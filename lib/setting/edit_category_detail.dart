@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodlist/generated/l10n.dart';
 import 'package:foodlist/setting/setting_appbar.dart';
 import '../database/ingredient.dart';
-import 'edit_subcategory_detail.dart';
 
 class EditCategoryDetailPage extends StatefulWidget {
   const EditCategoryDetailPage({super.key});
@@ -56,49 +55,36 @@ class _EditCategoryDetailPageState extends State<EditCategoryDetailPage> {
             Column(
               key: ValueKey(catKeys[index]),
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditSubcategoryDetailPage(catKey: catKeys[index]),
+                ListTile(
+                  leading: Text(
+                    getCategoryIcon(catKeys[index]),
+                    style: const TextStyle(fontSize: 22),
+                  ),
+                  title: Row(
+                    children: [
+                      Expanded(
+                        child: Text(cdb.categoryMap[catKeys[index]]!),
                       ),
-                    );
-                  },
-                  child: ListTile(
-                    title: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            setState(() {
-                              _showDeleteDialog(context, catKeys[index]);
-                            });
-                          },
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () => _showEditDialog(context, catKeys[index]),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          setState(() {
+                            _showDeleteDialog(context, catKeys[index]);
+                          });
+                        },
+                      ),
+                      ReorderableDragStartListener(
+                        index: index,
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Icon(Icons.drag_handle),
                         ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(cdb.categoryMap[catKeys[index]]!),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            _showEditDialog(context, catKeys[index]);
-                          },
-                        ),
-                        ReorderableDragStartListener(
-                          index: index,
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Icon(Icons.drag_handle),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 const Divider(height: 0),

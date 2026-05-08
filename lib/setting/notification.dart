@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodlist/setting/setting_appbar.dart';
 import 'package:foodlist/util/alarm.dart';
+import 'package:foodlist/util/permission.dart';
 import '../generated/l10n.dart';
 import '../util/notification.dart';
-import '../database/data.dart';
 
 class NotificationSettingPage extends StatefulWidget {
   const NotificationSettingPage({Key? key}) : super(key: key);
@@ -14,14 +14,12 @@ class NotificationSettingPage extends StatefulWidget {
 }
 
 class _NotificationSettingPageState extends State<NotificationSettingPage> {
-  // * Initialize notification service
-  final NotificationService notificationService = NotificationService();
-  final InputDataBase inputDataBase = InputDataBase();
-  final AlarmService alarmService = AlarmService();
+  final NotificationService _notificationService = NotificationService();
+  final AlarmService _alarmService = AlarmService();
 
-  // * Initialize selected time to 7 AM
-  TimeOfDay selectedTime = const TimeOfDay(hour: 7, minute: 0);
-  DateTime selectedTimeDateTime = DateTime(
+  bool _notificationsEnabled = false;
+  TimeOfDay _selectedTime = const TimeOfDay(hour: 7, minute: 0);
+  DateTime _selectedDateTime = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
@@ -32,113 +30,275 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
   @override
   void initState() {
     super.initState();
-    // * Load notification time
-    _loadSelectedTime();
+    _loadState();
   }
 
-  // * Function to load the selected time
-  Future<void> _loadSelectedTime() async {
-    DateTime? time = await alarmService.getAlarmTime();
-    setState(() {
-      selectedTime = TimeOfDay.fromDateTime(time);
-      selectedTimeDateTime = time;
-    });
+  Future<void> _loadState() async {
+    final enabled = await _notificationService.areNotificationsEnabled();
+    final time = await _alarmService.getAlarmTime();
+    if (mounted) {
+      setState(() {
+        _notificationsEnabled = enabled;
+        _selectedTime = TimeOfDay.fromDateTime(time);
+        _selectedDateTime = time;
+      });
+    }
   }
 
-  // * Function to show the time picker
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
+  // ── Toggle notification ──────────────────────────────────────────────────
+  Future<void> _onToggle(bool value) async {
+    await _notificationService.toggleNotifications(value);
+
+    if (value) {
+      final alarmOk =
+          await PermissionManager.checkAndRequestScheduleExactAlarmPermission(
+              toSetting: true);
+      final notifOk =
+          await PermissionManager.checkAndRequestNotificationPermission(
+              toSetting: true);
+
+      if (!alarmOk || !notifOk) {
+        await _notificationService.toggleNotifications(false);
+        value = false;
+      } else {
+        await _alarmService.scheduleDailyAlarm();
+      }
+    } else {
+      await _alarmService.cancelAlarm();
+    }
+
+    if (mounted) setState(() => _notificationsEnabled = value);
+  }
+
+  // ── Time picker ───────────────────────────────────────────────────────────
+  Future<void> _selectTime() async {
+    final picked = await showTimePicker(
       context: context,
-      initialTime: selectedTime,
+      initialTime: _selectedTime,
+      builder: (context, child) => Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: const ColorScheme.light(
+            primary: Colors.blueGrey,
+            onPrimary: Colors.white,
+          ),
+        ),
+        child: child!,
+      ),
     );
 
-    if (picked != null && picked != selectedTime) {
-      setState(
-        () {
-          selectedTime = picked;
-          selectedTimeDateTime = DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day,
-            selectedTime.hour,
-            selectedTime.minute,
-          );
-          alarmService.setAlarmTime(selectedTimeDateTime);
-        },
+    if (picked != null && picked != _selectedTime) {
+      final newDT = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        picked.hour,
+        picked.minute,
       );
-      if (await notificationService.areNotificationsEnabled()) {
-        alarmService.scheduleDailyAlarm();
+      setState(() {
+        _selectedTime = picked;
+        _selectedDateTime = newDT;
+      });
+      _alarmService.setAlarmTime(newDT);
+      if (await _notificationService.areNotificationsEnabled()) {
+        _alarmService.scheduleDailyAlarm();
       }
     }
   }
 
+  // ── Build ─────────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
+    final String hh = _selectedTime.hour.toString().padLeft(2, '0');
+    final String mm = _selectedTime.minute.toString().padLeft(2, '0');
+
     return Scaffold(
+      backgroundColor: const Color(0xFFF0F2F5),
       appBar: SettingAppbar(title: S.of(context).notificationSetting),
-      body: Container(
+      body: ListView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(height: 24),
-            GestureDetector(
-              onTap: () => _selectTime(context),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      S.of(context).selectedTime(
-                          selectedTime.hour.toString().padLeft(2, '0'),
-                          selectedTime.minute.toString().padLeft(2, '0')),
-                      style: const TextStyle(fontSize: 18),
+        children: [
+          const SizedBox(height: 8),
+
+          // ── Toggle card ────────────────────────────────────────────────
+          _card(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                children: [
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFA000),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    const Icon(Icons.access_time, size: 24),
-                  ],
-                ),
+                    child: const Icon(Icons.notifications_outlined,
+                        color: Colors.white, size: 20),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          S.of(context).notifications,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF212121),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          S.of(context).notificationContent,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey.shade500,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Switch(
+                    value: _notificationsEnabled,
+                    activeColor: Colors.blueGrey,
+                    onChanged: _onToggle,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 24),
-            Text(
-              S.of(context).notificationContent,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[700],
-              ),
-            ),
-            const SizedBox(height: 24),
-            // * A icon of Priority High to explain why the notification may be delayed
-            Card(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              color: Colors.red[100],
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    const Icon(Icons.priority_high, color: Colors.red),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        S.of(context).notificationContentWarn,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[700],
+          ),
+
+          const SizedBox(height: 16),
+
+          // ── Time card (only shown when enabled) ─────────────────────────
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 250),
+            child: _notificationsEnabled
+                ? Column(
+                    key: const ValueKey('timeCard'),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4, bottom: 10),
+                        child: Text(
+                          S.of(context).reminderTime,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.blueGrey.shade600,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                      GestureDetector(
+                        onTap: _selectTime,
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 28),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.blueGrey.shade600,
+                                Colors.blueGrey.shade800,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blueGrey.withOpacity(0.35),
+                                blurRadius: 14,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              const Icon(Icons.access_time_outlined,
+                                  color: Colors.white60, size: 28),
+                              const SizedBox(height: 10),
+                              Text(
+                                '$hh : $mm',
+                                style: const TextStyle(
+                                  fontSize: 60,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.white,
+                                  letterSpacing: 6,
+                                  height: 1.1,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  S.of(context).clickToChangeReminderTime,
+                                  style: const TextStyle(
+                                      color: Colors.white70, fontSize: 13),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  )
+                : const SizedBox.shrink(key: ValueKey('hidden')),
+          ),
+
+          // ── Warning card ──────────────────────────────────────────────
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFF8E1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFFFCA28), width: 1),
             ),
-          ],
-        ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.warning_amber_outlined,
+                    color: Color(0xFFFF8F00), size: 20),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    S.of(context).notificationContentWarn,
+                    style: const TextStyle(
+                        fontSize: 13, color: Color(0xFF6D4C00), height: 1.5),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _card({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }

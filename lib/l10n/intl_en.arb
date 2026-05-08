@@ -3,16 +3,13 @@
   "home": "Home",
   "settings": "Settings",
   "add": "Add",
-  "editIngredients": "Edit Ingredients",
-  "addIngredients": "Add Ingredients",
+  "editIngredients": "Edit Ingredient",
+  "addIngredients": "Add Ingredient",
   "category": "Category",
-  "subcategory": "Subcategory",
-  "subcategoryName": "Name",
-  "subcategoryNameInputHint": "Please input the name of the ingredient",
-  "selectSubcategoryHint": "Select Subcategory",
-  "selectCategoryHint": "Select Category",
-  "addToSubcategory": "Add to Subcategory",
-  "expireDate": "Expire Date",
+  "ingredientName": "Name",
+  "ingredientNameHint": "e.g. Eggplant, Spinach...",
+  "quantity": "Quantity",
+  "expireDate": "Expiry Date",
   "selectDate": "Select Date",
   "expireDateConfirmMessage": "Expire Date: {expireDate}",
   "@expireDateConfirmMessage": {
@@ -36,6 +33,29 @@
   "notificationContent": "Set the time at which you would like to receive notifications. This helps you to know which items are expiring soon. ",
   "privacyContent": "This Privacy Policy describes how our mobile application, (hereinafter referred to as ''the App''), collects, uses, and discloses your information. The App is committed to maintaining robust privacy protections for its users. Our Privacy Policy is designed to help you understand how we collect and use the personal information you decide to share and help you make informed decisions when using the App.\n\nBy using or accessing the App, you accept the practices described in this Privacy Policy. If you do not agree to this policy, please do not use the App. We reserve the right to modify this policy from time to time, so please review it frequently. Your continued use of the App signifies your acceptance of our Privacy Policy as modified.\n\n1. Data We Collect\nCurrently, the App does not collect any personal data. The App is designed to store all data related to your food within the device itself and does not have any feature to collect your personal data.\n\n2. Data Storage and Protection\nYour data is stored on your device and is not accessible by anyone but you, unless the data on your device is shared by you or your device provider.\n\n3. Future Updates\nIn future updates, if there is a feature that allows user data upload for functionalities such as synchronization, we still will not disclose this information to any third party. We will announce the update of our privacy policy when these features are added.\n\n4. Changes to Our Privacy Policy\nThe App reserves the right to change this policy and our Terms of Service at any time. We will notify users of significant changes to our Privacy Policy by sending a notice to the primary email address specified in your account or by placing a prominent notice on our site. Significant changes will go into effect 30 days following such notification. Non-material changes or clarifications will take effect immediately. You should periodically check the Site and this privacy page for updates.",
   "entryDate": "Entry Date",
+  "daysLeft": "{days} days left",
+  "@daysLeft": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "expiresToday": "Expires today!",
+  "expiresTomorrow": "Expires tomorrow!",
+  "expiredDaysAgo": "Expired {days} days ago",
+  "@expiredDaysAgo": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "summaryExpired": "Expired",
+  "summaryExpiringSoon": "Expiring Soon",
+  "summaryFresh": "Fresh",
+  "filterAll": "All",
+  "filterExpiringSoon": "Expiring Soon",
+  "filterExpired": "Expired",
+  "searchHint": "Search ingredients...",
+  "noIngredients": "No ingredients yet",
+  "noIngredientsHint": "Tap + to add your first ingredient!",
   "none": "None",
   "notificationMoreItems": "and {number} more items",
   "@notificationMoreItems": {
@@ -163,5 +183,14 @@
     }
   },
   "specialThanksToAllContributorsBelow": "Special thanks to all contributors below!",
-  "license": "License"
+  "license": "License",
+  "preferences": "Preferences",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "ingredientManagement": "Ingredient Management",
+  "reminderTime": "Reminder Time",
+  "clickToChangeReminderTime": "Click to change reminder time",
+  "dragToReorderHint": "Long press the right handle to reorder",
+  "categoryName": "Category Name",
+  "icon": "Icon"
 }

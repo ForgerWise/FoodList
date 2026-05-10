@@ -5,7 +5,9 @@ import '../generated/l10n.dart';
 class InputDataBase {
   List ingredientsList = [];
 
-  final _myBox = Hive.box("mybox");
+  // Use a getter instead of a field initializer to ensure the box is open
+  // before accessing it (important in the alarm callback background isolate).
+  Box get _myBox => Hive.box('mybox');
 
   // New format: [categoryKey, customName, expireDate, quantity]
   // Old format: [categoryDisplayName, subcategoryName, inputDate, expireDate]

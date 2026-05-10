@@ -65,8 +65,8 @@
       }
     }
   },
-  "foodlistExpiryNotification": "FoodList 消費期限通知",
-  "foodlistExpiryNotificationContent": "今日まで: {todayItems}\n明日まで: {tomorrowItems}",
+  "foodlistExpiryNotification": "🍱 食材の期限通知",
+  "foodlistExpiryNotificationContent": "今日: {todayItems} ／ 明日: {tomorrowItems}",
   "@foodlistExpiryNotificationContent": {
     "placeholders": {
       "todayItems": {
@@ -119,15 +119,15 @@
       }
     }
   },
-  "notificationContentWarn": "一部のデバイスでは、バッテリー最適化設定や Android の制限により、通知が遅れる可能性があります。",
+  "notificationContentWarn": "一部のデバイスでは、設定時刻より数分遅れて通知が届く場合があります。これは Android のバッテリー最適化による正常な動作です。",
   "other": "その他",
   "faq": "よくある質問",
   "faqWhyEditNotLoad": "なぜデータが自動的に編集ページにロードされなかったのですか？",
   "faqWhyEditNotLoadAns": "データ構造のため、以前に異なる言語で保存されたデータは自動的にロードされません。ただし、空の状態から編集を開始することはできます。",
   "faqWhyNotificationNotWork": "なぜ通知が機能していないのですか？",
-  "faqWhyNotificationNotWorkAns": "デバイスの設定でアプリの通知が有効になっていることを確認してください。それでも動作しない場合は、バッテリー最適化設定を確認し、アプリのバッテリー最適化を無効にしてください。",
+  "faqWhyNotificationNotWorkAns": "1. デバイスの設定 > アプリ > FoodList > 通知 で通知が有効になっているか確認してください。\n2. FoodListのバッテリー最適化を無効にしてください（設定 > バッテリー > バッテリー最適化 > FoodList > 最適化しない）。\n3. アプリ内の通知スイッチをオフにしてから再度オンにして、アラームを再登録してください。",
   "faqWhyNotificationDelay": "なぜ通知が遅れているのですか？",
-  "faqWhyNotificationDelayAns": "バッテリー最適化設定やAndroidの制限により、一部のデバイスでは通知が遅れる場合があります。",
+  "faqWhyNotificationDelayAns": "FoodList はシステムアラームを使用しており、Android の省電力機能により数分遅れる場合があります。これは正常な動作です。30分以上遅れる場合は、アプリのバッテリー最適化を無効にすることをお勧めします。",
   "editResetCategories": "カテゴリを編集/リセット",
   "editCategoriesNotSupportedHint": "カテゴリの編集機能はまだサポートされていません！",
   "edit": "編集",

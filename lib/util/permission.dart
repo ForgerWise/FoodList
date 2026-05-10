@@ -19,12 +19,6 @@ class PermissionManager {
     return false;
   }
 
-  static Future<bool> checkAndRequestScheduleExactAlarmPermission(
-      {bool toSetting = false}) {
-    return checkAndRequestPermission(Permission.scheduleExactAlarm,
-        toSetting: toSetting);
-  }
-
   static Future<bool> checkAndRequestNotificationPermission(
       {bool toSetting = false}) {
     return checkAndRequestPermission(Permission.notification,

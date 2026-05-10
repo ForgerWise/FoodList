@@ -65,8 +65,8 @@
       }
     }
   },
-  "foodlistExpiryNotification": "FoodList 有效日期通知",
-  "foodlistExpiryNotificationContent": "今日過期: {todayItems}\n明日過期: {tomorrowItems}",
+  "foodlistExpiryNotification": "🍱 食材到期提醒",
+  "foodlistExpiryNotificationContent": "今日: {todayItems} ／ 明日: {tomorrowItems}",
   "@foodlistExpiryNotificationContent": {
     "placeholders": {
       "todayItems": {
@@ -119,15 +119,15 @@
       }
     }
   },
-  "notificationContentWarn": "在部分設備可能因為電池優化設定或 Android 限制而導致通知延遲。",
+  "notificationContentWarn": "在部分設備上，通知可能會比設定時間晚幾分鐘到達，這是 Android 電池最佳化的正常行為。",
   "other": "其他",
   "faq": "常見問題",
   "faqWhyEditNotLoad": "為什麼資料沒有自動載入到編輯頁面？",
   "faqWhyEditNotLoadAns": "由於資料結構的原因，如果您的資料之前是以不同語言儲存的，則不會自動載入。但是，您仍然可以從空白狀態開始編輯。",
   "faqWhyNotificationNotWork": "為什麼通知沒有正常運作？",
-  "faqWhyNotificationNotWorkAns": "請確保您在裝置的設定中已啟用應用程式的通知。如果仍然無法正常運作，請檢查電池最佳化設定，並為該應用程式禁用電池最佳化。",
+  "faqWhyNotificationNotWorkAns": "1. 前往裝置的設定 > 應用程式 > FoodList > 通知，確認已啟用通知。\n2. 關閉 FoodList 的電池最佳化（設定 > 電池 > 電池最佳化 > FoodList > 不要最佳化）。\n3. 在 App 中將通知開關關閉再重新開啟，以重新登記鬧鐘。",
   "faqWhyNotificationDelay": "為什麼通知會延遲？",
-  "faqWhyNotificationDelayAns": "由於電池最佳化設定或 Android 限制，某些裝置上的通知可能會延遲。",
+  "faqWhyNotificationDelayAns": "FoodList 使用系統鬧鐘，Android 可能因為省電機制而將通知延遲幾分鐘，這屬於正常行為。若延遲超過 30 分鐘，建議關閉該 App 的電池最佳化設定。",
   "editResetCategories": "編輯/重置類別",
   "editCategoriesNotSupportedHint": "編輯類別功能尚未支援！",
   "edit": "編輯",

@@ -65,8 +65,8 @@
       }
     }
   },
-  "foodlistExpiryNotification": "FoodList Expiry Notification",
-  "foodlistExpiryNotificationContent": "Expiring today: {todayItems}\nExpiring tomorrow: {tomorrowItems}",
+  "foodlistExpiryNotification": "🍱 Food Expiry Reminder",
+  "foodlistExpiryNotificationContent": "Today: {todayItems} / Tomorrow: {tomorrowItems}",
   "@foodlistExpiryNotificationContent": {
     "placeholders": {
       "todayItems": {
@@ -119,15 +119,15 @@
       }
     }
   },
-  "notificationContentWarn": "Notifications may be delayed on some devices due to battery optimization settings or android restrictions.",
+  "notificationContentWarn": "Notifications may arrive a few minutes after the set time on some devices. This is expected behavior due to Android battery optimization.",
   "other": "other",
   "faq": "FAQ",
   "faqWhyEditNotLoad": "Why didn''t the data load to the edit page automatically?",
   "faqWhyEditNotLoadAns": "Due to the data structure, if your data was saved in a different language previously, it will not be loaded automatically. However, you can still edit it starting from a blank state.",
   "faqWhyNotificationNotWork": "Why isn''t the notification working?",
-  "faqWhyNotificationNotWorkAns": "Please ensure that you have enabled notifications for the app in your device settings. If it still doesn''t work, check the battery optimization settings and disable battery optimization for the app.",
-  "faqWhyNotificationDelay": "Why is the notification being delayed?",
-  "faqWhyNotificationDelayAns": "Notifications may be delayed on some devices due to battery optimization settings or android restrictions.",
+  "faqWhyNotificationNotWorkAns": "1. Go to your device Settings > Apps > FoodList > Notifications and make sure notifications are enabled.\n2. Disable battery optimization for FoodList (Settings > Battery > Battery Optimization > FoodList > Don''t optimize).\n3. Toggle the notification switch off and on again in the app to re-register the alarm.",
+  "faqWhyNotificationDelay": "Why is the notification delayed?",
+  "faqWhyNotificationDelayAns": "FoodList uses a system alarm that may be delayed by a few minutes by Android to save battery. This is normal and expected. If the delay is more than 30 minutes, try disabling battery optimization for the app.",
   "editResetCategories": "Edit/Reset Categories",
   "editCategoriesNotSupportedHint": "Edit categories is not supported yet!",
   "edit": "Edit",

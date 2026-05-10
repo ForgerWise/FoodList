@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,33 +8,87 @@ import '../database/sub_category.dart';
 import '../generated/l10n.dart';
 import 'notification.dart';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// TOP-LEVEL callback — MUST be a top-level function (not a static method)
+// for android_alarm_manager_plus to locate it reliably in release builds.
+// @pragma('vm:entry-point') prevents Dart's tree-shaker from removing it.
+// ─────────────────────────────────────────────────────────────────────────────
+@pragma('vm:entry-point')
+Future<void> alarmCallback() async {
+  debugPrint('Alarm triggered: Updating expired food items...');
+
+  // Initialize Flutter bindings (required in background isolate)
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    // Initialize Hive
+    await Hive.initFlutter();
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(SubCategoryAdapter());
+    }
+    // Guard: only open the box if it is not already open
+    if (!Hive.isBoxOpen('mybox')) {
+      await Hive.openBox('mybox');
+    }
+
+    // Load locale safely — fall back to 'en' on any error
+    String locale;
+    try {
+      locale = await LanguageDB.getLanguageWithoutContext();
+    } catch (_) {
+      locale = 'en';
+    }
+    await S.load(Locale(locale));
+
+    // Send the notification
+    final notificationService = NotificationService();
+    await notificationService.init();
+    await notificationService.sendDailyNotification();
+
+    debugPrint('Alarm completed successfully');
+  } catch (e, stack) {
+    debugPrint('Alarm callback error: $e\n$stack');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AlarmService
+// ─────────────────────────────────────────────────────────────────────────────
 class AlarmService {
   static final AlarmService _instance = AlarmService._internal();
 
-  factory AlarmService() {
-    return _instance;
-  }
+  factory AlarmService() => _instance;
 
   AlarmService._internal();
 
-  // * Initialize the AlarmManager
+  /// Must be called once in main() before runApp.
   Future<void> init() async {
     await AndroidAlarmManager.initialize();
   }
 
-  // * Schedule a daily alarm at the specified time
+  /// Schedule (or reschedule) the daily inexact alarm.
+  /// Uses inexact alarm to avoid requiring SCHEDULE_EXACT_ALARM permission.
+  /// Android may delay the alarm by a few minutes for battery efficiency.
   Future<void> scheduleDailyAlarm() async {
     DateTime selectedTime = await getAlarmTime();
-    DateTime now = DateTime.now();
+    final DateTime now = DateTime.now();
 
+    // If the selected time has already passed today, schedule for tomorrow
     if (selectedTime.isBefore(now)) {
       selectedTime = selectedTime.add(const Duration(days: 1));
     }
 
     await AndroidAlarmManager.periodic(
-        const Duration(days: 1), 0, alarmCallback,
-        startAt: selectedTime, rescheduleOnReboot: true);
-    debugPrint('Scheduled daily alarm at $selectedTime');
+      const Duration(days: 1),
+      0,
+      alarmCallback,         // top-level function reference
+      startAt: selectedTime,
+      exact: false,          // inexact: no special permission needed
+      wakeup: true,          // wake the device so notification is delivered
+      rescheduleOnReboot: true,
+    );
+
+    debugPrint('Scheduled daily inexact alarm at $selectedTime');
   }
 
   Future<void> cancelAlarm() async {
@@ -43,71 +96,25 @@ class AlarmService {
     debugPrint('Cancelled daily alarm');
   }
 
-  // * The callback function that runs when the alarm is triggered
-  @pragma('vm:entry-point')
-  static Future<void> alarmCallback() async {
-    debugPrint("Alarm triggered: Updating expired food items...");
-
-    // * Initialize Flutter bindings
-    WidgetsFlutterBinding.ensureInitialized();
-
-    // * Initialize alarm service to load the notification icon
-    await AlarmService().init();
-
-    //* Check the time now, reschedule if it is called just because of reboot
-    //* If this is a reboot, cancel the alarm and reschedule it
-    DateTime selectedTime = await AlarmService().getAlarmTime();
-    DateTime now = DateTime.now();
-    // * If time now is before the selected time, reschedule the alarm and return
-    if (now.isBefore(selectedTime)) {
-      await AlarmService().cancelAlarm();
-      await AlarmService().scheduleDailyAlarm();
-      return;
-    }
-    // * If the time if after the selected time 30 minutes, reschedule the alarm but keep the notification
-    else if (now.isAfter(selectedTime.add(const Duration(minutes: 30)))) {
-      await AlarmService().cancelAlarm();
-      await AlarmService().scheduleDailyAlarm();
-    }
-    // * Otherwise, continue with the alarm
-
-    // * Initialize Hive and open the box before using it
-    await Hive.initFlutter();
-    if (!Hive.isAdapterRegistered(1)) {
-      // * Check if the adapter is already registered
-      Hive.registerAdapter(SubCategoryAdapter());
-    }
-    await Hive.openBox('mybox');
-
-    // * Initialize the localizations
-    String locale = await LanguageDB.getLanguageWithoutContext();
-    await S.load(Locale(locale));
-
-    // * Call the notification service to send the daily notification
-    NotificationService notificationService = NotificationService();
-    await notificationService.sendDailyNotification();
-    debugPrint("Alarm completed");
-  }
-
-  // * Save the selected time for alarms
+  /// Persist the user-chosen alarm time (time-of-day only; date is ignored).
   Future<void> setAlarmTime(DateTime selectedTime) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('alarmTime', selectedTime.toIso8601String());
   }
 
-  // * Retrieve the selected time for alarms
+  /// Load the persisted alarm time and return it adjusted to today's date.
   Future<DateTime> getAlarmTime() async {
     final prefs = await SharedPreferences.getInstance();
-    String? timeString = prefs.getString('alarmTime');
+    final String? timeString = prefs.getString('alarmTime');
 
-    // * If the time is not set, return the default time
     if (timeString == null) {
-      return DateTime.now().copyWith(hour: 7, minute: 0);
+      // Default: 07:00 today
+      final now = DateTime.now();
+      return DateTime(now.year, now.month, now.day, 7, 0, 0);
     }
 
-    // * Change the date to today but keep the time
-    DateTime time = DateTime.parse(timeString);
-    DateTime now = DateTime.now();
-    return time.copyWith(year: now.year, month: now.month, day: now.day);
+    final DateTime saved = DateTime.parse(timeString);
+    final DateTime now = DateTime.now();
+    return DateTime(now.year, now.month, now.day, saved.hour, saved.minute, 0);
   }
 }

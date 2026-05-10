@@ -47,23 +47,22 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
 
   // ── Toggle notification ──────────────────────────────────────────────────
   Future<void> _onToggle(bool value) async {
-    await _notificationService.toggleNotifications(value);
-
     if (value) {
-      final alarmOk =
-          await PermissionManager.checkAndRequestScheduleExactAlarmPermission(
-              toSetting: true);
+      // * Check notification permission before saving state (prevents race condition)
       final notifOk =
           await PermissionManager.checkAndRequestNotificationPermission(
               toSetting: true);
 
-      if (!alarmOk || !notifOk) {
-        await _notificationService.toggleNotifications(false);
-        value = false;
-      } else {
-        await _alarmService.scheduleDailyAlarm();
+      if (!notifOk) {
+        // Permission denied — do not change state
+        if (mounted) setState(() => _notificationsEnabled = false);
+        return;
       }
+
+      await _notificationService.toggleNotifications(true);
+      await _alarmService.scheduleDailyAlarm();
     } else {
+      await _notificationService.toggleNotifications(false);
       await _alarmService.cancelAlarm();
     }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlist/generated/l10n.dart';
 import 'package:foodlist/setting/setting_appbar.dart';
 import '../database/ingredient.dart';
+import '../util/app_scaffold.dart';
 
 class EditCategoryDetailPage extends StatefulWidget {
   const EditCategoryDetailPage({super.key});
@@ -34,7 +35,7 @@ class _EditCategoryDetailPageState extends State<EditCategoryDetailPage> {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    return Scaffold(
+    return AppScaffold(
       appBar: SettingAppbar(title: S.of(context).editCategory),
       body: ReorderableListView(
         buildDefaultDragHandles: false,
@@ -62,12 +63,11 @@ class _EditCategoryDetailPageState extends State<EditCategoryDetailPage> {
                   ),
                   title: Row(
                     children: [
-                      Expanded(
-                        child: Text(cdb.categoryMap[catKeys[index]]!),
-                      ),
+                      Expanded(child: Text(cdb.categoryMap[catKeys[index]]!)),
                       IconButton(
                         icon: const Icon(Icons.edit),
-                        onPressed: () => _showEditDialog(context, catKeys[index]),
+                        onPressed: () =>
+                            _showEditDialog(context, catKeys[index]),
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
@@ -142,8 +142,9 @@ class _EditCategoryDetailPageState extends State<EditCategoryDetailPage> {
   }
 
   void _showEditDialog(BuildContext context, String catKey) {
-    final TextEditingController controller =
-        TextEditingController(text: cdb.categoryMap[catKey]);
+    final TextEditingController controller = TextEditingController(
+      text: cdb.categoryMap[catKey],
+    );
 
     showDialog(
       context: context,
@@ -152,8 +153,9 @@ class _EditCategoryDetailPageState extends State<EditCategoryDetailPage> {
           title: Text(S.of(context).editCategory),
           content: TextField(
             controller: controller,
-            decoration:
-                InputDecoration(hintText: S.of(context).enterNewCategoryName),
+            decoration: InputDecoration(
+              hintText: S.of(context).enterNewCategoryName,
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -187,8 +189,9 @@ class _EditCategoryDetailPageState extends State<EditCategoryDetailPage> {
           title: Text(S.of(context).addCategory),
           content: TextField(
             controller: controller,
-            decoration:
-                InputDecoration(hintText: S.of(context).enterNewCategoryName),
+            decoration: InputDecoration(
+              hintText: S.of(context).enterNewCategoryName,
+            ),
           ),
           actions: <Widget>[
             TextButton(

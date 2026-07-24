@@ -3,6 +3,7 @@ import 'package:foodlist/setting/setting_appbar.dart';
 import 'package:foodlist/util/alarm.dart';
 import 'package:foodlist/util/permission.dart';
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 import '../util/notification.dart';
 
 class NotificationSettingPage extends StatefulWidget {
@@ -51,7 +52,8 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
       // * Check notification permission before saving state (prevents race condition)
       final notifOk =
           await PermissionManager.checkAndRequestNotificationPermission(
-              toSetting: true);
+            toSetting: true,
+          );
 
       if (!notifOk) {
         // Permission denied — do not change state
@@ -110,7 +112,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
     final String hh = _selectedTime.hour.toString().padLeft(2, '0');
     final String mm = _selectedTime.minute.toString().padLeft(2, '0');
 
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: const Color(0xFFF0F2F5),
       appBar: SettingAppbar(title: S.of(context).notificationSetting),
       body: ListView(
@@ -121,8 +123,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
           // ── Toggle card ────────────────────────────────────────────────
           _card(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 children: [
                   Container(
@@ -132,8 +133,11 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                       color: const Color(0xFFFFA000),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.notifications_outlined,
-                        color: Colors.white, size: 20),
+                    child: const Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -218,8 +222,11 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                           ),
                           child: Column(
                             children: [
-                              const Icon(Icons.access_time_outlined,
-                                  color: Colors.white60, size: 28),
+                              const Icon(
+                                Icons.access_time_outlined,
+                                color: Colors.white60,
+                                size: 28,
+                              ),
                               const SizedBox(height: 10),
                               Text(
                                 '$hh : $mm',
@@ -234,7 +241,9 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                               const SizedBox(height: 8),
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 5),
+                                  horizontal: 14,
+                                  vertical: 5,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.15),
                                   borderRadius: BorderRadius.circular(20),
@@ -242,7 +251,9 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                                 child: Text(
                                   S.of(context).clickToChangeReminderTime,
                                   style: const TextStyle(
-                                      color: Colors.white70, fontSize: 13),
+                                    color: Colors.white70,
+                                    fontSize: 13,
+                                  ),
                                 ),
                               ),
                             ],
@@ -266,14 +277,20 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.warning_amber_outlined,
-                    color: Color(0xFFFF8F00), size: 20),
+                const Icon(
+                  Icons.warning_amber_outlined,
+                  color: Color(0xFFFF8F00),
+                  size: 20,
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     S.of(context).notificationContentWarn,
                     style: const TextStyle(
-                        fontSize: 13, color: Color(0xFF6D4C00), height: 1.5),
+                      fontSize: 13,
+                      color: Color(0xFF6D4C00),
+                      height: 1.5,
+                    ),
                   ),
                 ),
               ],

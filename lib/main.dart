@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:foodlist/database/languagedb.dart';
@@ -38,17 +37,14 @@ void main() async {
     locale = LanguageDB.languageToLocale(languageCode);
   } else {
     locale = LanguageDB.languageToLocale(
-        await LanguageDB.getLanguageWithoutContext());
+      await LanguageDB.getLanguageWithoutContext(),
+    );
   }
 
-  // Enable edge-to-edge rendering (required for Android 15 / SDK 35)
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
-    systemNavigationBarColor: Colors.transparent,
-    systemNavigationBarContrastEnforced: false,
-  ));
+  // Keep Flutter in edge-to-edge mode without using deprecated system bar
+  // color APIs. Android enables the backward-compatible window behavior in
+  // MainActivity.
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   runApp(MyApp(locale: locale));
 }
@@ -131,10 +127,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int index = 0;
-  final screens = [
-    const HomePage(),
-    const SettingPage(),
-  ];
+  final screens = [const HomePage(), const SettingPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -144,10 +137,7 @@ class _MainPageState extends State<MainPage> {
         data: NavigationBarThemeData(
           indicatorColor: Colors.blueGrey,
           labelTextStyle: WidgetStateProperty.all(
-            const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
+            const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           ),
         ),
         child: NavigationBar(

@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../database/data.dart';
 import '../database/ingredient.dart';
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 import '../util/list_tile.dart';
 import 'add_page.dart';
 
@@ -83,7 +84,8 @@ class _HomePageState extends State<HomePage> {
           duration: const Duration(seconds: 4),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(10),
+          ),
           margin: const EdgeInsets.all(12),
         ),
       );
@@ -148,7 +150,7 @@ class _HomePageState extends State<HomePage> {
         });
         return true;
       },
-      child: Scaffold(
+      child: AppScaffold(
         backgroundColor: const Color(0xFFF0F2F5),
         appBar: _buildAppBar(),
         body: Column(
@@ -167,8 +169,10 @@ class _HomePageState extends State<HomePage> {
                   await _loadAll();
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
-                label: Text(S.of(context).add,
-                    style: const TextStyle(color: Colors.white)),
+                label: Text(
+                  S.of(context).add,
+                  style: const TextStyle(color: Colors.white),
+                ),
               )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -181,16 +185,20 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       title: Text(
         S.of(context).foodlist,
-        style:
-            const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       backgroundColor: Colors.blueGrey,
       elevation: 0,
       centerTitle: true,
       actions: [
         IconButton(
-          icon: Icon(_searchOpen ? Icons.search_off : Icons.search,
-              color: Colors.white),
+          icon: Icon(
+            _searchOpen ? Icons.search_off : Icons.search,
+            color: Colors.white,
+          ),
           onPressed: () {
             setState(() {
               _searchOpen = !_searchOpen;
@@ -304,20 +312,27 @@ class _HomePageState extends State<HomePage> {
           children: [
             _filterChip('all', S.of(context).filterAll, Icons.list_alt),
             const SizedBox(width: 6),
-            _filterChip('expiringSoon', S.of(context).filterExpiringSoon,
-                Icons.warning_amber_outlined),
+            _filterChip(
+              'expiringSoon',
+              S.of(context).filterExpiringSoon,
+              Icons.warning_amber_outlined,
+            ),
             const SizedBox(width: 6),
-            _filterChip('expired', S.of(context).filterExpired,
-                Icons.error_outline),
+            _filterChip(
+              'expired',
+              S.of(context).filterExpired,
+              Icons.error_outline,
+            ),
             const SizedBox(width: 6),
             // Category chips
             ..._cdb.categoryKeys.map((key) {
               return Padding(
                 padding: const EdgeInsets.only(right: 6),
                 child: _filterChip(
-                    key,
-                    '${getCategoryIcon(key)} ${_cdb.categoryMap[key] ?? key}',
-                    null),
+                  key,
+                  '${getCategoryIcon(key)} ${_cdb.categoryMap[key] ?? key}',
+                  null,
+                ),
               );
             }),
           ],
@@ -344,8 +359,11 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 14,
-                  color: selected ? Colors.white : Colors.grey.shade600),
+              Icon(
+                icon,
+                size: 14,
+                color: selected ? Colors.white : Colors.grey.shade600,
+              ),
               const SizedBox(width: 4),
             ],
             Text(
@@ -376,9 +394,10 @@ class _HomePageState extends State<HomePage> {
             Text(
               S.of(context).noIngredients,
               style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey,
+              ),
             ),
             const SizedBox(height: 8),
             Text(

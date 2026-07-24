@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({Key? key}) : super(key: key);
@@ -47,18 +48,21 @@ class FeedbackState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).feedback),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         children: [
           Center(
-            child: Text(S.of(context).versionVersion(_version),
-                style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey)),
+            child: Text(
+              S.of(context).versionVersion(_version),
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+            ),
           ),
           const SizedBox(height: 32),
           _buildListItem(
@@ -80,30 +84,46 @@ class FeedbackState extends State<FeedbackPage> {
           _buildListItem(
             icon: Icons.mail_outline_rounded,
             title: S.of(context).contactUs,
-            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
-                forgerwiseEmail, titleOfContactUs)),
+            onTap: () => _launchUrl(
+              _combineEmailAndTitleAndMessage(
+                forgerwiseEmail,
+                titleOfContactUs,
+              ),
+            ),
           ),
           _buildListItem(
             icon: Icons.bug_report_outlined,
             title: S.of(context).bugReport,
-            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
-                forgerwiseEmail, titleOfBugReport,
-                message: messageOfBugReport)),
+            onTap: () => _launchUrl(
+              _combineEmailAndTitleAndMessage(
+                forgerwiseEmail,
+                titleOfBugReport,
+                message: messageOfBugReport,
+              ),
+            ),
           ),
           _buildListItem(
             icon: Icons.g_translate_rounded,
             title: S.of(context).translationError,
-            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
-                forgerwiseEmail, titleOfTranslationError,
-                message: messageOfTranslationError)),
+            onTap: () => _launchUrl(
+              _combineEmailAndTitleAndMessage(
+                forgerwiseEmail,
+                titleOfTranslationError,
+                message: messageOfTranslationError,
+              ),
+            ),
           ),
           const SizedBox(height: 16),
           _buildListItem(
             icon: Icons.translate_rounded,
             title: S.of(context).contributeTranslation,
-            onTap: () => _launchUrl(_combineEmailAndTitleAndMessage(
-                forgerwiseEmail, titleOfContributeTranslation,
-                message: messageOfContributeTranslation)),
+            onTap: () => _launchUrl(
+              _combineEmailAndTitleAndMessage(
+                forgerwiseEmail,
+                titleOfContributeTranslation,
+                message: messageOfContributeTranslation,
+              ),
+            ),
           ),
           _buildListItem(
             icon: Icons.integration_instructions_outlined,
@@ -170,15 +190,24 @@ class FeedbackState extends State<FeedbackPage> {
             color: Colors.black87,
           ),
         ),
-        trailing: Icon(Icons.chevron_right, color: Colors.grey.shade300, size: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        trailing: Icon(
+          Icons.chevron_right,
+          color: Colors.grey.shade300,
+          size: 20,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
         onTap: onTap,
       ),
     );
   }
 
-  Uri _combineEmailAndTitleAndMessage(String email, String title,
-      {String message = ""}) {
+  Uri _combineEmailAndTitleAndMessage(
+    String email,
+    String title, {
+    String message = "",
+  }) {
     return Uri.parse("mailto:$email?subject=$title&body=$message");
   }
 
@@ -195,8 +224,9 @@ class FeedbackState extends State<FeedbackPage> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(S.of(context).urlCopiedToClipboard),
-            backgroundColor: Colors.blueGrey),
+          content: Text(S.of(context).urlCopiedToClipboard),
+          backgroundColor: Colors.blueGrey,
+        ),
       );
     }
   }

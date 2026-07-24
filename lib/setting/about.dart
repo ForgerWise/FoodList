@@ -3,6 +3,7 @@ import 'package:foodlist/setting/setting_appbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 import 'feedback.dart';
 
 class AboutPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _AboutState extends State<AboutPage> {
   final Uri homepageUri = Uri.parse("https://www.forgerwise.com");
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).about),
       body: SingleChildScrollView(
@@ -37,20 +38,20 @@ class _AboutState extends State<AboutPage> {
             const SizedBox(height: 32),
             const Divider(color: Colors.black12, height: 1),
             const SizedBox(height: 32),
-            
+
             _buildSection(
               title: 'GitHub',
               content: S.of(context).aboutContentGithub,
               url: githubUri,
             ),
             const SizedBox(height: 24),
-            
+
             _buildSection(
               title: S.of(context).officialWebsite,
               content: S.of(context).aboutContentHomepage,
               url: homepageUri,
             ),
-            
+
             const SizedBox(height: 80),
           ],
         ),
@@ -60,8 +61,10 @@ class _AboutState extends State<AboutPage> {
           context,
           MaterialPageRoute(builder: (context) => const FeedbackPage()),
         ),
-        label: Text(S.of(context).feedback,
-            style: const TextStyle(color: Colors.white)),
+        label: Text(
+          S.of(context).feedback,
+          style: const TextStyle(color: Colors.white),
+        ),
         icon: const Icon(Icons.rate_review_outlined, color: Colors.white),
         backgroundColor: Colors.blueGrey,
         elevation: 2,
@@ -69,7 +72,11 @@ class _AboutState extends State<AboutPage> {
     );
   }
 
-  Widget _buildSection({required String title, required String content, Uri? url}) {
+  Widget _buildSection({
+    required String title,
+    required String content,
+    Uri? url,
+  }) {
     Widget section = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -123,4 +130,3 @@ class _AboutState extends State<AboutPage> {
     return section;
   }
 }
-

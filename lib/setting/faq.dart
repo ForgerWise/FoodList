@@ -2,28 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:foodlist/setting/setting_appbar.dart';
 
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 
 class FAQPage extends StatelessWidget {
   const FAQPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).faq),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         children: [
-          faqCard(S.of(context).faqWhyEditNotLoad,
-              S.of(context).faqWhyEditNotLoadAns),
-          faqCard(S.of(context).faqWhyNotificationNotWork,
-              S.of(context).faqWhyNotificationNotWorkAns),
-          faqCard(S.of(context).faqWhyNotificationDelay,
-              S.of(context).faqWhyNotificationDelayAns),
-          faqCard(S.of(context).faqWhatWillResetCategoriesDo,
-              S.of(context).faqWhatWillResetCategoriesDoAns),
-          faqCard(S.of(context).faqHowToEditSubcategories,
-              S.of(context).faqHowToEditSubcategoriesAns),
+          faqCard(
+            S.of(context).faqWhyEditNotLoad,
+            S.of(context).faqWhyEditNotLoadAns,
+          ),
+          faqCard(
+            S.of(context).faqWhyNotificationNotWork,
+            S.of(context).faqWhyNotificationNotWorkAns,
+          ),
+          faqCard(
+            S.of(context).faqWhyNotificationDelay,
+            S.of(context).faqWhyNotificationDelayAns,
+          ),
+          faqCard(
+            S.of(context).faqWhatWillResetCategoriesDo,
+            S.of(context).faqWhatWillResetCategoriesDoAns,
+          ),
+          faqCard(
+            S.of(context).faqHowToEditSubcategories,
+            S.of(context).faqHowToEditSubcategoriesAns,
+          ),
         ],
       ),
     );
@@ -53,7 +64,11 @@ class FAQPage extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.help_outline_rounded, color: Colors.blueGrey.shade500, size: 22),
+                Icon(
+                  Icons.help_outline_rounded,
+                  color: Colors.blueGrey.shade500,
+                  size: 22,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -69,7 +84,11 @@ class FAQPage extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 34.0, top: 12.0, bottom: 12.0),
+              padding: const EdgeInsets.only(
+                left: 34.0,
+                top: 12.0,
+                bottom: 12.0,
+              ),
               child: Divider(height: 1, color: Colors.grey.shade100),
             ),
             Padding(

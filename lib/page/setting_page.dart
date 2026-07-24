@@ -9,6 +9,7 @@ import '../setting/language.dart';
 import '../setting/notification.dart';
 import '../setting/policy.dart';
 import '../setting/about.dart';
+import '../util/app_scaffold.dart';
 import '../util/notification.dart';
 
 class SettingPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: const Color(0xFFF0F2F5),
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
@@ -50,7 +51,10 @@ class _SettingPageState extends State<SettingPage> {
         title: Text(
           S.of(context).settings,
           style: const TextStyle(
-              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         elevation: 0,
       ),
@@ -150,8 +154,10 @@ class _SettingPageState extends State<SettingPage> {
           context,
           MaterialPageRoute(builder: (_) => const FeedbackPage()),
         ),
-        label: Text(S.of(context).feedback,
-            style: const TextStyle(color: Colors.white)),
+        label: Text(
+          S.of(context).feedback,
+          style: const TextStyle(color: Colors.white),
+        ),
         icon: const Icon(Icons.rate_review_outlined, color: Colors.white),
         backgroundColor: Colors.blueGrey,
       ),
@@ -165,7 +171,9 @@ class _SettingPageState extends State<SettingPage> {
       icon: Icons.notifications_outlined,
       iconBg: const Color(0xFFFFA000),
       title: S.of(context).notifications,
-      subtitle: _notificationsEnabled ? S.of(context).enabled : S.of(context).disabled,
+      subtitle: _notificationsEnabled
+          ? S.of(context).enabled
+          : S.of(context).disabled,
       subtitleColor: _notificationsEnabled
           ? const Color(0xFF43A047)
           : Colors.grey,
@@ -206,9 +214,7 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ],
       ),
-      child: Column(
-        children: children,
-      ),
+      child: Column(children: children),
     );
   }
 
@@ -267,8 +273,7 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right,
-                  size: 20, color: Colors.grey.shade400),
+              Icon(Icons.chevron_right, size: 20, color: Colors.grey.shade400),
             ],
           ),
         ),
@@ -277,11 +282,7 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   String _langDisplayName(String code) {
-    const names = {
-      'en': 'English',
-      'zh_TW': '繁體中文',
-      'ja': '日本語',
-    };
+    const names = {'en': 'English', 'zh_TW': '繁體中文', 'ja': '日本語'};
     return names[code] ?? code;
   }
 }

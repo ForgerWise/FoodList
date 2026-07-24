@@ -27,17 +27,17 @@ class NotificationService {
 
     const DarwinInitializationSettings iosSettings =
         DarwinInitializationSettings(
-      requestAlertPermission: false, // handled by PermissionManager
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
+          requestAlertPermission: false, // handled by PermissionManager
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
 
     const InitializationSettings initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(initSettings);
+    await flutterLocalNotificationsPlugin.initialize(settings: initSettings);
 
     // Ensure the notification channel exists (Android 8.0+)
     await _createNotificationChannel();
@@ -47,8 +47,10 @@ class NotificationService {
   /// even before the first notification is shown.
   Future<void> _createNotificationChannel() async {
     final AndroidFlutterLocalNotificationsPlugin? androidPlugin =
-        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+        flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
 
     if (androidPlugin == null) return;
 
@@ -100,15 +102,17 @@ class NotificationService {
         '🗓 ${S.current.summaryExpiringSoon} (${S.current.expiresTomorrow.replaceAll('!', '')}): $tomorrowText';
 
     // Concise one-liner shown in collapsed state
-    final String collapsedBody =
-        S.current.foodlistExpiryNotificationContent(todayText, tomorrowText);
+    final String collapsedBody = S.current.foodlistExpiryNotificationContent(
+      todayText,
+      tomorrowText,
+    );
 
     try {
       await flutterLocalNotificationsPlugin.show(
-        0,
-        S.current.foodlistExpiryNotification,
-        collapsedBody,
-        _buildNotificationDetails(
+        id: 0,
+        title: S.current.foodlistExpiryNotification,
+        body: collapsedBody,
+        notificationDetails: _buildNotificationDetails(
           expandedBody: expandedBody,
           todayCount: expireToday.length,
           tomorrowCount: expireTomorrow.length,
@@ -131,8 +135,9 @@ class NotificationService {
     const int accentColor = 0xFF546E7A; // Colors.blueGrey[600]
 
     // Sub-text shown below the app name on Android 7+
-    final String subText =
-        todayCount > 0 ? '⚠ $todayCount item(s) expiring today' : null ?? '';
+    final String subText = todayCount > 0
+        ? '⚠ $todayCount item(s) expiring today'
+        : null ?? '';
 
     final BigTextStyleInformation bigTextStyle = BigTextStyleInformation(
       expandedBody,

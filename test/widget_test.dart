@@ -1,30 +1,51 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../lib/main.dart';
+import 'package:foodlist/database/sub_category.dart';
+import 'package:foodlist/main.dart';
+import 'package:foodlist/page/homepage.dart';
+import 'package:foodlist/page/setting_page.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  setUpAll(() async {
+    Hive.init((await Directory.systemTemp.createTemp('foodlist_test_')).path);
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(SubCategoryAdapter());
+    }
+    await Hive.openBox<dynamic>('mybox');
   });
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({
+      'selectedLanguage': 'English',
+      'notificationsEnabled': false,
+    });
+    await Hive.box<dynamic>('mybox').clear();
+  });
+
+  testWidgets('app launches and switches between primary destinations', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const MyApp(locale: Locale('en')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HomePage), findsOneWidget);
+    expect(find.byType(SettingPage), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+
+    final navigationBar = tester.widget<NavigationBar>(
+      find.byType(NavigationBar),
+    );
+    expect(navigationBar.selectedIndex, 1);
+    expect(find.byType(SettingPage), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+
 }

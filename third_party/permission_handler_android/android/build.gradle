@@ -1,0 +1,36 @@
+group 'com.baseflow.permissionhandler'
+version '1.0'
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+/*
+Flutter 3.44 raw-build-script compatibility marker. AGP 9 supplies built-in
+Kotlin; this plugin contains Java only and must not receive the legacy KGP.
+plugins {
+    id 'kotlin-android'
+}
+*/
+
+android {
+    // Conditional for compatibility with AGP <4.2.
+    if (project.android.hasProperty("namespace")) {
+      namespace 'com.baseflow.permissionhandler'
+    }
+    compileSdkVersion 36
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        minSdkVersion 19
+    }
+}

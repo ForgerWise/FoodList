@@ -1,12 +1,12 @@
 package com.forgerwise.foodlist
 
-import io.flutter.embedding.android.FlutterActivity
+import android.os.Bundle
 import androidx.core.view.WindowCompat
+import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity: FlutterActivity() {
-    override fun onResume() {
-        super.onResume()
-        // Enable edge-to-edge display for Android 15+ compatibility
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        WindowCompat.enableEdgeToEdge(window)
     }
 }

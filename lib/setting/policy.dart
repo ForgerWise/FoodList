@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 import 'setting_appbar.dart';
 
 class PolicyPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class PolicyPage extends StatefulWidget {
 class _PolicyState extends State<PolicyPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).policy),
       body: SingleChildScrollView(

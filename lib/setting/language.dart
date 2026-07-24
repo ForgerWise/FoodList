@@ -4,6 +4,7 @@ import 'package:foodlist/main.dart';
 import 'package:foodlist/setting/setting_appbar.dart';
 import '../database/languageDB.dart';
 import '../generated/l10n.dart';
+import '../util/app_scaffold.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({Key? key}) : super(key: key);
@@ -31,7 +32,10 @@ class _LanguageState extends State<LanguagePage> {
   }
 
   Widget _buildLanguageTile(
-      String languageCode, String languageName, bool isSelected) {
+    String languageCode,
+    String languageName,
+    bool isSelected,
+  ) {
     return AnimationConfiguration.staggeredList(
       position: languagesList.indexOf(languageCode),
       duration: const Duration(milliseconds: 375),
@@ -41,22 +45,30 @@ class _LanguageState extends State<LanguagePage> {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
             decoration: BoxDecoration(
-              color: isSelected ? Colors.blueGrey.withOpacity(0.08) : Colors.white,
+              color: isSelected
+                  ? Colors.blueGrey.withOpacity(0.08)
+                  : Colors.white,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: isSelected ? Colors.blueGrey.withOpacity(0.5) : Colors.grey.shade200,
+                color: isSelected
+                    ? Colors.blueGrey.withOpacity(0.5)
+                    : Colors.grey.shade200,
                 width: 1,
               ),
-              boxShadow: isSelected ? [] : [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.02),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              boxShadow: isSelected
+                  ? []
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.02),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
             ),
             child: ListTile(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
               title: Text(
                 languageName,
                 style: TextStyle(
@@ -68,7 +80,10 @@ class _LanguageState extends State<LanguagePage> {
               trailing: isSelected
                   ? const Icon(Icons.check_circle, color: Colors.blueGrey)
                   : null,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 4.0,
+              ),
               onTap: () => _onLanguageTap(languageCode, isSelected),
             ),
           ),
@@ -87,7 +102,7 @@ class _LanguageState extends State<LanguagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: Colors.white,
       appBar: SettingAppbar(title: S.of(context).languages),
       body: FutureBuilder<String>(
@@ -109,7 +124,10 @@ class _LanguageState extends State<LanguagePage> {
                 final isSelected = selectedLanguage == languageCode;
 
                 return _buildLanguageTile(
-                    languageCode, languageName, isSelected);
+                  languageCode,
+                  languageName,
+                  isSelected,
+                );
               },
             ),
           );

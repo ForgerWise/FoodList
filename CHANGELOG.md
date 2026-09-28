@@ -7,11 +7,9 @@ All notable user-facing changes. Format based on [Keep a Changelog](https://keep
 ## [3.1.0] — 2026-09
 
 ### Highlights
-- Add food faster: pick a common food and its name, category and expiry date are filled in for you
-- Scan a barcode to fill in the product name, or take a photo to read the expiry date
-- New look with dark mode
-- Swipe "Used" to lower the quantity, with Undo
-- Friendlier reminders and many bug fixes
+- New: scan a barcode to fill in the food, and take a photo to set the expiry date
+- Completely redesigned interface for a smoother, easier flow
+- Dark mode and a new app icon
 
 ### Added
 - **Quick pick:** ~70 common foods (en / 繁中 / 日本語) with typical shelf life — tap one and name, category and expiry are filled in. Recently used items appear first.

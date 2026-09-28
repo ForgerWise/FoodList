@@ -48,7 +48,7 @@ dependencies:
   mobile_scanner: ^7.4.2
   package_info_plus:
     path: third_party/package_info_plus
-  permission_handler: 12.0.3
+  permission_handler: 13.0.2
   shared_preferences: 2.5.5
   timezone: 0.11.1
   url_launcher: 6.3.2

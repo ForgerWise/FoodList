@@ -6,6 +6,13 @@ All notable user-facing changes. Format based on [Keep a Changelog](https://keep
 
 ## [3.1.0] — 2026-09
 
+### Highlights
+- Add food faster: pick a common food and its name, category and expiry date are filled in for you
+- Scan a barcode to fill in the product name, or take a photo to read the expiry date
+- New look with dark mode
+- Swipe "Used" to lower the quantity, with Undo
+- Friendlier reminders and many bug fixes
+
 ### Added
 - **Quick pick:** ~70 common foods (en / 繁中 / 日本語) with typical shelf life — tap one and name, category and expiry are filled in. Recently used items appear first.
 - **Barcode scanning:** EAN/JAN/UPC, GS1 QR & DataMatrix (reads expiry dates), in-store labels for weighed food, and any other code as a personal shortcut. Names from Open Food Facts and Yahoo! Shopping (Japan); names you type are remembered offline.

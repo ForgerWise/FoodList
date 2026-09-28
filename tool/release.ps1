@@ -122,7 +122,10 @@ Get-ChildItem $out -File | ForEach-Object {
 } | Set-Content "$out/SHA256SUMS.txt" -Encoding utf8
 # GitHub release body — same shape as every release since v2.x:
 #   ## FoodList vX.Y.Z / bullet list / thank-you footer
-$bullets = ($notes -split "`n" | Where-Object { $_ -match '^\s*- ' } | ForEach-Object { $_.Trim() -replace '\*\*', '' }) -join "`n"
+# Short, user-facing list: the version's "### Highlights" if it has one,
+# otherwise every bullet of the section.
+$source = if ($notes -match '(?s)### Highlights\s*\n(.*?)(\n### |\z)') { $Matches[1] } else { $notes }
+$bullets = ($source -split "`n" | Where-Object { $_ -match '^\s*- ' } | ForEach-Object { $_.Trim() -replace '\*\*', '' }) -join "`n"
 @"
 ## FoodList $tag
 

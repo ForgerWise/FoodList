@@ -54,7 +54,7 @@ It bumps the version, runs the CI checks, builds the signed AAB + APKs with
 `--dart-define-from-file=dart_defines.json` (obfuscated, symbols kept),
 verifies the release certificate, archives everything to `releases/vX.Y.Z/`,
 merges `develop` → `main` through a PR once CI passes, tags, and publishes a
-GitHub Release with the APKs. Upload the AAB (and the debug-symbols zip) to
+GitHub Release in the usual format (title `vX.Y.Z`, one `FoodList-vX.Y.Z.apk`). Upload the AAB (and the debug-symbols zip) to
 Play Console yourself. Keep "Web Services by Yahoo! JAPAN" on the store listing.
 
 ## Store screenshots & listing (maintainers)

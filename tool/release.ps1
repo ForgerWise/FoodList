@@ -9,7 +9,9 @@ Steps: preflight → version bump → checks (format, l10n, analyze, test) →
 build AAB + APKs (--dart-define-from-file, obfuscated, symbols kept) →
 verify release signature → archive to releases/vX.Y.Z (git-ignored) with
 SHA-256 sums → commit + push develop → PR develop→main, wait for CI, merge →
-tag → GitHub Release with the APKs. The AAB is for Play Console (manual).
+tag → GitHub Release (title "vX.Y.Z", one asset "FoodList-vX.Y.Z.apk", same
+notes layout as earlier releases). Split APKs, AAB, symbols and SHA-256 sums
+stay in releases/vX.Y.Z; the AAB is for Play Console (manual).
 #>
 param(
     [ValidateSet('patch', 'minor', 'major', 'none')] [string] $Bump = 'patch',
@@ -118,7 +120,19 @@ Compress-Archive "$out/symbols/*" "$out/FoodList-$tag-debug-symbols.zip"
 Get-ChildItem $out -File | ForEach-Object {
     "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower())  $($_.Name)"
 } | Set-Content "$out/SHA256SUMS.txt" -Encoding utf8
-"# FoodList $version`n`n$notes`n" | Set-Content "$out/notes.md" -Encoding utf8
+# GitHub release body — same shape as every release since v2.x:
+#   ## FoodList vX.Y.Z / bullet list / thank-you footer
+$bullets = ($notes -split "`n" | Where-Object { $_ -match '^\s*- ' } | ForEach-Object { $_.Trim() -replace '\*\*', '' }) -join "`n"
+@"
+## FoodList $tag
+
+$bullets
+
+Thank you for using FoodList! We appreciate your feedback and support.
+If you encounter any issues or have suggestions, please let us know.
+"@ | Set-Content "$out/notes.md" -Encoding utf8
+# Same asset name as previous releases: one universal APK.
+Copy-Item "$out/FoodList-$tag-universal.apk" "$out/FoodList-$tag.apk"
 Write-Host "Archived to $out"
 
 if ($DryRun) { Step "Dry run done — nothing pushed. Artifacts: $out"; exit 0 }
@@ -141,12 +155,11 @@ Run gh pr merge $pr --merge --subject "Release $tag"
 
 Step "Tag $tag on main"
 Run git fetch origin main --quiet
-Run git tag -a $tag origin/main -m "FoodList $version"
+Run git tag $tag origin/main   # lightweight, like earlier tags
 Run git push origin $tag
 
 Step 'GitHub Release'
-$assets = Get-ChildItem $out -File -Include *.apk, SHA256SUMS.txt -Recurse | ForEach-Object FullName
-Run gh release create $tag @assets --title "FoodList $version" --notes-file "$out/notes.md" --latest
+Run gh release create $tag "$out/FoodList-$tag.apk" --title $tag --notes-file "$out/notes.md" --latest
 
 # Bring develop up to date with the merge commit.
 Run git pull origin main --no-edit

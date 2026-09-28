@@ -1,45 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:foodlist/database/languagedb.dart';
-import 'package:foodlist/util/alarm.dart';
-import 'package:foodlist/util/notification.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'database/sub_category.dart';
+import 'database/data.dart';
+import 'database/languagedb.dart';
 import 'generated/l10n.dart';
 import 'page/add_page.dart';
 import 'page/homepage.dart';
 import 'page/setting_page.dart';
-import 'setting/edit_categories.dart';
-import 'setting/faq.dart';
-import 'setting/language.dart';
-import 'setting/notification.dart';
-import 'setting/policy.dart';
-import 'setting/about.dart';
+import 'util/alarm.dart';
+import 'util/app_settings.dart';
+import 'util/notification.dart';
+import 'util/review.dart';
+import 'util/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Hive.initFlutter();
-  Hive.registerAdapter(SubCategoryAdapter());
-  await Hive.openBox("mybox");
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? languageCode = prefs.getString('selectedLanguage');
-
+  await openStorage();
   await NotificationService().init();
   await AlarmService().init();
+  await ReviewService.markFirstOpen();
+  await AppSettings.load();
 
-  Locale? locale;
-  if (languageCode != null) {
-    locale = LanguageDB.languageToLocale(languageCode);
-  } else {
-    locale = LanguageDB.languageToLocale(
-      await LanguageDB.getLanguageWithoutContext(),
-    );
-  }
+  final locale = LanguageDB.languageToLocale(await LanguageDB.getLanguage());
 
   // Keep Flutter in edge-to-edge mode without using deprecated system bar
   // color APIs. Android enables the backward-compatible window behavior in
@@ -77,43 +61,28 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Foodlist',
-      locale: _locale,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainPage(),
-        '/home': (context) => const HomePage(),
-        '/add': (context) => const AddPage(),
-        '/setting': (context) => const SettingPage(),
-        '/language': (context) => const LanguagePage(),
-        '/policy': (context) => const PolicyPage(),
-        '/about': (context) => const AboutPage(),
-        '/notification': (context) => const NotificationSettingPage(),
-        '/faq': (context) => const FAQPage(),
-        '/editIngredients': (context) => const EditCategoriesPage(),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        fontFamily: 'IBM Plex Sans',
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.blueGrey,
-          iconTheme: IconThemeData(color: Colors.white),
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: AppSettings.themeMode,
+      builder: (context, mode, _) => MaterialApp(
+        title: 'Foodlist',
+        debugShowCheckedModeBanner: false,
+        locale: _locale,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MainPage(),
+          '/add': (context) => const AddPage(),
+        },
+        theme: buildAppTheme(Brightness.light),
+        darkTheme: buildAppTheme(Brightness.dark),
+        themeMode: mode,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
       ),
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
     );
   }
 }
@@ -131,32 +100,28 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[index],
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: Colors.blueGrey,
-          labelTextStyle: WidgetStateProperty.all(
-            const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ),
-        child: NavigationBar(
-          backgroundColor: Colors.white,
+    return PopScope(
+      canPop: index == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) setState(() => index = 0); // back on Settings → Home
+      },
+      child: Scaffold(
+        body: screens[index],
+        bottomNavigationBar: NavigationBar(
           selectedIndex: index,
-          onDestinationSelected: (index) {
-            setState(() {
-              this.index = index;
-            });
-          },
+          onDestinationSelected: (index) => setState(() => this.index = index),
           destinations: [
             NavigationDestination(
-              icon: const Icon(Icons.home_outlined),
-              selectedIcon: const Icon(Icons.home, color: Colors.white),
+              icon: const Icon(Icons.kitchen_outlined),
+              selectedIcon: const Icon(Icons.kitchen, color: AppColors.primary),
               label: S.of(context).home,
             ),
             NavigationDestination(
               icon: const Icon(Icons.settings_outlined),
-              selectedIcon: const Icon(Icons.settings, color: Colors.white),
+              selectedIcon: const Icon(
+                Icons.settings,
+                color: AppColors.primary,
+              ),
               label: S.of(context).settings,
             ),
           ],

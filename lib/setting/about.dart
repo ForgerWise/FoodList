@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlist/setting/setting_appbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../util/theme.dart';
 
 import '../generated/l10n.dart';
 import '../util/app_scaffold.dart';
-import 'feedback.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -19,24 +18,23 @@ class _AboutState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      backgroundColor: Colors.white,
-      appBar: SettingAppbar(title: S.of(context).about),
+      appBar: AppBar(title: Text(S.of(context).about)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               S.of(context).aboutContent,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 height: 1.6,
-                color: Colors.black87,
+                color: context.c.text,
                 letterSpacing: 0.3,
               ),
             ),
             const SizedBox(height: 32),
-            const Divider(color: Colors.black12, height: 1),
+            Divider(color: context.c.border, height: 1),
             const SizedBox(height: 32),
 
             _buildSection(
@@ -51,23 +49,24 @@ class _AboutState extends State<AboutPage> {
               content: S.of(context).aboutContentHomepage,
               url: homepageUri,
             ),
+            const SizedBox(height: 24),
+
+            // Required attributions: Open Food Facts (ODbL) and Yahoo! JAPAN
+            // Web API credit (exact wording, linked).
+            _buildSection(
+              title: S.of(context).dataSources,
+              content: S.of(context).dataSourcesContent,
+              url: Uri.parse('https://world.openfoodfacts.org/'),
+            ),
+            _buildSection(
+              title: 'Web Services by Yahoo! JAPAN',
+              content: '',
+              url: Uri.parse('https://developer.yahoo.co.jp/sitemap/'),
+            ),
 
             const SizedBox(height: 80),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const FeedbackPage()),
-        ),
-        label: Text(
-          S.of(context).feedback,
-          style: const TextStyle(color: Colors.white),
-        ),
-        icon: const Icon(Icons.rate_review_outlined, color: Colors.white),
-        backgroundColor: Colors.blueGrey,
-        elevation: 2,
       ),
     );
   }
@@ -88,26 +87,27 @@ class _AboutState extends State<AboutPage> {
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: url != null ? Colors.blue : Colors.blueGrey,
+                color: context.c.accent,
                 letterSpacing: 1.0,
               ),
             ),
             if (url != null) ...[
               const SizedBox(width: 4),
-              const Icon(Icons.open_in_new, size: 14, color: Colors.blue),
+              Icon(Icons.open_in_new, size: 14, color: context.c.accent),
             ],
           ],
         ),
-        const SizedBox(height: 8),
-        Text(
-          content,
-          style: const TextStyle(
-            fontSize: 15,
-            height: 1.6,
-            color: Colors.black87,
-            letterSpacing: 0.3,
+        if (content.isNotEmpty) const SizedBox(height: 8),
+        if (content.isNotEmpty)
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.6,
+              color: context.c.text,
+              letterSpacing: 0.3,
+            ),
           ),
-        ),
       ],
     );
 

@@ -5,12 +5,15 @@ import '../generated/l10n.dart';
 import '../setting/edit_categories.dart';
 import '../setting/faq.dart';
 import '../setting/feedback.dart';
-import '../setting/language.dart';
+import '../main.dart';
 import '../setting/notification.dart';
 import '../setting/policy.dart';
 import '../setting/about.dart';
 import '../util/app_scaffold.dart';
 import '../util/notification.dart';
+import '../util/app_settings.dart';
+import '../util/review.dart';
+import '../util/theme.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -32,7 +35,7 @@ class _SettingPageState extends State<SettingPage> {
 
   Future<void> _loadStatus() async {
     final enabled = await _notificationService.areNotificationsEnabled();
-    final lang = await LanguageDB.getLanguageWithoutContext();
+    final lang = await LanguageDB.getLanguage();
     if (mounted) {
       setState(() {
         _notificationsEnabled = enabled;
@@ -44,20 +47,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        centerTitle: true,
-        title: Text(
-          S.of(context).settings,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 0,
-      ),
+      appBar: AppBar(title: Text(S.of(context).settings)),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
@@ -67,16 +57,51 @@ class _SettingPageState extends State<SettingPage> {
             _settingTile(
               context,
               icon: Icons.language,
-              iconBg: const Color(0xFF1E88E5),
               title: S.of(context).languages,
-              subtitle: _langDisplayName(_currentLanguage),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const LanguagePage()),
-              ).then((_) => _loadStatus()),
+              subtitle: LanguageDB.languageNames[_currentLanguage] ?? '',
+              onTap: () => _pick<String>(
+                options: LanguageDB.languageNames.keys.toList(),
+                current: _currentLanguage,
+                label: (code) => LanguageDB.languageNames[code]!,
+                onPicked: (code) async {
+                  await LanguageDB.setLanguage(code);
+                  if (!mounted) return;
+                  MyApp.of(
+                    this.context,
+                  )?.setLocale(LanguageDB.languageToLocale(code));
+                  _currentLanguage = code;
+                },
+              ),
             ),
             const _Separator(),
             _notificationTile(context),
+            const _Separator(),
+            _settingTile(
+              context,
+              icon: Icons.dark_mode_outlined,
+              title: S.of(context).appearance,
+              subtitle: _themeLabel(AppSettings.themeMode.value),
+              onTap: () => _pick<ThemeMode>(
+                options: ThemeMode.values,
+                current: AppSettings.themeMode.value,
+                label: _themeLabel,
+                onPicked: AppSettings.setThemeMode,
+              ),
+            ),
+            const _Separator(),
+            _settingTile(
+              context,
+              icon: Icons.hourglass_bottom_rounded,
+              title: S.of(context).soonThreshold,
+              subtitle: S.of(context).soonThresholdValue(AppSettings.soonDays),
+              onTap: () => _pick<int>(
+                title: S.of(context).soonThresholdHint,
+                options: AppSettings.soonDayOptions,
+                current: AppSettings.soonDays,
+                label: S.of(context).soonThresholdValue,
+                onPicked: AppSettings.setSoonDays,
+              ),
+            ),
           ]),
 
           const SizedBox(height: 20),
@@ -87,7 +112,6 @@ class _SettingPageState extends State<SettingPage> {
             _settingTile(
               context,
               icon: Icons.label_outline,
-              iconBg: const Color(0xFF43A047),
               title: S.of(context).editResetCategories,
               onTap: () => Navigator.push(
                 context,
@@ -103,8 +127,24 @@ class _SettingPageState extends State<SettingPage> {
           _settingCard([
             _settingTile(
               context,
+              icon: Icons.star_outline_rounded,
+              title: S.of(context).rateApp,
+              onTap: ReviewService.openStore,
+            ),
+            const _Separator(),
+            _settingTile(
+              context,
+              icon: Icons.rate_review_outlined,
+              title: S.of(context).feedback,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FeedbackPage()),
+              ),
+            ),
+            const _Separator(),
+            _settingTile(
+              context,
               icon: Icons.help_outline,
-              iconBg: const Color(0xFF7B1FA2),
               title: S.of(context).faq,
               onTap: () => Navigator.push(
                 context,
@@ -115,7 +155,6 @@ class _SettingPageState extends State<SettingPage> {
             _settingTile(
               context,
               icon: Icons.privacy_tip_outlined,
-              iconBg: const Color(0xFF00897B),
               title: S.of(context).policy,
               onTap: () => Navigator.push(
                 context,
@@ -126,7 +165,6 @@ class _SettingPageState extends State<SettingPage> {
             _settingTile(
               context,
               icon: Icons.info_outline,
-              iconBg: const Color(0xFF546E7A),
               title: S.of(context).about,
               onTap: () => Navigator.push(
                 context,
@@ -137,7 +175,6 @@ class _SettingPageState extends State<SettingPage> {
             _settingTile(
               context,
               icon: Icons.description_outlined,
-              iconBg: const Color(0xFF757575),
               title: S.of(context).license,
               onTap: () => Navigator.push(
                 context,
@@ -146,20 +183,10 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ]),
 
-          const SizedBox(height: 100),
+          const SizedBox(height: 20),
+
+          const SizedBox(height: 24),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const FeedbackPage()),
-        ),
-        label: Text(
-          S.of(context).feedback,
-          style: const TextStyle(color: Colors.white),
-        ),
-        icon: const Icon(Icons.rate_review_outlined, color: Colors.white),
-        backgroundColor: Colors.blueGrey,
       ),
     );
   }
@@ -169,14 +196,13 @@ class _SettingPageState extends State<SettingPage> {
     return _settingTile(
       context,
       icon: Icons.notifications_outlined,
-      iconBg: const Color(0xFFFFA000),
       title: S.of(context).notifications,
       subtitle: _notificationsEnabled
           ? S.of(context).enabled
           : S.of(context).disabled,
       subtitleColor: _notificationsEnabled
-          ? const Color(0xFF43A047)
-          : Colors.grey,
+          ? AppColors.fresh
+          : context.c.textMuted,
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => const NotificationSettingPage()),
@@ -186,6 +212,51 @@ class _SettingPageState extends State<SettingPage> {
 
   // ── Helpers ───────────────────────────────────────────────────────────────
 
+  String _themeLabel(ThemeMode m) => switch (m) {
+    ThemeMode.system => S.of(context).themeSystem,
+    ThemeMode.light => S.of(context).themeLight,
+    ThemeMode.dark => S.of(context).themeDark,
+  };
+
+  /// Bottom sheet with a single-choice list.
+  Future<void> _pick<T>({
+    String? title,
+    required List<T> options,
+    required T current,
+    required String Function(T) label,
+    required Future<void> Function(T) onPicked,
+  }) async {
+    final picked = await showModalBottomSheet<T>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (title != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+                child: Text(title, style: TextStyle(color: ctx.c.textMuted)),
+              ),
+            for (final o in options)
+              ListTile(
+                title: Text(label(o)),
+                trailing: o == current
+                    ? const Icon(Icons.check_rounded, color: AppColors.primary)
+                    : null,
+                onTap: () => Navigator.pop(ctx, o),
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (picked != null) {
+      await onPicked(picked);
+      if (mounted) setState(() {});
+    }
+  }
+
   Widget _sectionLabel(BuildContext context, String label) {
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 8),
@@ -194,7 +265,7 @@ class _SettingPageState extends State<SettingPage> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w700,
-          color: Colors.blueGrey.shade600,
+          color: context.c.textMuted,
           letterSpacing: 0.5,
         ),
       ),
@@ -202,18 +273,8 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   Widget _settingCard(List<Widget> children) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    return Card(
+      clipBehavior: Clip.antiAlias,
       child: Column(children: children),
     );
   }
@@ -221,7 +282,6 @@ class _SettingPageState extends State<SettingPage> {
   Widget _settingTile(
     BuildContext context, {
     required IconData icon,
-    required Color iconBg,
     required String title,
     String? subtitle,
     Color? subtitleColor,
@@ -230,7 +290,6 @@ class _SettingPageState extends State<SettingPage> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(14),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
@@ -241,10 +300,10 @@ class _SettingPageState extends State<SettingPage> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: iconBg,
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.primary.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, color: Colors.white, size: 20),
+                child: Icon(icon, color: AppColors.primary, size: 20),
               ),
               const SizedBox(width: 14),
               // Title + subtitle
@@ -254,10 +313,10 @@ class _SettingPageState extends State<SettingPage> {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF212121),
+                        color: context.c.text,
                       ),
                     ),
                     if (subtitle != null) ...[
@@ -266,24 +325,19 @@ class _SettingPageState extends State<SettingPage> {
                         subtitle,
                         style: TextStyle(
                           fontSize: 12,
-                          color: subtitleColor ?? Colors.grey.shade500,
+                          color: subtitleColor ?? context.c.textMuted,
                         ),
                       ),
                     ],
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right, size: 20, color: Colors.grey.shade400),
+              Icon(Icons.chevron_right, size: 20, color: context.c.textMuted),
             ],
           ),
         ),
       ),
     );
-  }
-
-  String _langDisplayName(String code) {
-    const names = {'en': 'English', 'zh_TW': '繁體中文', 'ja': '日本語'};
-    return names[code] ?? code;
   }
 }
 
@@ -291,9 +345,9 @@ class _Separator extends StatelessWidget {
   const _Separator();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 66),
-      child: Divider(height: 0.5, color: Colors.grey.shade200),
+    return const Padding(
+      padding: EdgeInsets.only(left: 66),
+      child: Divider(height: 1),
     );
   }
 }

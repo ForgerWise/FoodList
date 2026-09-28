@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodlist/setting/setting_appbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../util/theme.dart';
 
 import '../generated/l10n.dart';
 import '../util/app_scaffold.dart';
@@ -15,10 +15,6 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class FeedbackState extends State<FeedbackPage> {
-  String foodlistPlayStoreUrl =
-      "https://play.google.com/store/apps/details?id=com.forgerwise.foodlist";
-  String forgerwiseOfficialWebsite = "https://www.forgerwise.com";
-  String forgerwiseGithub = "https://github.com/ForgerWise";
   String forgerwiseEmail = "forgerwise@gmail.com";
   String foodlistGithubRepository = "https://github.com/ForgerWise/FoodList";
 
@@ -49,38 +45,21 @@ class FeedbackState extends State<FeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      backgroundColor: Colors.white,
-      appBar: SettingAppbar(title: S.of(context).feedback),
+      appBar: AppBar(title: Text(S.of(context).feedback)),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+        padding: const EdgeInsets.all(16),
         children: [
           Center(
             child: Text(
               S.of(context).versionVersion(_version),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: context.c.textMuted,
               ),
             ),
           ),
           const SizedBox(height: 32),
-          _buildListItem(
-            icon: Icons.star_rate_rounded,
-            title: S.of(context).rateThisApp,
-            onTap: () => _launchUrl(Uri.parse(foodlistPlayStoreUrl)),
-          ),
-          _buildListItem(
-            icon: Icons.language_rounded,
-            title: S.of(context).officialWebsite,
-            onTap: () => _launchUrl(Uri.parse(forgerwiseOfficialWebsite)),
-          ),
-          _buildListItem(
-            icon: Icons.code_rounded,
-            title: S.of(context).forgerwisesGithub,
-            onTap: () => _launchUrl(Uri.parse(forgerwiseGithub)),
-          ),
-          const SizedBox(height: 16),
           _buildListItem(
             icon: Icons.mail_outline_rounded,
             title: S.of(context).contactUs,
@@ -137,19 +116,19 @@ class FeedbackState extends State<FeedbackPage> {
               children: [
                 Text(
                   S.of(context).specialThanksToAllContributorsBelow,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey,
+                    color: context.c.accent,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   "PBL 12班のみんな",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
-                    color: Colors.blueGrey,
+                    color: context.c.accent,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -166,39 +145,16 @@ class FeedbackState extends State<FeedbackPage> {
     required String title,
     required VoidCallback onTap,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.blueGrey.shade500),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Colors.black87,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          leading: Icon(icon, color: context.c.accent),
+          title: Text(title, style: const TextStyle(fontSize: 15)),
+          trailing: Icon(Icons.chevron_right, color: context.c.textMuted),
+          onTap: onTap,
         ),
-        trailing: Icon(
-          Icons.chevron_right,
-          color: Colors.grey.shade300,
-          size: 20,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        onTap: onTap,
       ),
     );
   }
@@ -208,7 +164,17 @@ class FeedbackState extends State<FeedbackPage> {
     String title, {
     String message = "",
   }) {
-    return Uri.parse("mailto:$email?subject=$title&body=$message");
+    // Encoded properly so spaces / CJK / line breaks survive every mail app.
+    final body = [
+      if (message.isNotEmpty) message,
+      'FoodList $_version',
+    ].join('\n\n');
+    return Uri(
+      scheme: 'mailto',
+      path: email,
+      query:
+          'subject=${Uri.encodeComponent(title)}&body=${Uri.encodeComponent(body)}',
+    );
   }
 
   void _launchUrl(Uri url) async {
@@ -223,10 +189,7 @@ class FeedbackState extends State<FeedbackPage> {
     await Clipboard.setData(ClipboardData(text: url));
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).urlCopiedToClipboard),
-          backgroundColor: Colors.blueGrey,
-        ),
+        SnackBar(content: Text(S.of(context).urlCopiedToClipboard)),
       );
     }
   }

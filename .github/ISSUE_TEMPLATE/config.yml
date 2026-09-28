@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Barcode not found
+    url: https://world.openfoodfacts.org/contribute
+    about: Product names come from Open Food Facts — anyone can add a missing product there, and FoodList picks it up automatically.

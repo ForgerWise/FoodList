@@ -22,6 +22,7 @@ void main() {
     SharedPreferences.setMockInitialValues({
       'selectedLanguage': 'English',
       'notificationsEnabled': false,
+      'onboarding_v1_shown': true,
     });
     await Hive.box<dynamic>('mybox').clear();
   });
@@ -47,5 +48,4 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
   });
-
 }

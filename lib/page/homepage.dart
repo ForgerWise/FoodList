@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '../database/data.dart';
-import '../database/ingredient.dart';
+import '../database/category.dart';
 import '../generated/l10n.dart';
 import '../util/app_scaffold.dart';
 import '../util/list_tile.dart';
-import 'add_page.dart';
+import '../util/onboarding.dart';
+import '../util/theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,364 +18,304 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _myBox = InputDataBase();
+  final _db = InputDataBase();
   final _cdb = CategoryDataBase();
   bool _showFab = true;
 
-  // Search & filter state
   bool _searchOpen = false;
   String _searchQuery = '';
-  String _activeFilter = 'all'; // 'all' | 'expiringSoon' | 'expired' | cat key
+  ExpiryStatus? _statusFilter;
+  String? _categoryFilter;
   final _searchController = TextEditingController();
-  final _searchFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _loadAll();
+    _loadAll().then((_) {
+      if (mounted) showOnboardingIfNeeded(context);
+    });
   }
 
   Future<void> _loadAll() async {
-    // Check if INGREDIENTS_LIST key exists to distinguish first-run vs empty list
-    final box = Hive.box('mybox');
-    if (box.get('INGREDIENTS_LIST') == null) {
-      await _myBox.createInitialData();
-    }
-    await _myBox.loadData();
+    await _db.loadData();
     await _cdb.loadData();
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
     _searchController.dispose();
-    _searchFocusNode.dispose();
     super.dispose();
   }
 
-  void _deleteItem(int filteredIndex) {
-    final item = _filteredList[filteredIndex];
-    final origIndex = _myBox.ingredientsList.indexOf(item);
+  Future<void> _openAdd([Ingredient? editing]) async {
+    final result = await Navigator.pushNamed(
+      context,
+      '/add',
+      arguments: editing,
+    );
+    await _loadAll();
+    if (result == 'delete' && editing != null && mounted) {
+      final i = _db.indexOf(editing);
+      if (i != -1) _deleteItem(_db.items[i]); // same path as swipe → Undo works
+    }
+  }
+
+  void _deleteItem(Ingredient item, {String? message}) {
+    final origIndex = _db.items.indexOf(item);
     if (origIndex == -1) return;
 
-    // Save a copy for undo
-    final removedItem = List.from(item as List);
+    setState(() => _db.items.removeAt(origIndex));
+    _db.updateData();
 
-    setState(() {
-      _myBox.ingredientsList.removeAt(origIndex);
-    });
-    _myBox.updateData();
-
-    // Show SnackBar with undo action
     ScaffoldMessenger.of(context)
       ..removeCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(S.of(context).itemDeleted(removedItem[1])),
+          content: Text(message ?? S.of(context).itemDeleted(item.name)),
           action: SnackBarAction(
             label: S.of(context).undo,
             onPressed: () {
-              setState(() {
-                _myBox.ingredientsList.insert(origIndex, removedItem);
-              });
-              _myBox.updateData();
+              setState(() => _db.items.insert(origIndex, item));
+              _db.updateData();
             },
           ),
           duration: const Duration(seconds: 4),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+        ),
+      );
+  }
+
+  /// "Used one": quantity − 1, or remove (with Undo) when it was the last.
+  void _consumeOne(Ingredient item) {
+    if (item.quantity <= 1) {
+      _deleteItem(item, message: S.of(context).usedUp(item.name));
+      return;
+    }
+    final i = _db.items.indexOf(item);
+    if (i == -1) return;
+    final less = Ingredient(
+      item.categoryKey,
+      item.name,
+      item.expiry,
+      item.quantity - 1,
+    );
+    setState(() => _db.items[i] = less);
+    _db.updateData();
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).leftCount(item.name, less.quantity)),
+          action: SnackBarAction(
+            label: S.of(context).undo,
+            onPressed: () {
+              final j = _db.items.indexOf(less);
+              if (j == -1) return;
+              setState(() => _db.items[j] = item);
+              _db.updateData();
+            },
           ),
-          margin: const EdgeInsets.all(12),
+          duration: const Duration(seconds: 4),
         ),
       );
   }
 
   // ── Filtering ──────────────────────────────────────────────────────────────
-  List get _filteredList {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final threeDays = today.add(const Duration(days: 3));
-
-    return _myBox.ingredientsList.where((item) {
-      final String catKey = item[0] as String;
-      final String name = item[1] as String;
-      final String expStr = item[2] as String;
-
-      // Search filter
-      if (_searchQuery.isNotEmpty &&
-          !name.toLowerCase().contains(_searchQuery.toLowerCase())) {
+  List<Ingredient> get _filteredList {
+    final q = _searchQuery.toLowerCase();
+    return _db.items.where((item) {
+      if (q.isNotEmpty && !item.name.toLowerCase().contains(q)) return false;
+      if (_categoryFilter != null && item.categoryKey != _categoryFilter) {
         return false;
       }
-
-      // Status filter
-      if (_activeFilter != 'all') {
-        DateTime? exp;
-        try {
-          exp = DateTime.parse(expStr.replaceAll('/', '-'));
-        } catch (_) {}
-
-        if (_activeFilter == 'expired') {
-          if (exp == null ||
-              !DateTime(exp.year, exp.month, exp.day).isBefore(today)) {
-            return false;
-          }
-        } else if (_activeFilter == 'expiringSoon') {
-          if (exp == null) return false;
-          final expDay = DateTime(exp.year, exp.month, exp.day);
-          if (expDay.isBefore(today) || !expDay.isBefore(threeDays)) {
-            return false;
-          }
-        } else {
-          // Category filter
-          if (catKey != _activeFilter) return false;
-        }
-      }
-
+      if (_statusFilter != null && item.status != _statusFilter) return false;
       return true;
     }).toList();
   }
-
-  // ── Stats ──────────────────────────────────────────────────────────────────
-  Map<String, int> get _stats => _myBox.getStats();
 
   // ── Build ──────────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
     return NotificationListener<UserScrollNotification>(
       onNotification: (n) {
-        setState(() {
-          if (n.direction == ScrollDirection.reverse) _showFab = false;
-          if (n.direction == ScrollDirection.forward) _showFab = true;
-        });
-        return true;
+        final show = n.direction == ScrollDirection.forward
+            ? true
+            : n.direction == ScrollDirection.reverse
+            ? false
+            : _showFab;
+        if (show != _showFab) setState(() => _showFab = show);
+        return false;
       },
       child: AppScaffold(
-        backgroundColor: const Color(0xFFF0F2F5),
         appBar: _buildAppBar(),
         body: Column(
           children: [
-            if (_searchOpen) _buildSearchBar(),
             _buildSummaryRow(),
-            _buildFilterChips(),
+            _buildCategoryChips(),
             Expanded(child: _buildList()),
           ],
         ),
-        floatingActionButton: _showFab
-            ? FloatingActionButton.extended(
-                backgroundColor: Colors.blueGrey,
-                onPressed: () async {
-                  await Navigator.pushNamed(context, '/add');
-                  await _loadAll();
-                },
-                icon: const Icon(Icons.add, color: Colors.white),
-                label: Text(
-                  S.of(context).add,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              )
-            : null,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: AnimatedSlide(
+          duration: const Duration(milliseconds: 200),
+          offset: _showFab ? Offset.zero : const Offset(0, 2),
+          child: FloatingActionButton.extended(
+            onPressed: _openAdd,
+            icon: const Icon(Icons.add),
+            label: Text(
+              S.of(context).add,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  // ── AppBar ─────────────────────────────────────────────────────────────────
-  AppBar _buildAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: Text(
-        S.of(context).foodlist,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      backgroundColor: Colors.blueGrey,
-      elevation: 0,
-      centerTitle: true,
+      title: _searchOpen
+          ? TextField(
+              controller: _searchController,
+              autofocus: true,
+              onChanged: (v) => setState(() => _searchQuery = v),
+              decoration: InputDecoration(
+                hintText: S.of(context).searchHint,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                filled: false,
+              ),
+            )
+          : Text(S.of(context).foodlist),
       actions: [
         IconButton(
-          icon: Icon(
-            _searchOpen ? Icons.search_off : Icons.search,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            setState(() {
-              _searchOpen = !_searchOpen;
-              if (!_searchOpen) {
-                _searchQuery = '';
-                _searchController.clear();
-              } else {
-                _searchFocusNode.requestFocus();
-              }
-            });
-          },
+          icon: Icon(_searchOpen ? Icons.close : Icons.search),
+          onPressed: () => setState(() {
+            _searchOpen = !_searchOpen;
+            if (!_searchOpen) {
+              _searchQuery = '';
+              _searchController.clear();
+            }
+          }),
         ),
+        const SizedBox(width: 4),
       ],
     );
   }
 
-  // ── Search bar ─────────────────────────────────────────────────────────────
-  Widget _buildSearchBar() {
-    return Container(
-      color: Colors.blueGrey,
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-      child: TextField(
-        controller: _searchController,
-        focusNode: _searchFocusNode,
-        onChanged: (v) => setState(() => _searchQuery = v),
-        style: const TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          hintText: S.of(context).searchHint,
-          hintStyle: const TextStyle(color: Colors.white54),
-          prefixIcon: const Icon(Icons.search, color: Colors.white54),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.15),
-          contentPadding: const EdgeInsets.symmetric(vertical: 10),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ── Summary row ────────────────────────────────────────────────────────────
+  // ── Summary cards (also the status filter) ─────────────────────────────────
   Widget _buildSummaryRow() {
-    final stats = _stats;
-    return Container(
-      color: Colors.blueGrey,
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 16),
+    final stats = _db.getStats();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
       child: Row(
         children: [
           _summaryCard(
-            stats['expired'] ?? 0,
+            ExpiryStatus.expired,
+            stats[ExpiryStatus.expired]!,
             S.of(context).summaryExpired,
-            const Color(0xFFD32F2F),
+            AppColors.expired,
           ),
           const SizedBox(width: 8),
           _summaryCard(
-            stats['expiringSoon'] ?? 0,
+            ExpiryStatus.soon,
+            stats[ExpiryStatus.soon]!,
             S.of(context).summaryExpiringSoon,
-            const Color(0xFFF57C00),
+            AppColors.soon,
           ),
           const SizedBox(width: 8),
           _summaryCard(
-            stats['fresh'] ?? 0,
+            ExpiryStatus.fresh,
+            stats[ExpiryStatus.fresh]!,
             S.of(context).summaryFresh,
-            const Color(0xFF388E3C),
+            AppColors.fresh,
           ),
         ],
       ),
     );
   }
 
-  Widget _summaryCard(int count, String label, Color color) {
+  Widget _summaryCard(ExpiryStatus key, int count, String label, Color color) {
+    final selected = _statusFilter == key;
+    final textColor = statusTextColor(context, key);
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.white.withOpacity(0.2)),
-        ),
-        child: Column(
-          children: [
-            Text(
-              '$count',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w900,
-                color: count > 0 ? color : Colors.white,
+      child: Material(
+        color: selected ? color.withValues(alpha: 0.14) : context.c.surface,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => setState(() => _statusFilter = selected ? null : key),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: selected ? color : context.c.border,
+                width: selected ? 2 : 1,
               ),
             ),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 11, color: Colors.white70),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ── Filter chips ───────────────────────────────────────────────────────────
-  Widget _buildFilterChips() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            _filterChip('all', S.of(context).filterAll, Icons.list_alt),
-            const SizedBox(width: 6),
-            _filterChip(
-              'expiringSoon',
-              S.of(context).filterExpiringSoon,
-              Icons.warning_amber_outlined,
-            ),
-            const SizedBox(width: 6),
-            _filterChip(
-              'expired',
-              S.of(context).filterExpired,
-              Icons.error_outline,
-            ),
-            const SizedBox(width: 6),
-            // Category chips
-            ..._cdb.categoryKeys.map((key) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 6),
-                child: _filterChip(
-                  key,
-                  '${getCategoryIcon(key)} ${_cdb.categoryMap[key] ?? key}',
-                  null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$count',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: count > 0 ? textColor : context.c.textMuted,
+                  ),
                 ),
-              );
-            }),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _filterChip(String filterKey, String label, IconData? icon) {
-    final bool selected = _activeFilter == filterKey;
-    return GestureDetector(
-      onTap: () => setState(() => _activeFilter = filterKey),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: selected ? Colors.blueGrey : Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: selected ? Colors.blueGrey : Colors.grey.shade300,
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: selected ? textColor : context.c.textMuted,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (icon != null) ...[
-              Icon(
-                icon,
-                size: 14,
-                color: selected ? Colors.white : Colors.grey.shade600,
-              ),
-              const SizedBox(width: 4),
-            ],
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : Colors.grey.shade700,
-              ),
+      ),
+    );
+  }
+
+  // ── Category chips: only categories that currently have items ─────────────
+  Widget _buildCategoryChips() {
+    final used = _db.items.map((e) => e.categoryKey).toSet();
+    final keys = _cdb.categoryKeys.where(used.contains).toList();
+    // The filtered category may have just lost its last item.
+    if (_categoryFilter != null &&
+        (keys.length < 2 || !keys.contains(_categoryFilter))) {
+      _categoryFilter = null;
+    }
+    if (keys.length < 2) return const SizedBox.shrink();
+    return SizedBox(
+      height: 48,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        scrollDirection: Axis.horizontal,
+        itemCount: keys.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (_, i) {
+          final key = keys[i];
+          final selected = _categoryFilter == key;
+          return ChoiceChip(
+            label: Text(
+              '${getCategoryIcon(key)} ${_cdb.categoryMap[key] ?? key}',
             ),
-          ],
-        ),
+            selected: selected,
+            onSelected: (_) =>
+                setState(() => _categoryFilter = selected ? null : key),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: selected ? Colors.white : context.c.text,
+            ),
+          );
+        },
       ),
     );
   }
@@ -384,50 +324,77 @@ class _HomePageState extends State<HomePage> {
   Widget _buildList() {
     final items = _filteredList;
 
-    if (items.isEmpty) {
+    if (items.isEmpty && _db.items.isNotEmpty) {
       return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('🧊', style: TextStyle(fontSize: 64)),
-            const SizedBox(height: 16),
             Text(
-              S.of(context).noIngredients,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey,
-              ),
+              S.of(context).nothingMatches,
+              style: TextStyle(fontSize: 16, color: context.c.textMuted),
             ),
-            const SizedBox(height: 8),
-            Text(
-              S.of(context).noIngredientsHint,
-              style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
-              textAlign: TextAlign.center,
+            TextButton(
+              onPressed: () => setState(() {
+                _statusFilter = null;
+                _categoryFilter = null;
+                _searchOpen = false;
+                _searchQuery = '';
+                _searchController.clear();
+              }),
+              child: Text(S.of(context).clearFilters),
             ),
           ],
         ),
       );
     }
 
+    if (items.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('🧊', style: TextStyle(fontSize: 56)),
+              const SizedBox(height: 16),
+              Text(
+                S.of(context).noIngredients,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: context.c.text,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                S.of(context).noIngredientsHint,
+                style: TextStyle(fontSize: 14, color: context.c.textMuted),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return AnimationLimiter(
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: 8, bottom: 100),
+        padding: const EdgeInsets.only(top: 4, bottom: 100),
         itemCount: items.length,
         itemBuilder: (ctx, index) {
           final item = items[index];
           return AnimationConfiguration.staggeredList(
             position: index,
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 250),
             child: SlideAnimation(
-              verticalOffset: 40,
+              verticalOffset: 24,
               child: FadeInAnimation(
-                child: ListRifTile(
-                  categoryKey: item[0] as String,
-                  name: item[1] as String,
-                  expdate: item[2] as String,
-                  quantity: item[3] is int ? item[3] as int : 1,
-                  deleteFunction: (_) => _deleteItem(index),
+                child: IngredientTile(
+                  key: ObjectKey(item),
+                  item: item,
+                  onTap: () => _openAdd(item),
+                  deleteFunction: (_) => _deleteItem(item),
+                  consumeFunction: (_) => _consumeOne(item),
                 ),
               ),
             ),

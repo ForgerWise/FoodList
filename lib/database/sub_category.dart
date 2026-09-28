@@ -13,25 +13,23 @@ class SubCategory {
   SubCategory({required this.id, required this.name});
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-    };
+    return {'id': id, 'name': name};
   }
 
   factory SubCategory.fromJson(Map<String, dynamic> json) {
-    return SubCategory(
-      id: json['id'] as String,
-      name: json['name'] as String,
-    );
+    return SubCategory(id: json['id'] as String, name: json['name'] as String);
   }
 
   static SubCategory fromNameWithMapCheck(
-      String name, Map<String, List<SubCategory>> subCategoryMap) {
+    String name,
+    Map<String, List<SubCategory>> subCategoryMap,
+  ) {
     String generatedId = name.replaceAll(' ', '').replaceAll('&', '');
 
-    bool idExists = subCategoryMap.values.any((subCategories) =>
-        subCategories.any((subCategory) => subCategory.id == generatedId));
+    bool idExists = subCategoryMap.values.any(
+      (subCategories) =>
+          subCategories.any((subCategory) => subCategory.id == generatedId),
+    );
 
     if (idExists) {
       generatedId += '_${DateTime.now().millisecondsSinceEpoch}';

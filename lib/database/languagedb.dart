@@ -1,8 +1,7 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The user's chosen UI language, stored as 'en' / 'ja' / 'zh_TW'.
 class LanguageDB {
   static const String _languageKey = 'selectedLanguage';
 
@@ -12,91 +11,33 @@ class LanguageDB {
     'zh_TW': '繁體中文',
   };
 
-  static const Map<String, String> systemLanguageCodeToL10nCodeMap = {
-    'en': 'en',
-    'ja': 'ja',
-    'zh-Hant': 'zh_TW',
-    'zh_TW': 'zh_TW', // * For older versions of app
-    'zh-TW': 'zh_TW',
-    'zh': 'zh_TW', // * For some versions of phone
-    'zh_Hant': 'zh_TW' // * For some versions of phone
-  };
-
-  static const List<String> notFinishedLanguages = [];
-
-  static Future<void> setLanguage(String languageCode,
-      {String? countryCode}) async {
-    if (!languageNames.containsKey(languageCode)) {
-      throw Exception('Language code is not valid');
-    } else {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_languageKey, languageCode);
-    }
-  }
-
-  static Future<String> getLanguage(BuildContext context) async {
+  /// Saved language, or on first launch the device language (then saved).
+  static Future<String> getLanguage() async {
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey(_languageKey)) {
-      final locale = Localizations.localeOf(context);
-      final systemLanguageCode = locale.languageCode;
+    final saved = prefs.getString(_languageKey);
+    if (saved != null && languageNames.containsKey(saved)) return saved;
 
-      if (systemLanguageCodeToL10nCodeMap.containsKey(systemLanguageCode)) {
-        String l10nCode = systemLanguageCodeToL10nCodeMap[systemLanguageCode]!;
-        await setLanguage(l10nCode);
-        return l10nCode;
-      } else {
-        await setLanguage('en');
-        return 'en';
-      }
-    }
-
-    return prefs.getString(_languageKey) ?? 'en';
+    final device = WidgetsBinding.instance.platformDispatcher.locale;
+    final code = switch (device.languageCode) {
+      'zh' => 'zh_TW', // zh, zh-Hant, zh-TW … only Traditional Chinese ships
+      'ja' => 'ja',
+      _ => 'en',
+    };
+    await setLanguage(code);
+    return code;
   }
 
-  static Future<String> getLanguageWithoutContext() async {
+  static Future<void> setLanguage(String code) async {
+    if (!languageNames.containsKey(code)) {
+      throw ArgumentError.value(code, 'code', 'Unsupported language');
+    }
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey(_languageKey)) {
-      final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
-      final systemLanguageCode = systemLocale.languageCode;
-
-      if (systemLanguageCodeToL10nCodeMap.containsKey(systemLanguageCode)) {
-        String l10nCode = systemLanguageCodeToL10nCodeMap[systemLanguageCode]!;
-        await setLanguage(l10nCode);
-        return l10nCode;
-      } else {
-        await setLanguage('en');
-        return 'en';
-      }
-    }
-
-    return prefs.getString(_languageKey) ?? 'en';
+    await prefs.setString(_languageKey, code);
   }
 
-  static Locale languageToLocale(String languageCode) {
-    try {
-      if (languageCode.isEmpty) {
-        throw ArgumentError('languageCode cannot be empty');
-      }
-
-      if (!languageCode.contains("_")) {
-        return Locale(languageCode);
-      }
-
-      List<String> parts = languageCode.split('_');
-      return Locale.fromSubtags(
-        languageCode: parts[0],
-        countryCode: parts[1],
-      );
-    } catch (e) {
-      throw Exception('Error: $e');
-    }
-  }
-
-  static List<String> getNotFinishedLanguages() {
-    return notFinishedLanguages;
-  }
-
-  static List<String> getLanguagesList() {
-    return languageNames.keys.toList();
+  /// 'zh_TW' → Locale('zh', 'TW'), 'en' → Locale('en').
+  static Locale languageToLocale(String code) {
+    final parts = code.split('_');
+    return Locale(parts[0], parts.length > 1 ? parts[1] : null);
   }
 }

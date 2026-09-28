@@ -16,10 +16,7 @@ class SubCategoryAdapter extends TypeAdapter<SubCategory> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SubCategory(
-      id: fields[0] as String,
-      name: fields[1] as String,
-    );
+    return SubCategory(id: fields[0] as String, name: fields[1] as String);
   }
 
   @override

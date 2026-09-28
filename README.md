@@ -1,43 +1,65 @@
 # FoodList
 
-## Purpose
+[![CI](https://github.com/ForgerWise/FoodList/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ForgerWise/FoodList/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-FoodList is a mobile application designed to help manage the expiration dates of household food items, aiming to reduce food waste by providing timely reminders.
+**Use your food before it goes bad.** FoodList is a simple, free and open-source Android app that tracks what's in your fridge and reminds you before things expire. No account, no ads, and your data stays on your phone.
 
-## Background
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.forgerwise.foodlist)
 
-This project was developed as part of a university PBL (Project-Based Learning) course. Our team decided to create an app to address the issue of food loss. Special thanks to our team members for their valuable ideas and contributions throughout the development process.
+<p>
+  <img src="screenshots/en-US/01_home_light.png" width="220" alt="Home">
+  <img src="screenshots/en-US/03_add_light.png" width="220" alt="Add an item">
+  <img src="screenshots/en-US/02_home_dark.png" width="220" alt="Home, dark mode">
+</p>
 
 ## Features
 
-- **Custom Food Logging**: Users can freely log any food items and set expiration dates.
-- **Expiration Date Indicators**:
-  - **Green**: Indicates that the food is still fresh and within its expiration date.
-  - **Yellow**: Indicates that only one day remains before the food expires.
-  - **Red**: Indicates that the food has already expired.
+- **Add in two taps** — pick from common foods (with typical shelf life) or your recent items; name, category and expiry are filled in for you.
+- **Scan barcodes** — EAN / JAN / UPC, GS1 QR & DataMatrix (expiry date read automatically), supermarket in-store labels. Names you type are remembered.
+- **See what matters** — red = expired, orange = expiring soon (range is adjustable), green = fresh. Tap a counter to filter.
+- **Daily reminder** at a time you choose.
+- **Your categories** — rename, reorder, pick emoji icons.
+- Light & dark mode · English, 繁體中文, 日本語.
 
-## Installation
+## Install
 
-To install the app, download the latest APK from the releases page in this repository and install it on your Android device. You can find the releases [here](https://github.com/ForgerWise/FoodList/releases).
+- [Google Play](https://play.google.com/store/apps/details?id=com.forgerwise.foodlist)
+- APKs on the [Releases](https://github.com/ForgerWise/FoodList/releases) page
 
-Or, you can download the app from Google Play Store by clicking the badge below.
+## Build from source
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Download from Google Play" height="80">](https://play.google.com/store/apps/details?id=com.forgerwise.foodlist)
+Requires Flutter 3.47.x and JDK 17.
 
-## Usage
+```sh
+flutter pub get
+flutter run
+# optional: Japanese product names via Yahoo! Shopping
+cp dart_defines.example.json dart_defines.json   # put your Client ID inside
+flutter run --dart-define-from-file=dart_defines.json
+```
 
-1. **Add Food Items**: Open the app and log any food items you have at home along with their expiration dates.
-2. **Monitor Expiration**: The app will automatically display color-coded indicators based on the remaining time until expiration.
-3. **Manage Notifications**: Receive alerts as expiration dates approach to ensure timely consumption or disposal.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for checks, branches and release steps, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the code and stored data are organised, and [docs/DESIGN.md](docs/DESIGN.md) for the design guidelines.
+
+## Data sources
+
+Barcode lookups send only the barcode number:
+
+- **[Open Food Facts](https://world.openfoodfacts.org/)** — product data © Open Food Facts contributors, available under the [Open Database License](https://opendatacommons.org/licenses/odbl/1-0/). Missing a product? [Add it](https://world.openfoodfacts.org/contribute) and everyone benefits.
+- **Yahoo! Shopping (Japan)** — <a href="https://developer.yahoo.co.jp/sitemap/">Web Services by Yahoo! JAPAN</a>. Used for non-commercial purposes only, as required by the Yahoo! JAPAN developer guidelines.
+
+## Privacy
+
+FoodList collects no personal data. See the [Privacy Policy](Privacy-Policy.md).
+
+## Background
+
+FoodList started as a university PBL (Project-Based Learning) project on reducing household food loss. Thanks to everyone on the original team for their ideas and work.
 
 ## Contributing
 
-We welcome contributions and feedback from the community.
+Issues and pull requests are welcome — please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For any inquiries or support, please contact us at [forgerwise@gmail.com](mailto:forgerwise@gmail.com).
+[MIT](LICENSE) © ForgerWise · Contact: [forgerwise@gmail.com](mailto:forgerwise@gmail.com)

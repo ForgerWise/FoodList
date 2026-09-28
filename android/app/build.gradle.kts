@@ -67,6 +67,9 @@ dependencies {
     implementation("androidx.window:window:1.5.1")
     implementation("androidx.window:window-java:1.5.1")
     implementation("androidx.multidex:multidex:2.0.1")
+    // Expiry-date OCR. Unbundled: the model comes from Google Play services
+    // (~260 KB app size instead of ~4 MB per ABI for the bundled model).
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
 }
 
 flutter {

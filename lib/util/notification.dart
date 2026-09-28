@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../database/data.dart';
 import '../generated/l10n.dart';
-import 'permission.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -71,7 +71,7 @@ class NotificationService {
 
   /// Formats a list of item names into a compact display string.
   /// Shows up to 3 names; if more, appends "and N more".
-  String _formatItemList(List items) {
+  String _formatItemList(List<String> items) {
     if (items.isEmpty) return S.current.none;
 
     if (items.length <= 3) {
@@ -90,22 +90,25 @@ class NotificationService {
     final InputDataBase db = InputDataBase();
     await db.loadData();
 
-    final List expireToday = db.getIngredientsExpiry(0);
-    final List expireTomorrow = db.getIngredientsExpiry(1);
+    final expireToday = db.namesExpiringIn(0);
+    final expireTomorrow = db.namesExpiringIn(1);
 
     final String todayText = _formatItemList(expireToday);
     final String tomorrowText = _formatItemList(expireTomorrow);
 
+    // Nothing due: a short friendly line instead of "Today: none / Tomorrow: none".
+    final bool nothingDue = expireToday.isEmpty && expireTomorrow.isEmpty;
+
     // Build a rich expanded body for BigTextStyle
-    final String expandedBody =
-        '📅 ${S.current.summaryExpiringSoon} (${S.current.expiresToday.replaceAll('!', '')}): $todayText\n'
-        '🗓 ${S.current.summaryExpiringSoon} (${S.current.expiresTomorrow.replaceAll('!', '')}): $tomorrowText';
+    final String expandedBody = nothingDue
+        ? S.current.nothingExpiringSoon
+        : '📅 ${S.current.summaryExpiringSoon} (${S.current.expiresToday.replaceAll(RegExp('[!！]'), '')}): $todayText\n'
+              '🗓 ${S.current.summaryExpiringSoon} (${S.current.expiresTomorrow.replaceAll(RegExp('[!！]'), '')}): $tomorrowText';
 
     // Concise one-liner shown in collapsed state
-    final String collapsedBody = S.current.foodlistExpiryNotificationContent(
-      todayText,
-      tomorrowText,
-    );
+    final String collapsedBody = nothingDue
+        ? S.current.nothingExpiringSoon
+        : S.current.foodlistExpiryNotificationContent(todayText, tomorrowText);
 
     try {
       await flutterLocalNotificationsPlugin.show(
@@ -131,19 +134,12 @@ class NotificationService {
     required int todayCount,
     required int tomorrowCount,
   }) {
-    // Accent color matching the app's blueGrey theme
-    const int accentColor = 0xFF546E7A; // Colors.blueGrey[600]
-
-    // Sub-text shown below the app name on Android 7+
-    final String subText = todayCount > 0
-        ? '⚠ $todayCount item(s) expiring today'
-        : null ?? '';
+    const int accentColor = 0xFF2F7D5B; // AppColors.primary
 
     final BigTextStyleInformation bigTextStyle = BigTextStyleInformation(
       expandedBody,
       htmlFormatBigText: false,
       contentTitle: S.current.foodlistExpiryNotification,
-      summaryText: subText.isEmpty ? null : subText,
     );
 
     return NotificationDetails(
@@ -201,10 +197,9 @@ class NotificationService {
     }
     if (!stored) return false;
 
-    // Only check POST_NOTIFICATIONS permission (no exact alarm needed)
-    final notifGranted =
-        await PermissionManager.checkAndRequestNotificationPermission();
-    if (!notifGranted) {
+    // Read-only check: never pop a permission dialog just for showing status.
+    // (Asking happens in NotificationSettingPage when the user flips the switch.)
+    if (!await Permission.notification.isGranted) {
       await prefs.setBool('notificationsEnabled', false);
       return false;
     }

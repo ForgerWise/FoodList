@@ -7,7 +7,7 @@
   "addIngredients": "新增食材",
   "category": "類別",
   "ingredientName": "食材名稱",
-  "ingredientNameHint": "例：茄子、菠菜...",
+  "ingredientNameHint": "輸入名稱，或從下方直接選",
   "quantity": "數量",
   "expireDate": "有效日期",
   "selectDate": "選擇日期",
@@ -30,13 +30,15 @@
   "aboutContent": "這個應用程式源自我們對抗食物浪費的承諾。由於家庭食物浪費佔了近一半，我們提供了一個簡單易用的工具，幫助使用者管理食物的保存期限。希望透過這個工具，減少不必要的購買，並減少家庭中的食物浪費。",
   "languageNotSupportedYetMessage": "此語言尚未支援！但我們預計會在未來支援此語言！",
   "notificationSetting": "通知設定",
-  "notificationContent": "設定您希望接收通知的時間，這將幫助您了解哪些物品即將過期。",
-  "privacyContent": "本隱私政策說明我們的應用程式（以下簡稱為“應用程式”）如何收集、使用及披露您的資訊。應用程式致力於維護用戶的隱私權。我們的隱私政策旨在幫助您了解我們如何收集及使用您決定分享的個人資訊，並幫助您在使用應用程式時做出明智的決定。\n\n使用或訪問應用程式即表示您接受本隱私政策中描述的做法。如果您不同意此政策，請勿使用應用程式。我們保留隨時修改此政策的權利，請經常查看更新。您繼續使用應用程式即表示接受我們修改後的隱私政策。\n\n1. 我們收集的數據\n目前，應用程式不會收集任何個人數據。應用程式的設計是將與您的食物相關的所有數據儲存在裝置內，並且沒有任何功能可用來收集您的個人數據。\n\n2. 數據儲存與保護\n您的數據儲存在您的裝置中，除非由您或裝置提供商分享，否則其他人無法存取。\n\n3. 未來更新\n未來若有允許用戶上傳數據以進行同步的功能，我們仍不會將此資訊透露給第三方。我們將在這些功能新增時公告隱私政策的更新。\n\n4. 隱私政策變更\n應用程式保留隨時更改本政策及服務條款的權利。我們將通過向您帳戶中指定的主要電子郵件地址發送通知或在我們的網站上放置醒目的通知來告知您對隱私政策的重大更改。重大更改將在通知後30天生效。非重大更改或澄清將立即生效。您應定期檢查網站和本隱私頁面以了解更新。",
+  "notificationContent": "每天提醒一次今天與明天到期的食材。",
+  "privacyContent": "最後更新：2026-09-28（版本 3.1.0）\n\n你的食材清單不會離開你的手機，我們也不收集任何個人資料。\n\n1. 儲存在裝置上的資料\n你輸入的所有內容（食材、日期、數量、類別與設定）都只儲存在你的裝置上。我們沒有伺服器，也沒有帳號系統。解除安裝 App 即會刪除這些資料。\n\n2. 條碼掃描（選用）\n相機只在掃描畫面開啟時使用，影像只在裝置上辨識條碼，不會儲存或上傳。\n為了帶入商品名稱，App 只會把「條碼號碼」傳送給 Open Food Facts；日本商品另外傳送給 Yahoo! JAPAN 購物 Web API。不會傳送姓名、帳號或位置。與一般網路連線相同，這些服務可以看到你的 IP 位址。\n你為條碼輸入的名稱會記在你的裝置上。\n\n3. 通知\n到期提醒由 App 在本機排程與顯示，不會傳送到伺服器。\n\n4. 評分\nApp 可能偶爾顯示 Google Play 內建的評分視窗，這由 Google 提供，FoodList 不會取得任何資料。\n\n5. 政策變更\n若未來版本會傳送更多資料（例如同步功能），我們會先更新本政策。\n\n聯絡我們：forgerwise@gmail.com",
   "entryDate": "輸入日期",
   "daysLeft": "還剩 {days} 天",
   "@daysLeft": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "expiresToday": "今天到期！",
@@ -44,7 +46,9 @@
   "expiredDaysAgo": "已過期 {days} 天",
   "@expiredDaysAgo": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "summaryExpired": "已過期",
@@ -135,7 +139,7 @@
   "confirmReset": "確認重置",
   "categoriesResetHint": "確認重置類別為預設值？",
   "faqWhatWillResetCategoriesDo": "重置類別會發生什麼事？",
-  "faqWhatWillResetCategoriesDoAns": "重置類別將會將所有類別和子類別重設為預設值。",
+  "faqWhatWillResetCategoriesDoAns": "重置會把類別與圖示恢復成預設值，已儲存的食材不會被刪除。",
   "aboutContentGithub": "這個應用程式是完全開源且免費使用的。如果您有任何建議或想要貢獻此專案，請隨時訪問 GitHub 儲存庫。",
   "githubRepository": "GitHub 儲存庫",
   "aboutContentHomepage": "如果您對我們的其他專案有興趣，歡迎造訪我們的官方網站。",
@@ -145,7 +149,7 @@
   "error": "錯誤",
   "editCategory": "編輯類別",
   "confirmDelete": "確認刪除",
-  "confirmCategoryDelete": "您確定要刪除此類別嗎？",
+  "confirmCategoryDelete": "要刪除這個類別嗎？其中的食材會移到「其他」。",
   "enterNewCategoryName": "輸入新類別名稱",
   "save": "儲存",
   "addCategory": "新增類別",
@@ -201,5 +205,89 @@
       }
     }
   },
-  "undo": "復原"
+  "undo": "復原",
+  "scanBarcode": "掃描條碼",
+  "scanBarcodeHint": "將條碼對準框內",
+  "barcodeNotFound": "查無此商品。輸入名稱後，下次掃描會自動帶入",
+  "lookingUp": "查詢中…",
+  "quickPick": "快速選擇",
+  "daysChip": "{days} 天",
+  "@daysChip": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "customDate": "自訂日期",
+  "saveAndNext": "儲存並繼續新增",
+  "itemAdded": "已新增 {name}",
+  "@itemAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rateApp": "給 FoodList 評分",
+  "noMatches": "沒有建議項目，直接儲存輸入的名稱即可",
+  "appearance": "外觀",
+  "themeSystem": "跟隨系統",
+  "themeLight": "淺色",
+  "themeDark": "深色",
+  "soonThreshold": "「即將到期」的範圍",
+  "soonThresholdValue": "{days} 天內",
+  "@soonThresholdValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "soonThresholdHint": "在這個天數內到期的食材會顯示為橘色。",
+  "onboardingTitle": "歡迎使用 FoodList",
+  "onboardingAdd": "按「新增」，選一個常用食材，名稱和日期就自動填好。",
+  "onboardingTap": "點一下食材即可編輯。",
+  "onboardingSwipe": "把食材往左滑，可以標記用掉或刪除。",
+  "gotIt": "開始使用",
+  "inStoreBarcode": "這是店內自貼的條碼（生鮮秤重商品）。輸入名稱一次，下次就會自動帶入。",
+  "expiryFromBarcode": "已從條碼讀取到期日",
+  "torch": "手電筒",
+  "dataSources": "商品資料來源",
+  "dataSourcesContent": "商品名稱來自 Open Food Facts（ODbL 授權），日本商品另使用 Yahoo!ショッピング。",
+  "delete": "刪除",
+  "useOne": "用掉",
+  "usedUp": "{name} 已用完",
+  "@usedUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nothingMatches": "沒有符合的食材",
+  "clearFilters": "清除篩選",
+  "faqHowToEditItem": "如何編輯、用掉或刪除食材？",
+  "faqHowToEditItemAns": "點一下食材即可編輯。往左滑會出現「用掉一個」（數量減一，只剩一個時會移除）與「刪除」，兩者都可以立即復原。",
+  "faqWhatDoesScanSend": "掃描條碼會傳送什麼資料？",
+  "faqWhatDoesScanSendAns": "只會把條碼號碼傳給 Open Food Facts（日本商品另傳給 Yahoo! 購物）來查詢商品名稱。相機影像不會離開你的手機，你輸入的名稱只記在手機裡。",
+  "leftCount": "{name}：剩 ×{count}",
+  "@leftCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nothingExpiringSoon": "今明兩天沒有食材快到期，繼續保持！🎉",
+  "readDate": "拍照讀日期",
+  "dateFromPhoto": "已從照片讀取日期",
+  "noDateFound": "讀不到日期，請手動選擇",
+  "ocrUnavailable": "文字辨識模型下載中，請稍後再試。",
+  "whichDate": "哪一個是有效日期？",
+  "cameraUnavailable": "無法使用相機。請在系統設定允許相機權限，或直接輸入名稱。",
+  "openSettings": "開啟設定"
 }

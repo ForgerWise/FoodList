@@ -18,8 +18,10 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,32 +56,17 @@ class S {
 
   /// `Home`
   String get home {
-    return Intl.message(
-      'Home',
-      name: 'home',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 
   /// `Settings`
   String get settings {
-    return Intl.message(
-      'Settings',
-      name: 'settings',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Settings', name: 'settings', desc: '', args: []);
   }
 
   /// `Add`
   String get add {
-    return Intl.message(
-      'Add',
-      name: 'add',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Add', name: 'add', desc: '', args: []);
   }
 
   /// `Edit Ingredient`
@@ -102,28 +91,18 @@ class S {
 
   /// `Category`
   String get category {
-    return Intl.message(
-      'Category',
-      name: 'category',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Category', name: 'category', desc: '', args: []);
   }
 
   /// `Name`
   String get ingredientName {
-    return Intl.message(
-      'Name',
-      name: 'ingredientName',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Name', name: 'ingredientName', desc: '', args: []);
   }
 
-  /// `e.g. Eggplant, Spinach...`
+  /// `Name, or pick below`
   String get ingredientNameHint {
     return Intl.message(
-      'e.g. Eggplant, Spinach...',
+      'Name, or pick below',
       name: 'ingredientNameHint',
       desc: '',
       args: [],
@@ -132,38 +111,24 @@ class S {
 
   /// `Quantity`
   String get quantity {
-    return Intl.message(
-      'Quantity',
-      name: 'quantity',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Quantity', name: 'quantity', desc: '', args: []);
   }
 
   /// `Expiry Date`
   String get expireDate {
-    return Intl.message(
-      'Expiry Date',
-      name: 'expireDate',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Expiry Date', name: 'expireDate', desc: '', args: []);
   }
 
   /// `Select Date`
   String get selectDate {
-    return Intl.message(
-      'Select Date',
-      name: 'selectDate',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Select Date', name: 'selectDate', desc: '', args: []);
   }
 
   /// `Expire Date: {expireDate}`
   String expireDateConfirmMessage(DateTime expireDate) {
-    final DateFormat expireDateDateFormat =
-        DateFormat.yMd(Intl.getCurrentLocale());
+    final DateFormat expireDateDateFormat = DateFormat.yMd(
+      Intl.getCurrentLocale(),
+    );
     final String expireDateString = expireDateDateFormat.format(expireDate);
 
     return Intl.message(
@@ -176,22 +141,12 @@ class S {
 
   /// `Confirm`
   String get confirm {
-    return Intl.message(
-      'Confirm',
-      name: 'confirm',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Confirm', name: 'confirm', desc: '', args: []);
   }
 
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
 
   /// `Notifications`
@@ -206,48 +161,28 @@ class S {
 
   /// `Languages`
   String get languages {
-    return Intl.message(
-      'Languages',
-      name: 'languages',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Languages', name: 'languages', desc: '', args: []);
   }
 
   /// `Policy`
   String get policy {
-    return Intl.message(
-      'Policy',
-      name: 'policy',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Policy', name: 'policy', desc: '', args: []);
   }
 
   /// `About`
   String get about {
-    return Intl.message(
-      'About',
-      name: 'about',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('About', name: 'about', desc: '', args: []);
   }
 
   /// `Contact Us`
   String get contactUs {
-    return Intl.message(
-      'Contact Us',
-      name: 'contactUs',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Contact Us', name: 'contactUs', desc: '', args: []);
   }
 
-  /// `This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables'' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste.`
+  /// `This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste.`
   String get aboutContent {
     return Intl.message(
-      'This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables\'\' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste.',
+      'This app was created from our commitment to fight food waste. Given that nearly half of all wasted food happens at home, we provide a straightforward tool for users to manage their perishables\' expiration dates. Our goal is to reduce unnecessary buying and cut down household food waste.',
       name: 'aboutContent',
       desc: '',
       args: [],
@@ -274,20 +209,20 @@ class S {
     );
   }
 
-  /// `Set the time at which you would like to receive notifications. This helps you to know which items are expiring soon. `
+  /// `Get one reminder a day about items expiring today and tomorrow.`
   String get notificationContent {
     return Intl.message(
-      'Set the time at which you would like to receive notifications. This helps you to know which items are expiring soon. ',
+      'Get one reminder a day about items expiring today and tomorrow.',
       name: 'notificationContent',
       desc: '',
       args: [],
     );
   }
 
-  /// `This Privacy Policy describes how our mobile application, (hereinafter referred to as ''the App''), collects, uses, and discloses your information. The App is committed to maintaining robust privacy protections for its users. Our Privacy Policy is designed to help you understand how we collect and use the personal information you decide to share and help you make informed decisions when using the App.\n\nBy using or accessing the App, you accept the practices described in this Privacy Policy. If you do not agree to this policy, please do not use the App. We reserve the right to modify this policy from time to time, so please review it frequently. Your continued use of the App signifies your acceptance of our Privacy Policy as modified.\n\n1. Data We Collect\nCurrently, the App does not collect any personal data. The App is designed to store all data related to your food within the device itself and does not have any feature to collect your personal data.\n\n2. Data Storage and Protection\nYour data is stored on your device and is not accessible by anyone but you, unless the data on your device is shared by you or your device provider.\n\n3. Future Updates\nIn future updates, if there is a feature that allows user data upload for functionalities such as synchronization, we still will not disclose this information to any third party. We will announce the update of our privacy policy when these features are added.\n\n4. Changes to Our Privacy Policy\nThe App reserves the right to change this policy and our Terms of Service at any time. We will notify users of significant changes to our Privacy Policy by sending a notice to the primary email address specified in your account or by placing a prominent notice on our site. Significant changes will go into effect 30 days following such notification. Non-material changes or clarifications will take effect immediately. You should periodically check the Site and this privacy page for updates.`
+  /// `Last updated: 2026-09-28 (version 3.1.0)\n\nYour food list never leaves your phone, and we do not collect personal data.\n\n1. Data on your device\nEverything you enter — items, dates, quantities, categories and settings — is stored only on your device. There is no server and no account. Uninstalling the app deletes it.\n\n2. Barcode scanning (optional)\nThe camera is used only while the scan screen is open; images are processed on the device and never saved or uploaded.\nTo fill in a product name, only the barcode number is sent to Open Food Facts and, for Japanese products, the Yahoo! JAPAN Shopping Web API. No name, account or location is sent. Like any web request, these services can see your IP address.\nNames you type for barcodes are remembered on your device.\n\n3. Notifications\nReminders are scheduled and shown locally. Nothing is sent to a server.\n\n4. Ratings\nThe app may show Google Play's built-in rating dialog, which is provided by Google. FoodList receives no data from it.\n\n5. Changes\nIf a future version sends more data (for example, sync), this policy will be updated first.\n\nContact: forgerwise@gmail.com`
   String get privacyContent {
     return Intl.message(
-      'This Privacy Policy describes how our mobile application, (hereinafter referred to as \'\'the App\'\'), collects, uses, and discloses your information. The App is committed to maintaining robust privacy protections for its users. Our Privacy Policy is designed to help you understand how we collect and use the personal information you decide to share and help you make informed decisions when using the App.\n\nBy using or accessing the App, you accept the practices described in this Privacy Policy. If you do not agree to this policy, please do not use the App. We reserve the right to modify this policy from time to time, so please review it frequently. Your continued use of the App signifies your acceptance of our Privacy Policy as modified.\n\n1. Data We Collect\nCurrently, the App does not collect any personal data. The App is designed to store all data related to your food within the device itself and does not have any feature to collect your personal data.\n\n2. Data Storage and Protection\nYour data is stored on your device and is not accessible by anyone but you, unless the data on your device is shared by you or your device provider.\n\n3. Future Updates\nIn future updates, if there is a feature that allows user data upload for functionalities such as synchronization, we still will not disclose this information to any third party. We will announce the update of our privacy policy when these features are added.\n\n4. Changes to Our Privacy Policy\nThe App reserves the right to change this policy and our Terms of Service at any time. We will notify users of significant changes to our Privacy Policy by sending a notice to the primary email address specified in your account or by placing a prominent notice on our site. Significant changes will go into effect 30 days following such notification. Non-material changes or clarifications will take effect immediately. You should periodically check the Site and this privacy page for updates.',
+      'Last updated: 2026-09-28 (version 3.1.0)\n\nYour food list never leaves your phone, and we do not collect personal data.\n\n1. Data on your device\nEverything you enter — items, dates, quantities, categories and settings — is stored only on your device. There is no server and no account. Uninstalling the app deletes it.\n\n2. Barcode scanning (optional)\nThe camera is used only while the scan screen is open; images are processed on the device and never saved or uploaded.\nTo fill in a product name, only the barcode number is sent to Open Food Facts and, for Japanese products, the Yahoo! JAPAN Shopping Web API. No name, account or location is sent. Like any web request, these services can see your IP address.\nNames you type for barcodes are remembered on your device.\n\n3. Notifications\nReminders are scheduled and shown locally. Nothing is sent to a server.\n\n4. Ratings\nThe app may show Google Play\'s built-in rating dialog, which is provided by Google. FoodList receives no data from it.\n\n5. Changes\nIf a future version sends more data (for example, sync), this policy will be updated first.\n\nContact: forgerwise@gmail.com',
       name: 'privacyContent',
       desc: '',
       args: [],
@@ -296,12 +231,7 @@ class S {
 
   /// `Entry Date`
   String get entryDate {
-    return Intl.message(
-      'Entry Date',
-      name: 'entryDate',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Entry Date', name: 'entryDate', desc: '', args: []);
   }
 
   /// `{days} days left`
@@ -334,10 +264,12 @@ class S {
     );
   }
 
-  /// `Expired {days} days ago`
+  /// `{days, plural, =1{Expired yesterday} other{Expired {days} days ago}}`
   String expiredDaysAgo(int days) {
-    return Intl.message(
-      'Expired $days days ago',
+    return Intl.plural(
+      days,
+      one: 'Expired yesterday',
+      other: 'Expired $days days ago',
       name: 'expiredDaysAgo',
       desc: '',
       args: [days],
@@ -346,12 +278,7 @@ class S {
 
   /// `Expired`
   String get summaryExpired {
-    return Intl.message(
-      'Expired',
-      name: 'summaryExpired',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Expired', name: 'summaryExpired', desc: '', args: []);
   }
 
   /// `Expiring Soon`
@@ -366,22 +293,12 @@ class S {
 
   /// `Fresh`
   String get summaryFresh {
-    return Intl.message(
-      'Fresh',
-      name: 'summaryFresh',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Fresh', name: 'summaryFresh', desc: '', args: []);
   }
 
   /// `All`
   String get filterAll {
-    return Intl.message(
-      'All',
-      name: 'filterAll',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('All', name: 'filterAll', desc: '', args: []);
   }
 
   /// `Expiring Soon`
@@ -396,12 +313,7 @@ class S {
 
   /// `Expired`
   String get filterExpired {
-    return Intl.message(
-      'Expired',
-      name: 'filterExpired',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Expired', name: 'filterExpired', desc: '', args: []);
   }
 
   /// `Search ingredients...`
@@ -436,12 +348,7 @@ class S {
 
   /// `None`
   String get none {
-    return Intl.message(
-      'None',
-      name: 'none',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('None', name: 'none', desc: '', args: []);
   }
 
   /// `and {number} more items`
@@ -454,21 +361,23 @@ class S {
     );
   }
 
-  /// `FoodList Expiry Notification`
+  /// `🍱 Food Expiry Reminder`
   String get foodlistExpiryNotification {
     return Intl.message(
-      'FoodList Expiry Notification',
+      '🍱 Food Expiry Reminder',
       name: 'foodlistExpiryNotification',
       desc: '',
       args: [],
     );
   }
 
-  /// `Expiring today: {todayItems}\nExpiring tomorrow: {tomorrowItems}`
+  /// `Today: {todayItems} / Tomorrow: {tomorrowItems}`
   String foodlistExpiryNotificationContent(
-      String todayItems, String tomorrowItems) {
+    String todayItems,
+    String tomorrowItems,
+  ) {
     return Intl.message(
-      'Expiring today: $todayItems\nExpiring tomorrow: $tomorrowItems',
+      'Today: $todayItems / Tomorrow: $tomorrowItems',
       name: 'foodlistExpiryNotificationContent',
       desc: '',
       args: [todayItems, tomorrowItems],
@@ -477,12 +386,7 @@ class S {
 
   /// `Example`
   String get example {
-    return Intl.message(
-      'Example',
-      name: 'example',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Example', name: 'example', desc: '', args: []);
   }
 
   /// `Slide to Delete`
@@ -497,72 +401,37 @@ class S {
 
   /// `Meat`
   String get meat {
-    return Intl.message(
-      'Meat',
-      name: 'meat',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Meat', name: 'meat', desc: '', args: []);
   }
 
   /// `Fish`
   String get fish {
-    return Intl.message(
-      'Fish',
-      name: 'fish',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Fish', name: 'fish', desc: '', args: []);
   }
 
   /// `Vegetable`
   String get vegetable {
-    return Intl.message(
-      'Vegetable',
-      name: 'vegetable',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Vegetable', name: 'vegetable', desc: '', args: []);
   }
 
   /// `Fruit`
   String get fruit {
-    return Intl.message(
-      'Fruit',
-      name: 'fruit',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Fruit', name: 'fruit', desc: '', args: []);
   }
 
   /// `Bean`
   String get bean {
-    return Intl.message(
-      'Bean',
-      name: 'bean',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Bean', name: 'bean', desc: '', args: []);
   }
 
   /// `Egg & Milk`
   String get eggMilk {
-    return Intl.message(
-      'Egg & Milk',
-      name: 'eggMilk',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Egg & Milk', name: 'eggMilk', desc: '', args: []);
   }
 
   /// `Mushroom`
   String get mushroom {
-    return Intl.message(
-      'Mushroom',
-      name: 'mushroom',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Mushroom', name: 'mushroom', desc: '', args: []);
   }
 
   /// `Processed Food`
@@ -577,82 +446,42 @@ class S {
 
   /// `Others`
   String get others {
-    return Intl.message(
-      'Others',
-      name: 'others',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Others', name: 'others', desc: '', args: []);
   }
 
   /// `Beef`
   String get beef {
-    return Intl.message(
-      'Beef',
-      name: 'beef',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Beef', name: 'beef', desc: '', args: []);
   }
 
   /// `Pork`
   String get pork {
-    return Intl.message(
-      'Pork',
-      name: 'pork',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Pork', name: 'pork', desc: '', args: []);
   }
 
   /// `Chicken`
   String get chicken {
-    return Intl.message(
-      'Chicken',
-      name: 'chicken',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Chicken', name: 'chicken', desc: '', args: []);
   }
 
   /// `Other Meats`
   String get otherMeats {
-    return Intl.message(
-      'Other Meats',
-      name: 'otherMeats',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Other Meats', name: 'otherMeats', desc: '', args: []);
   }
 
   /// `Tuna`
   String get tuna {
-    return Intl.message(
-      'Tuna',
-      name: 'tuna',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Tuna', name: 'tuna', desc: '', args: []);
   }
 
   /// `Salmon`
   String get salmon {
-    return Intl.message(
-      'Salmon',
-      name: 'salmon',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Salmon', name: 'salmon', desc: '', args: []);
   }
 
   /// `Oyster`
   String get oyster {
-    return Intl.message(
-      'Oyster',
-      name: 'oyster',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Oyster', name: 'oyster', desc: '', args: []);
   }
 
   /// `Other Fishes`
@@ -667,12 +496,7 @@ class S {
 
   /// `Carrot`
   String get carrot {
-    return Intl.message(
-      'Carrot',
-      name: 'carrot',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Carrot', name: 'carrot', desc: '', args: []);
   }
 
   /// `Other Vegetables`
@@ -687,12 +511,7 @@ class S {
 
   /// `Apple`
   String get apple {
-    return Intl.message(
-      'Apple',
-      name: 'apple',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Apple', name: 'apple', desc: '', args: []);
   }
 
   /// `Other Fruits`
@@ -707,42 +526,22 @@ class S {
 
   /// `Soybean`
   String get soybean {
-    return Intl.message(
-      'Soybean',
-      name: 'soybean',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Soybean', name: 'soybean', desc: '', args: []);
   }
 
   /// `Other Beans`
   String get otherBeans {
-    return Intl.message(
-      'Other Beans',
-      name: 'otherBeans',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Other Beans', name: 'otherBeans', desc: '', args: []);
   }
 
   /// `Egg`
   String get egg {
-    return Intl.message(
-      'Egg',
-      name: 'egg',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Egg', name: 'egg', desc: '', args: []);
   }
 
   /// `Milk`
   String get milk {
-    return Intl.message(
-      'Milk',
-      name: 'milk',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Milk', name: 'milk', desc: '', args: []);
   }
 
   /// `Other Egg & Milk`
@@ -777,12 +576,7 @@ class S {
 
   /// `Other Items`
   String get otherItems {
-    return Intl.message(
-      'Other Items',
-      name: 'otherItems',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Other Items', name: 'otherItems', desc: '', args: []);
   }
 
   /// `Selected Time: {selectedHour}:{selectedMinute}`
@@ -795,10 +589,10 @@ class S {
     );
   }
 
-  /// `Notifications may be delayed on some devices due to battery optimization settings or android restrictions.`
+  /// `Notifications may arrive a few minutes after the set time on some devices. This is expected behavior due to Android battery optimization.`
   String get notificationContentWarn {
     return Intl.message(
-      'Notifications may be delayed on some devices due to battery optimization settings or android restrictions.',
+      'Notifications may arrive a few minutes after the set time on some devices. This is expected behavior due to Android battery optimization.',
       name: 'notificationContentWarn',
       desc: '',
       args: [],
@@ -807,22 +601,12 @@ class S {
 
   /// `other`
   String get other {
-    return Intl.message(
-      'other',
-      name: 'other',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('other', name: 'other', desc: '', args: []);
   }
 
   /// `FAQ`
   String get faq {
-    return Intl.message(
-      'FAQ',
-      name: 'faq',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('FAQ', name: 'faq', desc: '', args: []);
   }
 
   /// `Why didn''t the data load to the edit page automatically?`
@@ -855,30 +639,30 @@ class S {
     );
   }
 
-  /// `Please ensure that you have enabled notifications for the app in your device settings. If it still doesn''t work, check the battery optimization settings and disable battery optimization for the app.`
+  /// `1. Go to your device Settings > Apps > FoodList > Notifications and make sure notifications are enabled.\n2. Disable battery optimization for FoodList (Settings > Battery > Battery Optimization > FoodList > Don''t optimize).\n3. Toggle the notification switch off and on again in the app to re-register the alarm.`
   String get faqWhyNotificationNotWorkAns {
     return Intl.message(
-      'Please ensure that you have enabled notifications for the app in your device settings. If it still doesn\'\'t work, check the battery optimization settings and disable battery optimization for the app.',
+      '1. Go to your device Settings > Apps > FoodList > Notifications and make sure notifications are enabled.\n2. Disable battery optimization for FoodList (Settings > Battery > Battery Optimization > FoodList > Don\'\'t optimize).\n3. Toggle the notification switch off and on again in the app to re-register the alarm.',
       name: 'faqWhyNotificationNotWorkAns',
       desc: '',
       args: [],
     );
   }
 
-  /// `Why is the notification being delayed?`
+  /// `Why is the notification delayed?`
   String get faqWhyNotificationDelay {
     return Intl.message(
-      'Why is the notification being delayed?',
+      'Why is the notification delayed?',
       name: 'faqWhyNotificationDelay',
       desc: '',
       args: [],
     );
   }
 
-  /// `Notifications may be delayed on some devices due to battery optimization settings or android restrictions.`
+  /// `FoodList uses a system alarm that may be delayed by a few minutes by Android to save battery. This is normal and expected. If the delay is more than 30 minutes, try disabling battery optimization for the app.`
   String get faqWhyNotificationDelayAns {
     return Intl.message(
-      'Notifications may be delayed on some devices due to battery optimization settings or android restrictions.',
+      'FoodList uses a system alarm that may be delayed by a few minutes by Android to save battery. This is normal and expected. If the delay is more than 30 minutes, try disabling battery optimization for the app.',
       name: 'faqWhyNotificationDelayAns',
       desc: '',
       args: [],
@@ -907,22 +691,12 @@ class S {
 
   /// `Edit`
   String get edit {
-    return Intl.message(
-      'Edit',
-      name: 'edit',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
   }
 
   /// `Reset`
   String get reset {
-    return Intl.message(
-      'Reset',
-      name: 'reset',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
   }
 
   /// `Confirm Reset`
@@ -955,10 +729,10 @@ class S {
     );
   }
 
-  /// `Resetting the categories will reset all the categories and subcategories to their default values.`
+  /// `Resetting restores the default categories and icons. Your saved ingredients are not deleted.`
   String get faqWhatWillResetCategoriesDoAns {
     return Intl.message(
-      'Resetting the categories will reset all the categories and subcategories to their default values.',
+      'Resetting restores the default categories and icons. Your saved ingredients are not deleted.',
       name: 'faqWhatWillResetCategoriesDoAns',
       desc: '',
       args: [],
@@ -997,22 +771,12 @@ class S {
 
   /// `ForgerWise`
   String get forgerwise {
-    return Intl.message(
-      'ForgerWise',
-      name: 'forgerwise',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('ForgerWise', name: 'forgerwise', desc: '', args: []);
   }
 
   /// `FoodList`
   String get foodlist {
-    return Intl.message(
-      'FoodList',
-      name: 'foodlist',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('FoodList', name: 'foodlist', desc: '', args: []);
   }
 
   /// `This ingredient's Category or Subcategory is deleted, cannot edit. If you want to edit the content of this ingredient, please delete the ingredient and add again.`
@@ -1027,12 +791,7 @@ class S {
 
   /// `Error`
   String get error {
-    return Intl.message(
-      'Error',
-      name: 'error',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Error', name: 'error', desc: '', args: []);
   }
 
   /// `Edit Category`
@@ -1055,10 +814,10 @@ class S {
     );
   }
 
-  /// `Are you sure you want to delete this category?`
+  /// `Delete this category? Items in it will move to "Others".`
   String get confirmCategoryDelete {
     return Intl.message(
-      'Are you sure you want to delete this category?',
+      'Delete this category? Items in it will move to "Others".',
       name: 'confirmCategoryDelete',
       desc: '',
       args: [],
@@ -1077,12 +836,7 @@ class S {
 
   /// `Save`
   String get save {
-    return Intl.message(
-      'Save',
-      name: 'save',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Save', name: 'save', desc: '', args: []);
   }
 
   /// `Add Category`
@@ -1177,12 +931,7 @@ class S {
 
   /// `Homepage`
   String get homepage {
-    return Intl.message(
-      'Homepage',
-      name: 'homepage',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Homepage', name: 'homepage', desc: '', args: []);
   }
 
   /// `URL copied to clipboard`
@@ -1197,12 +946,7 @@ class S {
 
   /// `Feedback`
   String get feedback {
-    return Intl.message(
-      'Feedback',
-      name: 'feedback',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Feedback', name: 'feedback', desc: '', args: []);
   }
 
   /// `Rate this app`
@@ -1267,12 +1011,7 @@ class S {
 
   /// `Bug report`
   String get bugReport {
-    return Intl.message(
-      'Bug report',
-      name: 'bugReport',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Bug report', name: 'bugReport', desc: '', args: []);
   }
 
   /// `About FoodList`
@@ -1367,42 +1106,22 @@ class S {
 
   /// `License`
   String get license {
-    return Intl.message(
-      'License',
-      name: 'license',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('License', name: 'license', desc: '', args: []);
   }
 
   /// `Preferences`
   String get preferences {
-    return Intl.message(
-      'Preferences',
-      name: 'preferences',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Preferences', name: 'preferences', desc: '', args: []);
   }
 
   /// `Enabled`
   String get enabled {
-    return Intl.message(
-      'Enabled',
-      name: 'enabled',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Enabled', name: 'enabled', desc: '', args: []);
   }
 
   /// `Disabled`
   String get disabled {
-    return Intl.message(
-      'Disabled',
-      name: 'disabled',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Disabled', name: 'disabled', desc: '', args: []);
   }
 
   /// `Ingredient Management`
@@ -1457,12 +1176,7 @@ class S {
 
   /// `Icon`
   String get icon {
-    return Intl.message(
-      'Icon',
-      name: 'icon',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Icon', name: 'icon', desc: '', args: []);
   }
 
   /// `"{itemName}" Deleted`
@@ -1477,9 +1191,404 @@ class S {
 
   /// `Undo`
   String get undo {
+    return Intl.message('Undo', name: 'undo', desc: '', args: []);
+  }
+
+  /// `Scan barcode`
+  String get scanBarcode {
     return Intl.message(
-      'Undo',
-      name: 'undo',
+      'Scan barcode',
+      name: 'scanBarcode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Point the camera at the barcode`
+  String get scanBarcodeHint {
+    return Intl.message(
+      'Point the camera at the barcode',
+      name: 'scanBarcodeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product not found. Type its name — we'll remember this barcode next time.`
+  String get barcodeNotFound {
+    return Intl.message(
+      'Product not found. Type its name — we\'ll remember this barcode next time.',
+      name: 'barcodeNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Looking up…`
+  String get lookingUp {
+    return Intl.message('Looking up…', name: 'lookingUp', desc: '', args: []);
+  }
+
+  /// `Quick pick`
+  String get quickPick {
+    return Intl.message('Quick pick', name: 'quickPick', desc: '', args: []);
+  }
+
+  /// `{days} days`
+  String daysChip(int days) {
+    return Intl.message('$days days', name: 'daysChip', desc: '', args: [days]);
+  }
+
+  /// `Pick date`
+  String get customDate {
+    return Intl.message('Pick date', name: 'customDate', desc: '', args: []);
+  }
+
+  /// `Save & add another`
+  String get saveAndNext {
+    return Intl.message(
+      'Save & add another',
+      name: 'saveAndNext',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Added {name}`
+  String itemAdded(String name) {
+    return Intl.message(
+      'Added $name',
+      name: 'itemAdded',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Rate FoodList`
+  String get rateApp {
+    return Intl.message('Rate FoodList', name: 'rateApp', desc: '', args: []);
+  }
+
+  /// `No suggestions — just save what you typed`
+  String get noMatches {
+    return Intl.message(
+      'No suggestions — just save what you typed',
+      name: 'noMatches',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Appearance`
+  String get appearance {
+    return Intl.message('Appearance', name: 'appearance', desc: '', args: []);
+  }
+
+  /// `System default`
+  String get themeSystem {
+    return Intl.message(
+      'System default',
+      name: 'themeSystem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get themeLight {
+    return Intl.message('Light', name: 'themeLight', desc: '', args: []);
+  }
+
+  /// `Dark`
+  String get themeDark {
+    return Intl.message('Dark', name: 'themeDark', desc: '', args: []);
+  }
+
+  /// `"Expiring soon" range`
+  String get soonThreshold {
+    return Intl.message(
+      '"Expiring soon" range',
+      name: 'soonThreshold',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Within {days} days`
+  String soonThresholdValue(int days) {
+    return Intl.message(
+      'Within $days days',
+      name: 'soonThresholdValue',
+      desc: '',
+      args: [days],
+    );
+  }
+
+  /// `Items expiring within this range are shown in orange.`
+  String get soonThresholdHint {
+    return Intl.message(
+      'Items expiring within this range are shown in orange.',
+      name: 'soonThresholdHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to FoodList`
+  String get onboardingTitle {
+    return Intl.message(
+      'Welcome to FoodList',
+      name: 'onboardingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap Add and pick a common item — name and date are filled in for you.`
+  String get onboardingAdd {
+    return Intl.message(
+      'Tap Add and pick a common item — name and date are filled in for you.',
+      name: 'onboardingAdd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap an item to edit it.`
+  String get onboardingTap {
+    return Intl.message(
+      'Tap an item to edit it.',
+      name: 'onboardingTap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Swipe an item left to mark it used or delete it.`
+  String get onboardingSwipe {
+    return Intl.message(
+      'Swipe an item left to mark it used or delete it.',
+      name: 'onboardingSwipe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get started`
+  String get gotIt {
+    return Intl.message('Get started', name: 'gotIt', desc: '', args: []);
+  }
+
+  /// `This is a store-label barcode (weighed/fresh items). Type the name once and it will be filled in next time.`
+  String get inStoreBarcode {
+    return Intl.message(
+      'This is a store-label barcode (weighed/fresh items). Type the name once and it will be filled in next time.',
+      name: 'inStoreBarcode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiry date read from the barcode`
+  String get expiryFromBarcode {
+    return Intl.message(
+      'Expiry date read from the barcode',
+      name: 'expiryFromBarcode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flashlight`
+  String get torch {
+    return Intl.message('Flashlight', name: 'torch', desc: '', args: []);
+  }
+
+  /// `Product data`
+  String get dataSources {
+    return Intl.message(
+      'Product data',
+      name: 'dataSources',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product names come from Open Food Facts (ODbL) and, in Japan, Yahoo!ショッピング.`
+  String get dataSourcesContent {
+    return Intl.message(
+      'Product names come from Open Food Facts (ODbL) and, in Japan, Yahoo!ショッピング.',
+      name: 'dataSourcesContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Used`
+  String get useOne {
+    return Intl.message('Used', name: 'useOne', desc: '', args: []);
+  }
+
+  /// `{name} used up`
+  String usedUp(String name) {
+    return Intl.message(
+      '$name used up',
+      name: 'usedUp',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Nothing matches`
+  String get nothingMatches {
+    return Intl.message(
+      'Nothing matches',
+      name: 'nothingMatches',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear filters`
+  String get clearFilters {
+    return Intl.message(
+      'Clear filters',
+      name: 'clearFilters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do I edit, use up or delete an item?`
+  String get faqHowToEditItem {
+    return Intl.message(
+      'How do I edit, use up or delete an item?',
+      name: 'faqHowToEditItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap an item to edit it. Swipe it to the left for "Used one" (lowers the quantity, or removes it when only one is left) and "Delete". Both can be undone right after.`
+  String get faqHowToEditItemAns {
+    return Intl.message(
+      'Tap an item to edit it. Swipe it to the left for "Used one" (lowers the quantity, or removes it when only one is left) and "Delete". Both can be undone right after.',
+      name: 'faqHowToEditItemAns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What does barcode scanning send?`
+  String get faqWhatDoesScanSend {
+    return Intl.message(
+      'What does barcode scanning send?',
+      name: 'faqWhatDoesScanSend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Only the barcode number, to Open Food Facts (and Yahoo! Shopping for Japanese products), to look up the product name. Camera images never leave your phone. Names you type are remembered on your phone.`
+  String get faqWhatDoesScanSendAns {
+    return Intl.message(
+      'Only the barcode number, to Open Food Facts (and Yahoo! Shopping for Japanese products), to look up the product name. Camera images never leave your phone. Names you type are remembered on your phone.',
+      name: 'faqWhatDoesScanSendAns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{name}: ×{count} left`
+  String leftCount(String name, int count) {
+    return Intl.message(
+      '$name: ×$count left',
+      name: 'leftCount',
+      desc: '',
+      args: [name, count],
+    );
+  }
+
+  /// `Nothing expires today or tomorrow — nice work! 🎉`
+  String get nothingExpiringSoon {
+    return Intl.message(
+      'Nothing expires today or tomorrow — nice work! 🎉',
+      name: 'nothingExpiringSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Read from photo`
+  String get readDate {
+    return Intl.message(
+      'Read from photo',
+      name: 'readDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date read from the photo`
+  String get dateFromPhoto {
+    return Intl.message(
+      'Date read from the photo',
+      name: 'dateFromPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't find a date — please pick it`
+  String get noDateFound {
+    return Intl.message(
+      'Couldn\'t find a date — please pick it',
+      name: 'noDateFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text recognition is still downloading. Try again in a minute.`
+  String get ocrUnavailable {
+    return Intl.message(
+      'Text recognition is still downloading. Try again in a minute.',
+      name: 'ocrUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Which one is the expiry date?`
+  String get whichDate {
+    return Intl.message(
+      'Which one is the expiry date?',
+      name: 'whichDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera unavailable. Allow camera access in Settings, or just type the name.`
+  String get cameraUnavailable {
+    return Intl.message(
+      'Camera unavailable. Allow camera access in Settings, or just type the name.',
+      name: 'cameraUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open settings`
+  String get openSettings {
+    return Intl.message(
+      'Open settings',
+      name: 'openSettings',
       desc: '',
       args: [],
     );

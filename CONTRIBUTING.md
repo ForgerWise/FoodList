@@ -67,6 +67,7 @@ adb install -r build/app/outputs/flutter-apk/app-x86_64-release.apk   # rooted g
 dart run tool/make_seed.dart build/seed
 python tool/capture_screenshots.py     # → screenshots/  (emulator: -camera-back virtualscene)
 python tool/capture_screenshots.py --scan-overlay   # emulator restarted with -camera-back none
+python tool/prepare_scan_photo.py <photo.jpg>   # optional: real photo behind the scan slide
 python tool/store_images.py            # → fastlane/…/phoneScreenshots + featureGraphic
 python tool/app_icon.py                # only if the icon changes
 ```

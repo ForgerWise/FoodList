@@ -20,7 +20,10 @@ FONTS = {
     'en-US': r'C:\Windows\Fonts\segoeuib.ttf',
     'zh-TW': r'C:\Windows\Fonts\msjhbd.ttc',
     'ja-JP': r'C:\Windows\Fonts\YuGothB.ttc',
+    'zh-CN': r'C:\Windows\Fonts\msyhbd.ttc',
 }
+# Store locales without their own app UI reuse another locale's screenshots.
+SHOTS_FROM = {'zh-CN': 'zh-TW'}
 GREEN, GREEN_DARK = (47, 125, 91), (24, 74, 53)
 NIGHT, NIGHT_DARK = (27, 33, 30), (10, 13, 12)
 
@@ -29,26 +32,31 @@ SLIDES = [
     ('01_home_light', False, {
         'en-US': ('Use food before\nit goes bad', 'See what expires first — at a glance'),
         'zh-TW': ('食材過期前\n提醒你用掉', '什麼快過期，一眼就知道'),
+        'zh-CN': ('食材过期前\n提醒你用掉', '什么快过期，一眼就知道'),
         'ja-JP': ('食材を期限内に\n使い切ろう', '期限が近いものがひと目でわかる'),
     }),
     ('03_add_light', False, {
         'en-US': ('Add in two taps', 'Pick a food — name, category and date are filled in'),
         'zh-TW': ('點兩下就新增', '選一個常用食材，名稱、類別、日期自動填好'),
+        'zh-CN': ('点两下就添加', '选一个常用食材，名称、类别、日期自动填好'),
         'ja-JP': ('2タップで追加', 'よく使う食材を選ぶだけで名前も期限も自動入力'),
     }),
     ('11_scan', False, {
         'en-US': ('Scan the barcode', 'Product names filled in — and remembered'),
         'zh-TW': ('掃條碼自動帶入', '查到品名自動填入，輸入過的也會記住'),
+        'zh-CN': ('扫条形码自动填入', '查到品名自动填入，输入过的也会记住'),
         'ja-JP': ('バーコードで入力', '商品名を自動入力、入力した名前も記憶'),
     }),
     ('02_home_dark', True, {
         'en-US': ('Dark mode', 'Easy on the eyes, day and night'),
         'zh-TW': ('深色模式', '白天晚上都好看'),
+        'zh-CN': ('深色模式', '白天晚上都好看'),
         'ja-JP': ('ダークモード', '昼も夜も見やすい'),
     }),
     ('05_settings_light', False, {
         'en-US': ('Daily reminder', 'Your time, your "expiring soon" range'),
         'zh-TW': ('每日到期提醒', '提醒時間、到期範圍都能自訂'),
+        'zh-CN': ('每日到期提醒', '提醒时间、到期范围都能自定义'),
         'ja-JP': ('毎日お知らせ', '通知時間も「期限間近」の範囲も自由に'),
     }),
 ]
@@ -56,6 +64,7 @@ SLIDES = [
 TAGLINE = {  # feature graphic; must stay left of the phone (≈ 560 px)
     'en-US': 'Use food before\nit goes bad',
     'zh-TW': '食材過期前\n提醒你用掉',
+    'zh-CN': '食材过期前\n提醒你用掉',
     'ja-JP': '食材を期限内に\n使い切ろう',
 }
 
@@ -101,7 +110,7 @@ def centered(draw, text, font, y, fill, canvas_w, spacing=12):
 def scan_screen(locale):
     """Real scanner UI (captured over a black camera) with a friendly scene
     behind it: tool/assets/scan_background.png if present, else the cartoon."""
-    ov = Image.open(os.path.join(ROOT, 'screenshots', locale, 'scan_overlay.png')).convert('RGB')
+    ov = Image.open(os.path.join(ROOT, 'screenshots', SHOTS_FROM.get(locale, locale), 'scan_overlay.png')).convert('RGB')
     W, H = ov.size
     top = 262  # status bar + app bar stay as captured
     gray = ov.convert('L')
@@ -134,7 +143,7 @@ def slide(locale, shot, dark, headline, subline):
     d = ImageDraw.Draw(img)
     y = centered(d, headline, ImageFont.truetype(FONTS[locale], 88), 130, 'white', W)
     y = centered(d, subline, ImageFont.truetype(FONTS[locale], 40), y + 44, (230, 240, 235), W)
-    src = scan_screen(locale) if shot == '11_scan' else os.path.join(ROOT, 'screenshots', locale, shot + '.png')
+    src = scan_screen(locale) if shot == '11_scan' else os.path.join(ROOT, 'screenshots', SHOTS_FROM.get(locale, locale), shot + '.png')
     p = phone(src, 760)
     img.alpha_composite(p, ((W - p.width) // 2, y + 20))  # bleeds off the bottom on purpose
     return img.convert('RGB')
@@ -149,7 +158,7 @@ def feature_graphic(locale, tagline):
     d.text((64, 228), 'FoodList', font=ImageFont.truetype(FONTS['en-US'], 76), fill='white')
     d.multiline_text((66, 330), tagline, font=ImageFont.truetype(FONTS[locale], 34),
                      fill=(230, 240, 235), spacing=10)
-    p = phone(os.path.join(ROOT, 'screenshots', locale, '01_home_light.png'), 300)
+    p = phone(os.path.join(ROOT, 'screenshots', SHOTS_FROM.get(locale, locale), '01_home_light.png'), 300)
     img.alpha_composite(p, (W - p.width + 10, 40))
     return img.convert('RGB')
 

@@ -82,7 +82,7 @@ if __name__ == '__main__':
         bars(a, BARS, 0.40).save(os.path.join(d, 'ic_launcher_foreground.png'))
         bars(a, [(255, 255, 255, 255)] * 3, 0.40).save(os.path.join(d, 'ic_launcher_monochrome.png'))
     full_icon(512).save(os.path.join(ROOT, 'assets', 'images', 'appLogo.png'))
-    for loc in ('en-US', 'zh-TW', 'ja-JP'):
+    for loc in ('en-US', 'zh-TW', 'ja-JP', 'zh-CN'):
         out = os.path.join(ROOT, 'fastlane', 'metadata', 'android', loc, 'images')
         os.makedirs(out, exist_ok=True)
         full_icon(512, radius_share=0).convert('RGB').save(os.path.join(out, 'icon.png'))  # Play masks it

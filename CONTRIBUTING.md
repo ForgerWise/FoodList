@@ -44,7 +44,11 @@ Names come from [Open Food Facts](https://world.openfoodfacts.org/). If a barcod
 
 ## Releasing (maintainers)
 
-Write the notes under **[Unreleased]** in `CHANGELOG.md`, then from `develop`:
+Before releasing:
+- Under **[Unreleased]** in `CHANGELOG.md`, add `### Highlights` (3–5 user-facing bullets, used for the GitHub Release) plus the full Added/Changed/Fixed list.
+- Write Play Console notes, max 3 lines each, in `fastlane/metadata/android/<locale>/changelogs/<build>.txt` for en-US, ja-JP, zh-CN and zh-TW. The script assembles them into `releases/vX.Y.Z/play-release-notes.txt`, ready to paste.
+
+Then from `develop`:
 
 ```powershell
 pwsh tool/release.ps1 -Bump patch   # or minor / major; -DryRun to only build

@@ -61,6 +61,17 @@ $version = "$maj.$min.$pat"; $tag = "v$version"
 Step "Version $version+$build"
 if (git tag --list $tag) { Fail "Tag $tag already exists." }
 
+# Play Console release notes: fastlane/metadata/android/<locale>/changelogs/<build>.txt
+# (≤ 3 short lines, Play limit 500 chars). Assembled into play-release-notes.txt below.
+$PlayLocales = 'en-US', 'ja-JP', 'zh-CN', 'zh-TW'
+foreach ($loc in $PlayLocales) {
+    $f = "fastlane/metadata/android/$loc/changelogs/$build.txt"
+    if (-not (Test-Path $f)) { Fail "Missing Play release notes: $f (≤ 3 lines)." }
+    $text = (Get-Content $f -Raw -Encoding utf8).Trim()
+    if ($text.Length -gt 500) { Fail "$f is $($text.Length) chars; Play allows 500." }
+    if (($text -split "`n").Count -gt 3) { Fail "$f has more than 3 lines." }
+}
+
 $changelog = Get-Content CHANGELOG.md -Raw
 if ($Bump -ne 'none') {
     # Move "Unreleased" notes under the new version.
@@ -136,6 +147,10 @@ If you encounter any issues or have suggestions, please let us know.
 "@ | Set-Content "$out/notes.md" -Encoding utf8
 # Same asset name as previous releases: one universal APK.
 Copy-Item "$out/FoodList-$tag-universal.apk" "$out/FoodList-$tag.apk"
+# Ready to paste into Play Console → Release notes.
+($PlayLocales | ForEach-Object {
+    "<$_>`n$((Get-Content "fastlane/metadata/android/$_/changelogs/$build.txt" -Raw -Encoding utf8).Trim())`n</$_>"
+}) -join "`n" | Set-Content "$out/play-release-notes.txt" -Encoding utf8
 Write-Host "Archived to $out"
 
 if ($DryRun) { Step "Dry run done — nothing pushed. Artifacts: $out"; exit 0 }
@@ -171,3 +186,4 @@ Run git push origin develop
 Step 'Done'
 Write-Host "GitHub: https://github.com/ForgerWise/FoodList/releases/tag/$tag"
 Write-Host "Play Console: upload $out/FoodList-$tag.aab and $out/FoodList-$tag-debug-symbols.zip"
+Write-Host "Release notes to paste: $out/play-release-notes.txt"

@@ -1,0 +1,3 @@
+• Add food in two taps: pick a common food or scan a barcode
+• Read expiry dates from a photo, plus dark mode and a fresh new look
+• Swipe "Used" to lower the quantity, and many fixes

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../util/theme.dart';
 
-import '../database/ingredient.dart';
+import '../database/category.dart';
+import '../database/data.dart';
 import '../generated/l10n.dart';
 import '../util/app_scaffold.dart';
 import '../util/countdown_button.dart';
@@ -32,9 +34,8 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
   }
 
   // ── Reorder ────────────────────────────────────────────────────────────────
+  // onReorderItem already gives the post-removal index.
   void _onReorder(int oldIndex, int newIndex) {
-    if (newIndex > _catKeys.length) newIndex = _catKeys.length;
-    if (newIndex > oldIndex) newIndex -= 1;
     setState(() {
       _cdb.reorderCategory(oldIndex, newIndex);
       _catKeys = List<String>.from(_cdb.categoryKeys);
@@ -45,22 +46,11 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: Text(
-          S.of(context).editResetCategories,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
+        title: Text(S.of(context).editResetCategories),
         actions: [
           IconButton(
-            icon: const Icon(Icons.restore, color: Colors.red),
+            icon: Icon(Icons.restore, color: context.c.textMuted),
             tooltip: S.of(context).reset,
             onPressed: () => _showResetDialog(context),
           ),
@@ -72,38 +62,31 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
               children: [
                 // Drag hint banner
                 Container(
-                  margin: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+                  margin: const EdgeInsets.fromLTRB(16, 12, 16, 4),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.blueGrey.withOpacity(0.08),
+                    color: AppColors.primary.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.swap_vert,
-                        size: 16,
-                        color: Colors.blueGrey.shade600,
-                      ),
+                      Icon(Icons.swap_vert, size: 16, color: context.c.accent),
                       const SizedBox(width: 8),
                       Text(
                         S.of(context).dragToReorderHint,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.blueGrey.shade600,
-                        ),
+                        style: TextStyle(fontSize: 12, color: context.c.accent),
                       ),
                     ],
                   ),
                 ),
                 Expanded(
                   child: ReorderableListView(
-                    padding: const EdgeInsets.fromLTRB(12, 8, 12, 100),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
                     buildDefaultDragHandles: false,
-                    onReorder: _onReorder,
+                    onReorderItem: _onReorder,
                     children: [
                       for (int i = 0; i < _catKeys.length; i++)
                         _buildCategoryCard(i),
@@ -113,7 +96,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
               ],
             ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: AppColors.primary,
         onPressed: () => _showCategorySheet(context),
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(
@@ -132,18 +115,8 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
     return Padding(
       key: ValueKey(key),
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
@@ -153,7 +126,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: Colors.blueGrey.withOpacity(0.08),
+              color: AppColors.primary.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
@@ -164,26 +137,20 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
             label,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
+          onTap: () => _showCategorySheet(
+            context,
+            editKey: key,
+            currentName: label,
+            currentIcon: icon,
+          ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
+                tooltip: S.of(context).delete,
                 icon: Icon(
-                  Icons.edit_outlined,
-                  color: Colors.blueGrey.shade400,
-                  size: 20,
-                ),
-                onPressed: () => _showCategorySheet(
-                  context,
-                  editKey: key,
-                  currentName: label,
-                  currentIcon: icon,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(
                   Icons.delete_outline,
-                  color: Colors.red,
+                  color: context.c.textMuted,
                   size: 20,
                 ),
                 onPressed: () => _showDeleteDialog(context, key),
@@ -192,7 +159,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                 index: index,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Icon(Icons.drag_handle, color: Colors.grey.shade400),
+                  child: Icon(Icons.drag_handle, color: context.c.textMuted),
                 ),
               ),
             ],
@@ -224,9 +191,11 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
           child: SafeArea(
             top: false,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              decoration: BoxDecoration(
+                color: context.c.surface,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
               ),
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
               child: Column(
@@ -239,7 +208,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                       width: 40,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: context.c.border,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -263,17 +232,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                     style: const TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       labelText: S.of(ctx).categoryName,
-                      labelStyle: TextStyle(color: Colors.blueGrey.shade400),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: Colors.blueGrey,
-                          width: 2,
-                        ),
-                      ),
+                      labelStyle: TextStyle(color: context.c.accent),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -285,7 +244,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: Colors.blueGrey.shade600,
+                          color: context.c.accent,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -315,12 +274,12 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                           height: 44,
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? Colors.blueGrey.withOpacity(0.15)
-                                : Colors.grey.shade100,
+                                ? AppColors.primary.withValues(alpha: 0.15)
+                                : context.c.border,
                             borderRadius: BorderRadius.circular(8),
                             border: isSelected
-                                ? Border.all(color: Colors.blueGrey, width: 2)
-                                : Border.all(color: Colors.grey.shade200),
+                                ? Border.all(color: AppColors.primary, width: 2)
+                                : Border.all(color: context.c.border),
                           ),
                           child: Center(
                             child: Text(
@@ -338,7 +297,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey,
+                        backgroundColor: AppColors.primary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -351,12 +310,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
                         setState(() {
                           if (editKey != null) {
                             _cdb.renameCategory(editKey, name);
-                            // After rename, key changes — get the new key
-                            final newKey = _cdb.categoryKeys.firstWhere(
-                              (k) => _cdb.categoryMap[k] == name,
-                              orElse: () => editKey,
-                            );
-                            _cdb.setCategoryIcon(newKey, selectedEmoji);
+                            _cdb.setCategoryIcon(editKey, selectedEmoji);
                           } else {
                             _cdb.addCategory(name, icon: selectedEmoji);
                           }
@@ -391,7 +345,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
-            const Icon(Icons.delete_outline, color: Colors.red),
+            const Icon(Icons.delete_outline, color: AppColors.expired),
             const SizedBox(width: 8),
             Text(S.of(ctx).confirmDelete),
           ],
@@ -405,9 +359,11 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.06),
+                color: AppColors.expired.withValues(alpha: 0.06),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red.withOpacity(0.2)),
+                border: Border.all(
+                  color: AppColors.expired.withValues(alpha: 0.2),
+                ),
               ),
               child: Row(
                 children: [
@@ -430,23 +386,29 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
             onPressed: () => Navigator.pop(ctx),
             child: Text(
               S.of(ctx).cancel,
-              style: TextStyle(color: Colors.grey.shade600),
+              style: TextStyle(color: context.c.textMuted),
             ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
+              backgroundColor: AppColors.expired,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
               elevation: 0,
             ),
-            onPressed: () {
-              setState(() {
-                _cdb.removeCategory(catKey);
-                _catKeys = List<String>.from(_cdb.categoryKeys);
-              });
-              Navigator.pop(ctx);
+            onPressed: () async {
+              _cdb.removeCategory(catKey);
+              // Keep its items reachable instead of orphaning them.
+              final target = _cdb.categoryMap.containsKey('others')
+                  ? 'others'
+                  : _cdb.categoryKeys.firstOrNull;
+              if (target != null) {
+                await InputDataBase().moveCategory(catKey, target);
+              }
+              if (!mounted) return;
+              setState(() => _catKeys = List<String>.from(_cdb.categoryKeys));
+              if (ctx.mounted) Navigator.pop(ctx);
             },
             child: Text(
               S.of(ctx).confirm,
@@ -466,7 +428,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
-            const Icon(Icons.restore, color: Colors.orange),
+            const Icon(Icons.restore, color: AppColors.soon),
             const SizedBox(width: 8),
             Text(S.of(ctx).confirmReset),
           ],
@@ -477,7 +439,7 @@ class EditCategoriesPageState extends State<EditCategoriesPage> {
             onPressed: () => Navigator.pop(ctx),
             child: Text(
               S.of(ctx).cancel,
-              style: TextStyle(color: Colors.grey.shade600),
+              style: TextStyle(color: context.c.textMuted),
             ),
           ),
           CountdownButton(

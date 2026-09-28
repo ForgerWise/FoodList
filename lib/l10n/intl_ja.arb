@@ -7,7 +7,7 @@
   "addIngredients": "食材を追加する",
   "category": "カテゴリ",
   "ingredientName": "食材名",
-  "ingredientNameHint": "例：なす、ほうれん草...",
+  "ingredientNameHint": "名前を入力、または下から選択",
   "quantity": "数量",
   "expireDate": "消費期限",
   "selectDate": "日付を選択",
@@ -30,21 +30,25 @@
   "aboutContent": "このアプリは、フードロスを減らすために作成されました。実際、廃棄される食品のほぼ半分は家庭で発生しています。そこで、ユーザーが生鮮食品の賞味期限を簡単に管理できるツールを提供します。私たちの目標は、不必要な購入を減らし、家庭での食品廃棄物を減少させることです。",
   "languageNotSupportedYetMessage": "この言語はまだサポートされていません！しかし、将来的にサポートされる予定です！",
   "notificationSetting": "通知設定",
-  "notificationContent": "通知を受け取りたい時間を設定してください。これにより、すぐに期限切れになるアイテムを知ることができます。",
-  "privacyContent": "このプライバシーポリシーは、当社のモバイルアプリケーション（以下「アプリ」といいます）が、あなたの情報を収集、使用、開示する方法について説明しています。アプリはユーザーのプライバシー保護を重視しています。当社のプライバシーポリシーは、あなたが共有することを決めた個人情報をどのように収集・使用するかを理解し、アプリを使用する際に十分な判断を行えるように設計されています。\n\nアプリを使用またはアクセスすることで、あなたはこのプライバシーポリシーに記載されている慣行に同意したものとみなされます。本ポリシーに同意しない場合は、アプリを使用しないでください。当社は、このポリシーを随時変更する権利を留保しており、頻繁にご確認ください。アプリの継続的な使用は、改訂されたプライバシーポリシーに同意したことを意味します。\n\n1. 収集データ\n現在、アプリは個人データを一切収集していません。アプリは、あなたの食品に関するすべてのデータをデバイス内に保存するよう設計されており、個人データを収集する機能はありません。\n\n2. データの保存と保護\nデータはあなたのデバイスに保存されており、デバイスの提供者やあなたが共有しない限り、他者がアクセスすることはできません。\n\n3. 将来の更新\n将来、同期機能などのためにユーザーデータのアップロード機能が追加された場合でも、この情報を第三者に開示することはありません。これらの機能が追加された際には、プライバシーポリシーの更新をお知らせします。\n\n4. プライバシーポリシーの変更\nアプリは、このポリシーおよびサービス利用規約をいつでも変更する権利を有します。当社は、あなたのアカウントに指定された主要な電子メールアドレスに通知を送信するか、当社サイトに目立つ通知を掲示することで、プライバシーポリシーの重要な変更をお知らせします。重要な変更は通知後30日以内に有効となります。軽微な変更や明確化は即時に有効となります。最新の情報を確認するために、サイトおよびこのプライバシーページを定期的に確認してください。",
+  "notificationContent": "今日と明日に期限が来る食材を1日1回お知らせします。",
+  "privacyContent": "最終更新：2026-09-28（バージョン 3.1.0）\n\n食材リストがスマートフォンの外に出ることはなく、個人データも収集しません。\n\n1. 端末に保存されるデータ\n入力した内容（食材・日付・数量・カテゴリ・設定）はすべて端末内にのみ保存されます。サーバーやアカウントはありません。アプリをアンインストールするとデータも削除されます。\n\n2. バーコードスキャン（任意）\nカメラはスキャン画面を開いている間だけ使用し、画像は端末内でバーコードの読み取りにのみ使われ、保存・送信されません。\n商品名を入力するため、バーコードの番号のみを Open Food Facts と、日本の商品については Yahoo! JAPAN ショッピング Web API に送信します。氏名・アカウント・位置情報は送信しません。通常の通信と同様に、これらのサービスは IP アドレスを知ることができます。\nバーコードに付けた名前は端末内に保存されます。\n\n3. 通知\n期限のお知らせは端末内で予約・表示され、サーバーには送信されません。\n\n4. 評価\nGoogle Play 標準の評価ダイアログを表示することがあります。これは Google が提供するもので、FoodList がデータを受け取ることはありません。\n\n5. 変更\n今後のバージョンでより多くのデータを送信する機能（同期など）を追加する場合は、事前に本ポリシーを更新します。\n\nお問い合わせ：forgerwise@gmail.com",
   "entryDate": "入力日付",
   "daysLeft": "あと {days} 日",
   "@daysLeft": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
-  "expiresToday": "今日期限切れ！",
-  "expiresTomorrow": "明日期限切れ！",
+  "expiresToday": "今日まで！",
+  "expiresTomorrow": "明日まで！",
   "expiredDaysAgo": "{days} 日前に期限切れ",
   "@expiredDaysAgo": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "summaryExpired": "期限切れ",
@@ -135,7 +139,7 @@
   "confirmReset": "リセットを確認",
   "categoriesResetHint": "カテゴリをデフォルトにリセットしますか？",
   "faqWhatWillResetCategoriesDo": "カテゴリをリセットすると何が起こりますか？",
-  "faqWhatWillResetCategoriesDoAns": "カテゴリをリセットすると、すべてのカテゴリとサブカテゴリがデフォルト値にリセットされます。",
+  "faqWhatWillResetCategoriesDoAns": "リセットするとカテゴリとアイコンが初期状態に戻ります。保存済みの食材は削除されません。",
   "aboutContentGithub": "このアプリは完全にオープンソースで、無料で使用できます。ご意見やプロジェクトへの貢献がありましたら、GitHubリポジトリをご覧ください。",
   "githubRepository": "GitHubリポジトリ",
   "aboutContentHomepage": "他のプロジェクトにご興味がある場合は、公式サイトをご覧ください。",
@@ -145,7 +149,7 @@
   "error": "エラー",
   "editCategory": "カテゴリを編集",
   "confirmDelete": "削除を確認",
-  "confirmCategoryDelete": "このカテゴリを削除してもよろしいですか？",
+  "confirmCategoryDelete": "このカテゴリを削除しますか？中の食材は「その他」に移動します。",
   "enterNewCategoryName": "新しいカテゴリ名を入力",
   "save": "保存",
   "addCategory": "カテゴリを追加",
@@ -201,5 +205,89 @@
       }
     }
   },
-  "undo": "元に戻す"
+  "undo": "元に戻す",
+  "scanBarcode": "バーコードをスキャン",
+  "scanBarcodeHint": "バーコードを枠内に合わせてください",
+  "barcodeNotFound": "商品が見つかりません。名前を入力すると次回から自動入力されます",
+  "lookingUp": "検索中…",
+  "quickPick": "クイック選択",
+  "daysChip": "{days}日",
+  "@daysChip": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "customDate": "日付を選択",
+  "saveAndNext": "保存して続けて追加",
+  "itemAdded": "{name} を追加しました",
+  "@itemAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rateApp": "FoodList を評価",
+  "noMatches": "候補はありません。入力した名前でそのまま保存できます",
+  "appearance": "外観",
+  "themeSystem": "システムに合わせる",
+  "themeLight": "ライト",
+  "themeDark": "ダーク",
+  "soonThreshold": "「期限間近」の範囲",
+  "soonThresholdValue": "{days}日以内",
+  "@soonThresholdValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "soonThresholdHint": "この日数以内に期限が来る食材はオレンジ色で表示されます。",
+  "onboardingTitle": "FoodList へようこそ",
+  "onboardingAdd": "「追加」を押してよく使う食材を選ぶだけで、名前と日付が自動入力されます。",
+  "onboardingTap": "食材をタップすると編集できます。",
+  "onboardingSwipe": "食材を左にスワイプすると「使った」または削除ができます。",
+  "gotIt": "はじめる",
+  "inStoreBarcode": "店内で貼られたバーコード（量り売り・生鮮品）です。一度名前を入力すると次回から自動入力されます。",
+  "expiryFromBarcode": "バーコードから期限を読み取りました",
+  "torch": "ライト",
+  "dataSources": "商品データ",
+  "dataSourcesContent": "商品名は Open Food Facts（ODbL）と、日本では Yahoo!ショッピングから取得しています。",
+  "delete": "削除",
+  "useOne": "使った",
+  "usedUp": "{name} を使い切りました",
+  "@usedUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nothingMatches": "該当する食材はありません",
+  "clearFilters": "絞り込みを解除",
+  "faqHowToEditItem": "食材の編集・使用・削除はどうすればいいですか？",
+  "faqHowToEditItemAns": "食材をタップすると編集できます。左にスワイプすると「1つ使った」（数量を1減らし、最後の1つなら削除）と「削除」が表示され、どちらもすぐに元に戻せます。",
+  "faqWhatDoesScanSend": "バーコードスキャンでは何が送信されますか？",
+  "faqWhatDoesScanSendAns": "商品名を調べるため、バーコードの番号のみを Open Food Facts（日本の商品は Yahoo!ショッピングにも）へ送信します。カメラ画像が端末の外に出ることはなく、入力した名前も端末内にのみ保存されます。",
+  "leftCount": "{name}：残り ×{count}",
+  "@leftCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nothingExpiringSoon": "今日と明日に期限が来る食材はありません。この調子！🎉",
+  "readDate": "写真で読取",
+  "dateFromPhoto": "写真から期限を読み取りました",
+  "noDateFound": "日付を読み取れませんでした。手動で選んでください",
+  "ocrUnavailable": "文字認識モデルをダウンロード中です。少し待ってからお試しください。",
+  "whichDate": "どれが期限ですか？",
+  "cameraUnavailable": "カメラを使用できません。設定でカメラへのアクセスを許可するか、名前を入力してください。",
+  "openSettings": "設定を開く"
 }

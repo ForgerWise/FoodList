@@ -1,0 +1,16 @@
+FoodList helps you use food before it goes bad — simply.
+
+• Add in two taps: pick a common food and its name, category and typical shelf life are filled in. Your recent items come first.
+• Scan barcodes: EAN / JAN / UPC product codes fill in the name; GS1 QR and DataMatrix codes can even fill in the expiry date. Names you type are remembered.
+• See what matters: red = expired, orange = expiring soon, green = fresh. Tap a counter to filter.
+• "Used one" and Undo: swipe to use up or delete — mistakes are one tap away from fixed.
+• Daily reminder at the time you choose.
+• Your own categories and emoji icons.
+• Light and dark mode. English, 繁體中文, 日本語.
+
+Private by design: no account, no ads, no tracking. Your list stays on your phone. Barcode lookups send only the barcode number.
+
+Free and open source (MIT): https://github.com/ForgerWise/FoodList
+
+Product data: Open Food Facts (ODbL).
+Web Services by Yahoo! JAPAN (https://developer.yahoo.co.jp/sitemap/)

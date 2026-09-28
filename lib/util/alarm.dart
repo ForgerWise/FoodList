@@ -1,10 +1,9 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../database/languagedb.dart';
-import '../database/sub_category.dart';
+import '../database/data.dart';
 import '../generated/l10n.dart';
 import 'notification.dart';
 
@@ -21,24 +20,16 @@ Future<void> alarmCallback() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    // Initialize Hive
-    await Hive.initFlutter();
-    if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(SubCategoryAdapter());
-    }
-    // Guard: only open the box if it is not already open
-    if (!Hive.isBoxOpen('mybox')) {
-      await Hive.openBox('mybox');
-    }
+    await openStorage();
 
     // Load locale safely — fall back to 'en' on any error
     String locale;
     try {
-      locale = await LanguageDB.getLanguageWithoutContext();
+      locale = await LanguageDB.getLanguage();
     } catch (_) {
       locale = 'en';
     }
-    await S.load(Locale(locale));
+    await S.load(LanguageDB.languageToLocale(locale));
 
     // Send the notification
     final notificationService = NotificationService();
@@ -81,10 +72,10 @@ class AlarmService {
     await AndroidAlarmManager.periodic(
       const Duration(days: 1),
       0,
-      alarmCallback,         // top-level function reference
+      alarmCallback, // top-level function reference
       startAt: selectedTime,
-      exact: false,          // inexact: no special permission needed
-      wakeup: true,          // wake the device so notification is delivered
+      exact: false, // inexact: no special permission needed
+      wakeup: true, // wake the device so notification is delivered
       rescheduleOnReboot: true,
     );
 

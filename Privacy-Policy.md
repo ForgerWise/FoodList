@@ -1,28 +1,39 @@
-Privacy Policy  
-----------------
+# Privacy Policy
 
-### Introduction  
-Our privacy policy will help you understand what information we collect at Forger Wise, how Forger Wise uses it, and what choices you have.
-Forger Wise built the FoodList app as a free app. This SERVICE is provided by Forger Wise at no cost and is intended for use as is.
-If you choose to use our Service, then you agree to the collection and use of information in  relation with this policy. The Personal Information that we collect are used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.  
-The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible in our website, unless otherwise  defined in this Privacy Policy.
+_Last updated: 2026-09-28 (app version 3.1.0)_
 
-### 1. Data We Collect
+FoodList is a free, open-source app made by ForgerWise. This page explains what the app does with your information. The short version: **your food list never leaves your phone, and we do not collect personal data.**
 
-As of the current state, the App does not collect any personal data. The design of the App is such that it stores all data pertaining to your food within the device itself and lacks any functionality to collect your personal data.
+## 1. Data stored on your device
 
-### 2. Data Storage and Protection
+Everything you enter — food items, dates, quantities, categories and settings — is stored only on your device. We have no server and no account system, so we cannot see, sell or share this data. Uninstalling the app deletes it.
 
-The data you enter is stored on your device and is not accessible to anyone other than yourself unless the data on your device is shared by you or your device provider.
+## 2. Barcode scanning (optional)
 
-### 3. Future Updates
+- **Camera.** The camera is used only while the scan screen is open. Images are processed on the device to read the barcode and are never saved or uploaded.
+- **Product lookup.** To fill in a product name, the app sends **only the barcode number** over the internet to:
+  - [Open Food Facts](https://world.openfoodfacts.org/) — an open, non-profit food database ([privacy policy](https://world.openfoodfacts.org/privacy));
+  - [Yahoo! JAPAN Shopping Web API](https://developer.yahoo.co.jp/) for Japanese products ([privacy policy](https://privacy.lycorp.co.jp/en/)).
 
-Should there be a future update that allows user data upload for functionalities such as synchronization, we assure you that we will not disclose this information to any third parties. If such features are added, we will accordingly update our privacy policy and make an announcement.
+  No name, account, location or other identifier is sent. Like any web request, these services can see your IP address; please refer to their policies.
+- Names you type for barcodes are remembered on your device so the next scan works offline.
 
-### 4. Changes to This Privacy Policy  
-We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately, after they are posted on this page.  
+## 3. Notifications
 
-### Contact Us  
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.  
-Contact Information:  
-Email: forgerwise@gmail.com  
+Expiry reminders are scheduled and shown locally by the app. Nothing is sent to a server.
+
+## 4. Ratings
+
+The app may occasionally show Google Play's built-in rating dialog. This is provided by Google Play under [Google's Privacy Policy](https://policies.google.com/privacy); FoodList does not receive any data from it.
+
+## 5. Children
+
+The app does not knowingly collect any information from anyone, including children.
+
+## 6. Changes
+
+If a future version adds a feature that sends more data (for example, sync), this policy will be updated before that version is released. Changes are published on this page and in the repository history.
+
+## Contact
+
+Questions or suggestions: [forgerwise@gmail.com](mailto:forgerwise@gmail.com)

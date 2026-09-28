@@ -1,0 +1,16 @@
+FoodList 幫你在食材過期前把它用掉，簡單好用。
+
+• 點兩下就新增：選一個常用食材，名稱、類別和一般保存天數自動填好；最近用過的排在最前面。
+• 掃描條碼：EAN／JAN／UPC 商品條碼自動帶入品名；GS1 二維碼、DataMatrix 甚至能讀出到期日。輸入過的名稱會記住。
+• 一眼看重點：紅色＝已過期、橘色＝即將到期、綠色＝新鮮，點數字卡片即可篩選。
+• 「用掉一個」與復原：滑動即可用掉或刪除，按錯也能一鍵復原。
+• 每天在你設定的時間提醒。
+• 自訂類別與表情圖示。
+• 淺色／深色模式，支援繁體中文、English、日本語。
+
+重視隱私：不需帳號、沒有廣告、不追蹤。清單只存在你的手機；條碼查詢只會傳送條碼號碼。
+
+免費開源（MIT）：https://github.com/ForgerWise/FoodList
+
+商品資料：Open Food Facts（ODbL）
+Web Services by Yahoo! JAPAN (https://developer.yahoo.co.jp/sitemap/)

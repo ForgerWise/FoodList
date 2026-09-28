@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
 import '../util/app_scaffold.dart';
-import 'setting_appbar.dart';
+import '../util/theme.dart';
 
 class PolicyPage extends StatefulWidget {
   const PolicyPage({Key? key}) : super(key: key);
@@ -15,19 +15,18 @@ class _PolicyState extends State<PolicyPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      backgroundColor: Colors.white,
-      appBar: SettingAppbar(title: S.of(context).policy),
+      appBar: AppBar(title: Text(S.of(context).policy)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               S.of(context).privacyContent,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 height: 1.6,
-                color: Colors.black87,
+                color: context.c.text,
                 letterSpacing: 0.3,
               ),
             ),

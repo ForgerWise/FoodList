@@ -1,177 +1,165 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../generated/l10n.dart';
+import '../util/app_settings.dart';
+import 'category.dart';
+import 'sub_category.dart';
 
-class InputDataBase {
-  List ingredientsList = [];
+/// Opens local storage. Call before any database access, in the main isolate
+/// and in the alarm's background isolate.
+Future<void> openStorage() async {
+  await Hive.initFlutter();
+  // Pre-v3 builds stored SubCategory objects. Hive decodes every record in a
+  // box on open, so this adapter must stay registered even though the data is
+  // deleted on load — otherwise upgrading from those versions crashes.
+  if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(SubCategoryAdapter());
+  if (!Hive.isBoxOpen('mybox')) await Hive.openBox('mybox');
+}
 
-  // Use a getter instead of a field initializer to ensure the box is open
-  // before accessing it (important in the alarm callback background isolate).
-  Box get _myBox => Hive.box('mybox');
+enum ExpiryStatus { expired, soon, fresh }
 
-  // New format: [categoryKey, customName, expireDate, quantity]
-  // Old format: [categoryDisplayName, subcategoryName, inputDate, expireDate]
-  // Detection: old format has a String at index 3 (expireDate), new has an int (quantity)
+/// One fridge item. Stored in Hive as a plain list so the on-disk format of
+/// every released version keeps working:
+///   [categoryKey, name, 'yyyy/MM/dd', quantity]
+class Ingredient {
+  final String categoryKey;
+  final String name;
+  final DateTime expiry; // date only
+  final int quantity;
 
-  bool _isOldFormat(dynamic item) {
-    if (item is List && item.length >= 4) {
-      return item[3] is String;
-    }
-    return false;
+  const Ingredient(this.categoryKey, this.name, this.expiry, this.quantity);
+
+  static DateTime get _today {
+    final n = DateTime.now();
+    return DateTime(n.year, n.month, n.day);
   }
 
-  List _migrateItem(dynamic item) {
-    // Old: [categoryDisplay, subcategory, inputDate, expireDate]
-    // New: [categoryKey, customName, expireDate, quantity=1]
-    String categoryKey = _resolveCategoryKey(item[0] as String);
-    String customName = item[1] as String;
-    String expireDate = item[3] as String;
-    return [categoryKey, customName, expireDate, 1];
+  /// 'yyyy/MM/dd' (also tolerates missing zero padding and '-').
+  static DateTime parseDate(String s) {
+    final p = s.split(RegExp('[/-]')).map(int.parse).toList();
+    return DateTime(p[0], p[1], p[2]);
   }
 
-  // Map known display names (all languages) back to their internal keys
-  String _resolveCategoryKey(String displayName) {
-    const Map<String, List<String>> knownNames = {
-      'meat': ['Meat', '肉類', '肉類'],
-      'fish': ['Fish', '魚類', '魚'],
-      'vegetable': ['Vegetable', '蔬菜', '野菜'],
-      'fruit': ['Fruit', '水果', '果物'],
-      'bean': ['Bean', '豆類', '豆類'],
-      'eggMilk': ['Egg & Milk', '蛋奶', '卵と乳製品'],
-      'mushroom': ['Mushroom', '菇類', 'キノコ'],
-      'processedfood': ['Processed Food', '加工食品', '加工食品'],
-      'others': ['Others', '其他', 'その他'],
-    };
-    for (final entry in knownNames.entries) {
-      if (entry.value.contains(displayName)) return entry.key;
-    }
-    // Custom category or unrecognised — use display name as-is
-    return displayName;
-  }
+  static String formatDate(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}/${d.month.toString().padLeft(2, '0')}/${d.day.toString().padLeft(2, '0')}';
 
-  Future<void> createInitialData() async {
-    ingredientsList = [
-      ['others', S.current.slideToDelete, '2999/09/29', 1],
-    ];
-    await _myBox.put("INGREDIENTS_LIST", ingredientsList);
-  }
-
-  int compareIngredients(a, b) {
-    // Both formats: expireDate is at index 2 after migration
-    // But during mixed state guard with try/catch
+  /// Returns null for rows that cannot be understood.
+  static Ingredient? tryFromList(dynamic row) {
     try {
-      final String expA = a[2] as String;
-      final String expB = b[2] as String;
-      return DateTime.parse(expA.replaceAll("/", "-"))
-          .compareTo(DateTime.parse(expB.replaceAll("/", "-")));
+      if (row is! List || row.length < 3) return null;
+      // v1 format: [categoryDisplayName, subcategory, inputDate, expireDate]
+      if (row.length >= 4 && row[3] is String) {
+        return Ingredient(
+          legacyCategoryKey(row[0] as String),
+          row[1] as String,
+          parseDate(row[3] as String),
+          1,
+        );
+      }
+      return Ingredient(
+        row[0] as String,
+        row[1] as String,
+        parseDate(row[2] as String),
+        row.length > 3 && row[3] is int ? row[3] as int : 1,
+      );
     } catch (_) {
-      return 0;
+      return null;
     }
   }
+
+  List toList() => [categoryKey, name, formatDate(expiry), quantity];
+
+  String get expdate => formatDate(expiry);
+
+  /// Negative = already expired, 0 = today.
+  int get daysLeft => expiry.difference(_today).inDays;
+
+  ExpiryStatus get status {
+    final d = daysLeft;
+    if (d < 0) return ExpiryStatus.expired;
+    if (d < AppSettings.soonDays) return ExpiryStatus.soon;
+    return ExpiryStatus.fresh;
+  }
+}
+
+/// The fridge contents, persisted in Hive under INGREDIENTS_LIST.
+class InputDataBase {
+  static const _key = 'INGREDIENTS_LIST';
+
+  List<Ingredient> items = [];
+
+  // Rows we could not parse are kept untouched and written back, so a bug or
+  // unknown future format never silently deletes user data.
+  List _unparsed = [];
+
+  // Getter, not a field: the box must already be open (matters in the alarm
+  // callback's background isolate).
+  Box get _box => Hive.box('mybox');
 
   Future<void> loadData() async {
-    List rawList = _myBox.get("INGREDIENTS_LIST", defaultValue: []);
-
-    // Migrate old-format items if any exist
-    bool needsMigration = rawList.any((item) => _isOldFormat(item));
-    if (needsMigration) {
-      rawList = rawList.map((item) {
-        return _isOldFormat(item) ? _migrateItem(item) : item;
-      }).toList();
-      await _myBox.put("INGREDIENTS_LIST", rawList);
+    final raw = (_box.get(_key) as List?) ?? const [];
+    items = [];
+    _unparsed = [];
+    var migrated = false;
+    for (final row in raw) {
+      final item = Ingredient.tryFromList(row);
+      if (item == null) {
+        _unparsed.add(row);
+      } else if (_isOldSample(item)) {
+        migrated = true; // drop the tutorial row older versions inserted
+      } else {
+        items.add(item);
+        if (row is List && row.length >= 4 && row[3] is String) migrated = true;
+      }
     }
-
-    ingredientsList = rawList;
-    ingredientsList.sort(compareIngredients);
+    _sort();
+    if (migrated) await updateData(); // persist v1 → v2 migration once
   }
+
+  // Up to v3.0.x first launch added "Slide to delete" expiring 2999/09/29.
+  // Onboarding is a dialog now (see showOnboardingIfNeeded).
+  static bool _isOldSample(Ingredient i) =>
+      i.expiry == DateTime(2999, 9, 29) &&
+      const ['滑動以刪除', 'Slide to Delete', 'スライドして削除'].contains(i.name);
+
+  void _sort() => items.sort((a, b) => a.expiry.compareTo(b.expiry));
 
   Future<void> updateData() async {
-    ingredientsList.sort(compareIngredients);
-    _myBox.put("INGREDIENTS_LIST", ingredientsList);
+    _sort();
+    await _box.put(_key, [for (final i in items) i.toList(), ..._unparsed]);
   }
 
-  List editData(int index, String categoryKey, String name, String expdate,
-      int quantity, List ingredientsList) {
-    ingredientsList[index][0] = categoryKey;
-    ingredientsList[index][1] = name;
-    ingredientsList[index][2] = expdate;
-    ingredientsList[index][3] = quantity;
-    return ingredientsList;
+  /// Re-files every item of category [from] under [to].
+  Future<void> moveCategory(String from, String to) async {
+    await loadData();
+    items = [
+      for (final i in items)
+        i.categoryKey == from
+            ? Ingredient(to, i.name, i.expiry, i.quantity)
+            : i,
+    ];
+    await updateData();
   }
 
-  int searchIndex(
-      String categoryKey, String name, String expdate, List ingredientsList) {
-    for (int i = 0; i < ingredientsList.length; i++) {
-      if (ingredientsList[i][0] == categoryKey &&
-          ingredientsList[i][1] == name &&
-          ingredientsList[i][2] == expdate) {
-        return i;
-      }
+  /// Index of the first item equal to [target] (all fields), or -1.
+  int indexOf(Ingredient target) => items.indexWhere(
+    (i) =>
+        i.categoryKey == target.categoryKey &&
+        i.name == target.name &&
+        i.expiry == target.expiry &&
+        i.quantity == target.quantity,
+  );
+
+  Map<ExpiryStatus, int> getStats() {
+    final stats = {for (final s in ExpiryStatus.values) s: 0};
+    for (final i in items) {
+      stats[i.status] = stats[i.status]! + 1;
     }
-    return -1;
+    return stats;
   }
 
-  /// Returns summary counts for the home page header.
-  Map<String, int> getStats() {
-    int expired = 0, expiringSoon = 0, fresh = 0;
-    final DateTime now = DateTime.now();
-    final DateTime today = DateTime(now.year, now.month, now.day);
-    final DateTime twoDaysLater = today.add(const Duration(days: 2));
-
-    for (final item in ingredientsList) {
-      try {
-        final exp = DateTime.parse((item[2] as String).replaceAll("/", "-"));
-        final expDay = DateTime(exp.year, exp.month, exp.day);
-        if (expDay.isBefore(today)) {
-          expired++;
-        } else if (expDay.isBefore(twoDaysLater)) {
-          expiringSoon++;
-        } else {
-          fresh++;
-        }
-      } catch (_) {
-        // skip malformed items
-      }
-    }
-    return {'expired': expired, 'expiringSoon': expiringSoon, 'fresh': fresh};
-  }
-
-  /// Used by the notification service — returns customName for expiring items.
-  List getIngredientsExpiry(int howManyDays) {
-    loadData(); // non-awaited, same as original
-    List expiryList = [];
-    final DateTime now = DateTime.now();
-
-    for (int i = 0; i < ingredientsList.length; i++) {
-      try {
-        final DateTime expDate = DateTime.parse(
-            (ingredientsList[i][2] as String).replaceAll("/", "-"));
-
-        if (howManyDays == -1) {
-          if (expDate.isBefore(now)) expiryList.add(ingredientsList[i][1]);
-        } else if (howManyDays == 0) {
-          if (expDate.year == now.year &&
-              expDate.month == now.month &&
-              expDate.day == now.day) {
-            expiryList.add(ingredientsList[i][1]);
-          }
-        } else if (howManyDays == 1) {
-          final tomorrow = now.add(const Duration(days: 1));
-          if (expDate.year == tomorrow.year &&
-              expDate.month == tomorrow.month &&
-              expDate.day == tomorrow.day) {
-            expiryList.add(ingredientsList[i][1]);
-          }
-        } else {
-          final targetDate = now.add(Duration(days: howManyDays));
-          if (expDate.isBefore(targetDate) && expDate.isAfter(now)) {
-            expiryList.add(ingredientsList[i][1]);
-          }
-        }
-      } catch (_) {
-        // skip malformed items
-      }
-    }
-    return expiryList;
-  }
+  /// Names of items expiring exactly [days] days from today (0 = today).
+  List<String> namesExpiringIn(int days) => [
+    for (final i in items)
+      if (i.daysLeft == days) i.name,
+  ];
 }

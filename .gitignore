@@ -43,3 +43,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android build outputs
+/android/app/build/
+/android/build/
+
+# Local build secrets (copy dart_defines.example.json)
+dart_defines.json
+
+# Release builder output & private notes
+/releases/
+*.local.md
+__pycache__/

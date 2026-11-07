@@ -1,0 +1,40 @@
+# ForgerWise product manifest (schema 1).
+#
+# The facts FoodList gives to the sites that promote it: forgerwise.com
+# (ForgerWise/ForgerWise-Webpage) and yingchiehwang.com (ForgerWise/portfolio).
+# Each of those repos has a forgerwise.surface.yaml that says which facts it
+# copies and how. A weekly drift check compares them with this file and opens
+# a pull request on any site that has fallen behind, so change a fact here,
+# not on the sites.
+#
+# Values are either written here or point at the file that holds them
+# ({locale} is one of `locales`). Never copy a value that lives in another
+# file (version, store text) into this one.
+schema: 1
+id: foodlist
+name: FoodList
+kind: android-app
+status: published            # idea | building | beta | published | sunset
+since: 2023-07               # first release; surfaces show it as the start of the period
+version: { file: pubspec.yaml, key: version }   # 3.1.0+25 -> surfaces show 3.1.0
+
+links:
+  play: https://play.google.com/store/apps/details?id=com.forgerwise.foodlist
+  github: https://github.com/ForgerWise/FoodList
+  releases: https://github.com/ForgerWise/FoodList/releases
+
+assets:
+  icon: fastlane/metadata/android/en-US/images/icon.png
+  screenshots: screenshots/{locale}/    # NN_<screen>_<light|dark>.png
+  changelog: CHANGELOG.md
+
+facts:
+  title: fastlane/metadata/android/{locale}/title.txt
+  tagline: fastlane/metadata/android/{locale}/short_description.txt
+  description: fastlane/metadata/android/{locale}/full_description.txt
+  stack: [Flutter, Dart, Hive, Android]
+
+locales: [en-US, zh-TW, ja-JP]
+
+release:
+  signal: github-release     # a published GitHub release is a new version

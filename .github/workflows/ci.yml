@@ -10,10 +10,13 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# Runner: GitHub-hosted by default (this repository is public, so its minutes are free and fork
+# pull requests never reach the owner's PC). Set the repository variable CI_RUNS_ON to
+# '["self-hosted","linux","home-ci"]' to use the home runners instead.
 jobs:
   check:
     name: Analyze & test
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
@@ -41,7 +44,7 @@ jobs:
 
   build:
     name: Build Android (debug)
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     needs: check
     timeout-minutes: 30
     steps:

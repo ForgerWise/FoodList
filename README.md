@@ -1,7 +1,5 @@
 # FoodList
 
-> **AI agents: read [AGENTS.md](AGENTS.md) first** for the current rules on branches and pull requests, CI on the home PC, and how deploys work.
-
 [![CI](https://github.com/ForgerWise/FoodList/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ForgerWise/FoodList/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
